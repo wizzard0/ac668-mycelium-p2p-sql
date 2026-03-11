@@ -10,6 +10,7 @@
     "./sql-api/bun": "./sql-api/bun.ts",
     "./sql-api/wasm": "./sql-api/wasm.ts",
     "./sql-api/remote": "./sql-api/remote.ts",
+    "./lww": "./lww.ts",
     "./http": "./http.ts",
     "./cli": "./cli.ts"
   },
