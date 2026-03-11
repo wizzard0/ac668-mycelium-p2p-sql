@@ -28,7 +28,7 @@ export async function InitSql(dbFileName:string): Promise<AbstractSql> {
   return dbInitPromise;
 }
 
-let alreadySyncing=false;
+let activeSyncPromise: Promise<void> | null = null;
 
 const tableMessage = (workspaceId: string, addMessage: (message: string) => void) =>
   (message: string) => addMessage(`[${workspaceId}] ${message}`);
@@ -79,7 +79,7 @@ export function setBrowserFilename(filename: string){
   browserFilename = filename;
 }
 
-export async function SyncBrowser(
+export function SyncBrowser(
   workspaces: string[],
   addMessage: (message: string) => void,
   url: string,
@@ -87,15 +87,24 @@ export async function SyncBrowser(
 ): Promise<void> {
   if (!workspaces || workspaces.length === 0) {
     addMessage('No workspaces requested for synchronization.');
-    return;
+    return Promise.resolve();
   }
-  if(alreadySyncing) {
+  if (activeSyncPromise) {
     addMessage('alreadySyncing');
-    return;
+    return Promise.resolve();
   }
-  alreadySyncing = true;
-  const localDb = await InitSql(browserFilename);
+  activeSyncPromise = syncBrowserInner(workspaces, addMessage, url, nodeId)
+    .finally(() => { activeSyncPromise = null; });
+  return activeSyncPromise;
+}
 
+async function syncBrowserInner(
+  workspaces: string[],
+  addMessage: (message: string) => void,
+  url: string,
+  nodeId: string,
+): Promise<void> {
+  const localDb = await InitSql(browserFilename);
   try {
     for (const workspace of workspaces) {
       if (!workspace) {
@@ -116,7 +125,5 @@ export async function SyncBrowser(
   } catch (error) {
     const message = (error as Error).message;
     addMessage(`An error occurred during synchronization: ${message}`);
-  } finally {
-    alreadySyncing = false;
   }
 }

@@ -9,7 +9,7 @@ import {ensureGitRoot} from "./os/ensure-git-root.ts";
 
 const DEFAULT_PORT = 3000;
 
-function createApp(db: AbstractSql) {
+export function createApp(db: AbstractSql) {
   console.log({createApp: process.cwd()});
   ensureGitRoot();
 
@@ -33,24 +33,6 @@ function createApp(db: AbstractSql) {
       return c.json({ error: (error?.message || ""+error) }, 500);
     }
   });
-
-  // app.post('/deploy', async (c) => {
-  //   const bodyText = await c.req.text();
-  //   let body: DeployInput;
-  //   try {
-  //     body = JSON.parse(bodyText) as DeployInput;
-  //   } catch (error) {
-  //     console.error('Failed to parse /deploy body', { bodyText, error });
-  //     return c.text(bodyText, 500);
-  //   }
-  //
-  //   try {
-  //     const result: DeployOutput = await doDeploy(body);
-  //     return c.json(result);
-  //   } catch (error) {
-  //     return c.json({ error: error.message }, 500);
-  //   }
-  // });
 
   return app;
 }
@@ -82,12 +64,6 @@ export function startServer() {
   console.log(`Sync server running on port ${serverPort}`);
 }
 
-function logPort(port: number): number {
-  console.log(`Sync server running on port ${port}`);
-  return port;
+if (import.meta.main) {
+  startServer();
 }
-
-export default {
-  port: logPort(process.argv[3] ? parseInt(process.argv[3]) : DEFAULT_PORT),
-  fetch: createApp(new BunSqlApi(process.argv[2])).fetch as any,
-};
