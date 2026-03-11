@@ -21,7 +21,7 @@ async function main() {
     });
 
     log('Connecting to remote...');
-    const remoteDb = GetRemote('');
+    const remoteDb = GetRemote('', "");
 
     log('Syncing...');
     await SyncTables(localDb, remoteDb, log, 'test_table');

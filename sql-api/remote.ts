@@ -1,14 +1,14 @@
 import { AbstractSql, SqlInput, SqlOutput } from './api.ts';
 
-export function GetRemote(url: string): AbstractSql {
+export function GetRemote(url: string, bearerToken: string): AbstractSql {
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (bearerToken) headers['Authorization'] = `Bearer ${bearerToken}`;
   return {
     type: 'remote' as const,
     query: async (input: SqlInput): Promise<SqlOutput> => {
       const response = await fetch(url + '/sql/query', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify(input),
       });
 

@@ -10,7 +10,7 @@ export function getAbstractSql(source: string): AbstractSql {
     return new BunSqlApi(source);
   } else if (source.match(/:\d+$/)) {
     let url = source.includes('://') ? source : ('http://' + source)
-    return GetRemote(url);
+    return GetRemote(url, "");
   } else {
     throw new Error(`Invalid source: ${source}. Must end with .db or :<port>`);
   }

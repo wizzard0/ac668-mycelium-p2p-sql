@@ -112,7 +112,7 @@ async function syncBrowserInner(
         continue;
       }
       validateTableName(workspace);
-      const remoteDb = GetRemote(url);
+      const remoteDb = GetRemote(url, "");
       addMessage(`Syncing workspace ${workspace} via ${url}`);
       await CreateExampleTable(localDb, workspace);
       await CreateExampleTable(remoteDb, workspace);
