@@ -1,0 +1,23 @@
+### Check basic liveness
+POST http://localhost:3400/sql/query
+Content-Type: application/json
+
+{
+  "sql": "SELECT 1 as data",
+  "params": []
+}
+
+> {%
+client.test("Status code is 200", function() {
+  client.assert(response.status === 200, "Expected 200 OK");
+});
+// assert response has a single row with a single column
+client.test("Response has a single row with a single column", function() {
+  let s = Object.keys(response.body);
+//  console.log(s, response.body.toString());
+  let parsed = response.body; // already json!
+  console.log(parsed);
+  client.assert(parsed.rows.length === 1, "Expected 1 row");
+  client.assert(parsed.rows[0][0] === 1, "Expected 1");
+});
+%}

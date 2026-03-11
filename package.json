@@ -1,0 +1,27 @@
+{
+  "name": "mycelium-p2p-sql",
+  "version": "4.1.2026.10311",
+  "type": "module",
+  "exports": {
+    ".": "./full.ts",
+    "./sync": "./sync.ts",
+    "./copy": "./copy.ts",
+    "./sql-api": "./sql-api/api.ts",
+    "./sql-api/bun": "./sql-api/bun.ts",
+    "./sql-api/wasm": "./sql-api/wasm.ts",
+    "./sql-api/remote": "./sql-api/remote.ts",
+    "./http": "./http.ts",
+    "./cli": "./cli.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "4.11.7"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "typescript": "^5.2.2"
+  }
+}
