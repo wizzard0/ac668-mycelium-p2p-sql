@@ -22,7 +22,7 @@ export class BunSqlApi implements AbstractSql {
     const fields = statement.columnNames.map(column => ({ name: column }));
 
     // Convert result to rows
-    const rows = Array.isArray(result) ? result.map(Object.values) : [Object.values(result)];
+    const rows = Array.isArray(result) ? result.map(r => Object.values(r as Record<string, unknown>)) : [Object.values(result as Record<string, unknown>)];
 
     return { rows, fields };
   }

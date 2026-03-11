@@ -16,6 +16,10 @@ npm install mycelium-p2p-sql --registry $NPM_REGISTRY
 import { createReplicator } from "mycelium-p2p-sql";
 ```
 
+## Internals
+
+`t348.mjs` is a single-file zero-dependency TypeScript + React loader, used for fast iteration on the browser version.
+
 ## Publish
 
 ```bash

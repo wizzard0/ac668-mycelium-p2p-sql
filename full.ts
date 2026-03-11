@@ -1,8 +1,10 @@
 import { AbstractSql } from "./sql-api/api.ts";
 import { GetSequencesToSync, SequenceRange } from "./sync.ts";
 import { GetDataToCopy, InsertRecords } from "./copy.ts";
+import { validateTableName } from "./validate-table.ts";
 
 export async function SyncTables(source: AbstractSql, target: AbstractSql, addMessage: (message: string) => void, table: string): Promise<SequenceRange[]> {
+    validateTableName(table);
     // Step 1: Get the ranges to sync
     addMessage("Getting sequences to sync..." + new Date().toISOString().substring(11, 19));
     const rangesToSync = await GetSequencesToSync(source, target,table);

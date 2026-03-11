@@ -3,18 +3,23 @@ import { createWasmSqlApi, WasmSqlApi } from "./sql-api/wasm.ts";
 import { CreateExampleTable } from "./mock-data.ts";
 import { SyncTables } from "./full.ts";
 import { GetRemote } from "./sql-api/remote.ts";
+import { validateTableName } from "./validate-table.ts";
 
 let dbInstance: AbstractSql | null = null;
 let dbInitPromise: Promise<AbstractSql> | null = null;
 
-export async function InitSql(): Promise<AbstractSql> {
+/**
+ * @param dbFileName like "/p4804.sqlite3"
+ * @constructor
+ */
+export async function InitSql(dbFileName:string): Promise<AbstractSql> {
   if (dbInstance) {
     return dbInstance;
   }
   if (dbInitPromise) {
     return dbInitPromise;
   }
-  dbInitPromise = createWasmSqlApi("/p4804.sqlite3").then(async (db) => {
+  dbInitPromise = createWasmSqlApi(dbFileName).then(async (db) => {
     await CreateExampleTable(db, "example");
     dbInstance = db;
     dbInitPromise = null;
@@ -69,11 +74,16 @@ const notifyWorkspaceResync = async (
   }
 };
 
+export let browserFilename = "/p4804.sqlite3"
+export function setBrowserFilename(filename: string){
+  browserFilename = filename;
+}
+
 export async function SyncBrowser(
   workspaces: string[],
   addMessage: (message: string) => void,
   url: string,
-  nodeId?: string,
+  nodeId: string,
 ): Promise<void> {
   if (!workspaces || workspaces.length === 0) {
     addMessage('No workspaces requested for synchronization.');
@@ -84,7 +94,7 @@ export async function SyncBrowser(
     return;
   }
   alreadySyncing = true;
-  const localDb = await InitSql();
+  const localDb = await InitSql(browserFilename);
 
   try {
     for (const workspace of workspaces) {
@@ -92,6 +102,7 @@ export async function SyncBrowser(
         addMessage('Skipping workspace sync due to missing workspace id.');
         continue;
       }
+      validateTableName(workspace);
       const remoteDb = GetRemote(url);
       addMessage(`Syncing workspace ${workspace} via ${url}`);
       await CreateExampleTable(localDb, workspace);
@@ -103,7 +114,8 @@ export async function SyncBrowser(
     }
     addMessage("Synchronization completed successfully.");
   } catch (error) {
-    addMessage(`An error occurred during synchronization: ${error.message}`);
+    const message = (error as Error).message;
+    addMessage(`An error occurred during synchronization: ${message}`);
   } finally {
     alreadySyncing = false;
   }

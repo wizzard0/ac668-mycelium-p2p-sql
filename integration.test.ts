@@ -7,15 +7,12 @@ import { fileURLToPath } from "url";
 import { Database } from "bun:sqlite";
 import { BunSqlApi } from "./sql-api/bun.ts";
 import { MakeMockRecords, CreateExampleTable } from "./mock-data.ts";
-import { Browser } from "playwright-core";
-
-const playwrightPromise = import("playwright").catch(() => null);
+const playwrightPromise = import("playwright").catch(() => null) as Promise<any>;
 const playwright = await playwrightPromise;
 if (!playwright) console.warn("[integration] Playwright not installed");
 const run = playwright ? test : test.skip;
 
 const here = dirname(fileURLToPath(import.meta.url));
-const repoRoot = join(here, "../..");
 const tmpDir = join(here, "tmp");
 const dbPath = join(tmpDir, "integration.db");
 const decode = new TextDecoder();
@@ -54,7 +51,7 @@ run("browser syncs with cli server", async () => {
 
   try {
     await waitFor(server, "Integration server running");
-    const browser = await chromium.launch() as Browser;
+    const browser = await chromium.launch();
     try {
       const page = await browser.newPage();
       page.on("console", (msg: any) => console.log("[browser]", msg.text()));
