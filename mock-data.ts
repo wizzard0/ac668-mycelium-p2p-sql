@@ -1,4 +1,4 @@
-import {AbstractSql, SyncableRecord} from "./sql-api/api.ts";
+import type { AbstractSql, SyncableRecord } from "./sql-api/api.ts";
 
 export interface ExampleRecord extends SyncableRecord {
   data: string;

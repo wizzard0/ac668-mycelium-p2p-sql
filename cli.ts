@@ -1,4 +1,4 @@
-import {AbstractSql} from "./sql-api/api.ts";
+import type {AbstractSql} from "./sql-api/api.ts";
 import {CreateExampleTable} from "./mock-data";
 import {SyncTables} from "./full";
 import {getAbstractSql} from "./get-abstract-sql.ts";

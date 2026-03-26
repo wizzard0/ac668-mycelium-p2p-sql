@@ -1,4 +1,4 @@
-import {AbstractSql} from "./sql-api/api.ts";
+import type {AbstractSql} from "./sql-api/api.ts";
 import {BunSqlApi} from "./sql-api/bun.ts";
 import {GetRemote} from "./sql-api/remote.ts";
 

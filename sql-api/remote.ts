@@ -1,4 +1,4 @@
-import { AbstractSql, SqlInput, SqlOutput } from './api.ts';
+import type { AbstractSql, SqlInput, SqlOutput } from './api.ts';
 
 export function GetRemote(url: string, bearerToken: string): AbstractSql {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };

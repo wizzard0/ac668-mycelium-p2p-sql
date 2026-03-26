@@ -1,5 +1,5 @@
 import { Database } from "bun:sqlite";
-import { AbstractSql, SqlInput, SqlOutput } from "./api.ts";
+import type { AbstractSql, SqlInput, SqlOutput } from "./api.ts";
 
 export class BunSqlApi implements AbstractSql {
   private db: Database;

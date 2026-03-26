@@ -1,5 +1,6 @@
-import { AbstractSql } from "./sql-api/api.ts";
-import { GetSequencesToSync, SequenceRange } from "./sync.ts";
+import type { AbstractSql } from "./sql-api/api.ts";
+import { GetSequencesToSync } from "./sync.ts";
+import type { SequenceRange } from "./sync.ts";
 import { GetDataToCopy, InsertRecords } from "./copy.ts";
 import { validateTableName } from "./validate-table.ts";
 

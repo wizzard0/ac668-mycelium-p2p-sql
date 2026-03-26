@@ -1,4 +1,4 @@
-import { AbstractSql, SqlInput, SqlOutput } from "./api.ts";
+import type { AbstractSql, SqlInput, SqlOutput } from "./api.ts";
 
 const getSqlite = async () => {
   const url = new URL('/lib/sqlite.mjs', location.href).href;

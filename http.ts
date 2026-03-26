@@ -1,6 +1,6 @@
 import {Hono} from 'hono';
 import {cors} from 'hono/cors';
-import {AbstractSql, SqlInput, SqlOutput} from './sql-api/api.ts';
+import type {AbstractSql, SqlInput, SqlOutput} from './sql-api/api.ts';
 import {BunSqlApi} from './sql-api/bun.ts';
 import {serve} from 'bun';
 import {ensureGitRoot} from "./os/ensure-git-root.ts";

@@ -1,4 +1,4 @@
-import {AbstractSql} from "./sql-api/api.ts";
+import type { AbstractSql } from "./sql-api/api.ts";
 
 export interface Sequences {
   [node: string]: number;
@@ -35,8 +35,8 @@ export async function GetSequencesToSync(source: AbstractSql, target: AbstractSq
       : [targetSequences, sourceSequences];
 
     for (const node in fromSequences) {
-      const fromSeq = fromSequences[node];
-      const toSeq = toSequences[node] || 0;
+      const fromSeq = fromSequences[node] ?? 0;
+      const toSeq = toSequences[node] ?? 0;
 
       if (fromSeq > toSeq) {
         rangesToSync.push({

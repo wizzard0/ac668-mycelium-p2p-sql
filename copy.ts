@@ -1,6 +1,6 @@
-import { AbstractSql } from "./sql-api/api.ts";
-import { SequenceRange } from "./sync.ts";
-import {ExampleRecord} from "./mock-data.ts";
+import type { AbstractSql } from "./sql-api/api.ts";
+import type { SequenceRange } from "./sync.ts";
+import type { ExampleRecord } from "./mock-data.ts";
 
 export async function GetDataToCopy<T extends ExampleRecord>(source: AbstractSql, range: SequenceRange, table:string): Promise<T[]> {
   const { node, start, end } = range;

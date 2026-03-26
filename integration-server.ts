@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { serve } from "bun";
 import { BunSqlApi } from "./sql-api/bun.ts";
-import { SqlInput, SqlOutput } from "./sql-api/api.ts";
+import type { SqlInput, SqlOutput } from "./sql-api/api.ts";
 import { CreateExampleTable } from "./mock-data.ts";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";

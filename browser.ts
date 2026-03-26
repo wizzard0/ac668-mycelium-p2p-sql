@@ -1,5 +1,5 @@
-import { AbstractSql } from "./sql-api/api.ts";
-import { createWasmSqlApi, WasmSqlApi } from "./sql-api/wasm.ts";
+import type { AbstractSql } from "./sql-api/api.ts";
+import { createWasmSqlApi } from "./sql-api/wasm.ts";
 import { CreateExampleTable } from "./mock-data.ts";
 import { SyncTables } from "./full.ts";
 import { GetRemote } from "./sql-api/remote.ts";

@@ -1,4 +1,4 @@
-import { AbstractSql, SyncableRecord } from "./sql-api/api.ts";
+import type { AbstractSql, SyncableRecord } from "./sql-api/api.ts";
 import { validateTableName } from "./validate-table.ts";
 
 export interface LWWRecord extends SyncableRecord {
