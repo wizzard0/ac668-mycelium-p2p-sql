@@ -1,11 +1,15 @@
 import type { AbstractSql, SqlInput, SqlOutput } from './api.ts';
 
-export function GetRemote(url: string, bearerToken: string): AbstractSql {
+export type RemoteRequestLog = (method: string, url: string, status: number, ms: number, verb: string) => void;
+const noop: RemoteRequestLog = () => {};
+
+export function GetRemote(url: string, bearerToken: string, onRequest: RemoteRequestLog = noop): AbstractSql {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
   if (bearerToken) headers['Authorization'] = `Bearer ${bearerToken}`;
   return {
     type: 'remote' as const,
     query: async (input: SqlInput): Promise<SqlOutput> => {
+      const start = performance.now();
       const response = await fetch(url + '/sql/query', {
         method: 'POST',
         headers,
@@ -18,8 +22,12 @@ export function GetRemote(url: string, bearerToken: string): AbstractSql {
         throw new Error(`HTTP error! status: ${response.status} ${url}/sql/query: ${rb}`);
       }
 
-      return await response.json() as SqlOutput;
+      const result = await response.json() as SqlOutput;
+      const ms = Math.round(performance.now() - start);
+      const verb = input.sql.trimStart().slice(0, 6).toUpperCase();
+      onRequest("POST", url + '/sql/query', response.status, ms, verb);
+      return result;
     },
-    close: () => {} // No-op for remote connections
+    close: () => {}
   };
 }
