@@ -24,7 +24,7 @@ export async function GetDataToCopy<T extends ExampleRecord>(source: AbstractSql
 export async function InsertRecords(target: AbstractSql, records: ExampleRecord[],table:string): Promise<void> {
   for (const record of records) {
     await target.query({
-      sql: `INSERT INTO ${table} (node, seq, oid, time, data)
+      sql: `INSERT OR IGNORE INTO ${table} (node, seq, oid, time, data)
             VALUES (?, ?, ?, ?, ?)`,
       params: [
         record.node, record.seq, record.oid, record.time, record.data
