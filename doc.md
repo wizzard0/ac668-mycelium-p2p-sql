@@ -9,5 +9,7 @@
     - fetch sequences per writer
     - find diff ranges up and down (those are symmetric)
 - copy
-    - select items per writer x range, assume everything fits (no paging)
-    - insert into the other copy
+    - select items per writer x range in pages of SYNC_PAGE_SIZE (1000), ordered by seq
+    - insert each page into the other copy before reading the next page
+    - crash-safe: the target always holds a contiguous per-writer seq prefix, so an
+      interrupted sync resumes from max(seq) on the next run — no in-memory cursor

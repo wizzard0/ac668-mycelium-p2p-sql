@@ -2,14 +2,17 @@ import type { AbstractSql } from "./sql-api/api.ts";
 import type { SequenceRange } from "./sync.ts";
 import type { ExampleRecord } from "./mock-data.ts";
 
-export async function GetDataToCopy<T extends ExampleRecord>(source: AbstractSql, range: SequenceRange, table:string): Promise<T[]> {
+export async function GetDataToCopy<T extends ExampleRecord>(source: AbstractSql, range: SequenceRange, table:string, limit:number): Promise<T[]> {
+  if (!Number.isInteger(limit) || limit <= 0) {
+    throw new Error(`GetDataToCopy: limit must be a positive integer, got ${limit}`);
+  }
   const { node, start, end } = range;
-  
+
   const result = await source.query({
-    sql: `SELECT node, seq, oid, time, data FROM ${table} 
-          WHERE node = ? AND seq >= ? AND seq <= ? 
-          ORDER BY seq`,
-    params: [node, start, end]
+    sql: `SELECT node, seq, oid, time, data FROM ${table}
+          WHERE node = ? AND seq >= ? AND seq <= ?
+          ORDER BY seq LIMIT ?`,
+    params: [node, start, end, limit]
   });
 
   return result.rows.map(row => ({

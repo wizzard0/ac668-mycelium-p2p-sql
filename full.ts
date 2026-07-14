@@ -4,6 +4,8 @@ import type { SequenceRange } from "./sync.ts";
 import { GetDataToCopy, InsertRecords } from "./copy.ts";
 import { validateTableName } from "./validate-table.ts";
 
+export const SYNC_PAGE_SIZE = 1000;
+
 export async function SyncTables(source: AbstractSql, target: AbstractSql, addMessage: (message: string) => void, table: string): Promise<SequenceRange[]> {
     validateTableName(table);
     // Step 1: Get the ranges to sync
@@ -24,13 +26,23 @@ export async function SyncTables(source: AbstractSql, target: AbstractSql, addMe
 }
 
 async function copyRange(from: AbstractSql, to: AbstractSql, range: SequenceRange, addMessage: (message: string) => void, table: string): Promise<void> {
-    // Get data from the source
     addMessage(`Getting data to copy for range: ${JSON.stringify(range)}`);
-    const records = await GetDataToCopy(from, range,table);
-    addMessage(`Found ${records.length} records to copy.`);
-
-    // Insert records into the target
-    addMessage("Inserting records into target...");
-    await InsertRecords(to, records as any,table);
-    addMessage("Records inserted successfully.");
+    // Crash-recovery invariant: pages are read in seq order and each page is
+    // inserted before the next is read, so an interrupted sync always leaves
+    // the target with a contiguous per-node seq prefix. The next run resumes
+    // from max(seq) — a gap below it would never be re-requested. Do not
+    // reorder or parallelize pages.
+    let start = range.start;
+    while (start <= range.end) {
+        const page = await GetDataToCopy(from, { ...range, start }, table, SYNC_PAGE_SIZE);
+        if (page.length === 0) break;
+        await InsertRecords(to, page as any, table);
+        const lastSeq = page[page.length - 1].seq;
+        if (typeof lastSeq !== "number" || lastSeq < start) {
+            throw new Error(`copyRange: page for node ${range.node} ended at seq ${lastSeq}, below cursor ${start}`);
+        }
+        addMessage(`Copied ${page.length} records (seq ${start}..${lastSeq}).`);
+        if (page.length < SYNC_PAGE_SIZE) break;
+        start = lastSeq + 1;
+    }
 }
