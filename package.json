@@ -1,6 +1,6 @@
 {
   "name": "mycelium-p2p-sql",
-  "version": "4.3.2026.10511",
+  "version": "4.3.2026.10714",
   "type": "module",
   "exports": {
     ".": "./full.ts",
