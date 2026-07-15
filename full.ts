@@ -25,6 +25,23 @@ export async function SyncTables(source: AbstractSql, target: AbstractSql, addMe
     return rangesToSync;
 }
 
+// One-directional sync: copies rows `from` has that `to` lacks, never the
+// reverse. Callers pick the direction (pull: OneWay(remote, local); push:
+// OneWay(local, remote)).
+export async function SyncTablesOneWay(from: AbstractSql, to: AbstractSql, addMessage: (message: string) => void, table: string): Promise<SequenceRange[]> {
+    validateTableName(table);
+    addMessage("Getting sequences to sync (one-way)..." + new Date().toISOString().substring(11, 19));
+    const rangesToSync = await GetSequencesToSync(from, to, table);
+    const oneWayRanges = rangesToSync.filter((r) => r.direction === 'source_to_target');
+    addMessage(`Found ${oneWayRanges.length} one-way ranges to sync.`);
+
+    for (const range of oneWayRanges) {
+        addMessage(`Syncing range: ${JSON.stringify(range)}`);
+        await copyRange(from, to, range, addMessage, table);
+    }
+    return oneWayRanges;
+}
+
 async function copyRange(from: AbstractSql, to: AbstractSql, range: SequenceRange, addMessage: (message: string) => void, table: string): Promise<void> {
     addMessage(`Getting data to copy for range: ${JSON.stringify(range)}`);
     // Crash-recovery invariant: pages are read in seq order and each page is

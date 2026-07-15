@@ -22,3 +22,11 @@
   `GetSequencesToSync` fixes each range's `end` up front, so late rows are simply
   picked up by the next pass.
   Test: covered inside the crash test (writer injects rows before the first page read).
+
+## One-way sync (2026-07-15)
+
+- **SY-ronuk** — `SyncTablesOneWay(from, to, addMessage, table)` copies rows `from` has
+  that `to` lacks and never the reverse. Why: consumers need pull-only replicas (don't
+  write into a production node) and push-only replicas (don't take rows from an
+  untrusted one). Reuses the paginated, crash-safe `copyRange` (SY-pagul, SY-kotad).
+  Tests: full.test.ts "copies from→to and never the reverse", "paginates large one-way ranges".

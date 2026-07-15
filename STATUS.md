@@ -11,3 +11,9 @@
   (SY-pagul, SY-kotad, SY-vimon)
 - doc.md updated (removed "assume everything fits (no paging)").
 - Verified: `bun test` 33 pass, `bunx tsc --noEmit` clean.
+
+## 2026-07-15 — one-way sync
+
+- `SyncTablesOneWay`: direction-filtered variant of `SyncTables`, same paginated
+  copyRange. (SY-ronuk)
+- Verified: `bun test` 35 pass, `bunx tsc --noEmit` clean.

@@ -3,7 +3,7 @@ import { AbstractSql, SqlInput } from "./sql-api/api.ts";
 import { BunSqlApi } from "./sql-api/bun.ts";
 import { CreateExampleTable, InsertMockRecords, ExampleRecord } from "./mock-data";
 import { InsertRecords } from "./copy.ts";
-import { SyncTables, SYNC_PAGE_SIZE } from "./full";
+import { SyncTables, SyncTablesOneWay, SYNC_PAGE_SIZE } from "./full";
 
 async function seedSequentialRecords(db: AbstractSql, node: string, startSeq: number, count: number): Promise<void> {
   const records: ExampleRecord[] = [];
@@ -215,6 +215,58 @@ test("crash after first insert batch under concurrent writes: fresh sync converg
     await SyncTables(db1, db2, () => {}, 'example');
     const again = await db2.query({ sql: "SELECT count(*) FROM example", params: [] });
     expect(again.rows[0][0]).toBe(2600);
+  } finally {
+    (db1 as BunSqlApi).close();
+    (db2 as BunSqlApi).close();
+  }
+});
+
+test("SyncTablesOneWay copies from→to and never the reverse", async () => {
+  // why: SY-ronuk — replicas can be pull-only or push-only (e.g. don't write
+  // into a production node, or don't take rows from an untrusted one). The
+  // one-way primitive must leave `from` untouched.
+  const db1: AbstractSql = new BunSqlApi(":memory:");
+  const db2: AbstractSql = new BunSqlApi(":memory:");
+  try {
+    // given: each side has rows the other lacks
+    await CreateExampleTable(db1, 'example');
+    await CreateExampleTable(db2, 'example');
+    await InsertMockRecords("node1", db1, 'example');
+    await InsertMockRecords("node2", db2, 'example');
+
+    // when: syncing one way, twice (idempotency)
+    await SyncTablesOneWay(db1, db2, () => {}, 'example');
+    await SyncTablesOneWay(db1, db2, () => {}, 'example');
+
+    // then: db2 gained db1's rows; db1 did NOT gain db2's rows
+    const r2 = await db2.query({ sql: "SELECT count(*) FROM example", params: [] });
+    expect(r2.rows[0]![0]).toBe(4);
+    const r1 = await db1.query({ sql: "SELECT node, count(*) FROM example GROUP BY node", params: [] });
+    expect(r1.rows).toEqual([["node1", 2]]);
+  } finally {
+    (db1 as BunSqlApi).close();
+    (db2 as BunSqlApi).close();
+  }
+});
+
+test("SyncTablesOneWay paginates large one-way ranges", async () => {
+  // why: SY-ronuk — one-way sync must inherit the paginated, crash-safe copy.
+  const db1: AbstractSql = new BunSqlApi(":memory:");
+  const db2: AbstractSql = new BunSqlApi(":memory:");
+  try {
+    // given: from-side is 1.5 pages ahead
+    await CreateExampleTable(db1, 'example');
+    await CreateExampleTable(db2, 'example');
+    await seedSequentialRecords(db1, "node1", 1, SYNC_PAGE_SIZE + 500);
+    const messages: string[] = [];
+
+    // when: one-way sync
+    await SyncTablesOneWay(db1, db2, (m: string) => messages.push(m), 'example');
+
+    // then: all rows arrive in two pages
+    const res = await db2.query({ sql: "SELECT count(*), count(DISTINCT seq) FROM example", params: [] });
+    expect(res.rows[0]).toEqual([SYNC_PAGE_SIZE + 500, SYNC_PAGE_SIZE + 500]);
+    expect(messages.filter(m => m.startsWith("Copied")).length).toBe(2);
   } finally {
     (db1 as BunSqlApi).close();
     (db2 as BunSqlApi).close();
