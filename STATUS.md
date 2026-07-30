@@ -1,5 +1,12 @@
 # Status
 
+## 2026-07-30 — hono loosened to ^4.12.4
+
+- hono@4.11.7 (exact pin) carried two HIGH advisories fixed in >= 4.12.4:
+  GHSA-q5qw-h33p-qvwr (serveStatic file access), GHSA-88fw-hqm2-52qc (CORS
+  reflects any Origin with credentials). Range is now `^4.12.4`; lock resolves
+  4.12.31.
+
 ## 2026-07-14 — paginated sync reads
 
 - `GetDataToCopy(source, range, table, limit)`: explicit limit parameter, `LIMIT ?` in
