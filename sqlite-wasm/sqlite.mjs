@@ -1,8 +1,3 @@
-import { default as sqlite3InitModule } from './sqlite3-bundler-friendly.mjs';
-import _ from './sqlite3-worker1-promiser.mjs';
-
-const sqlite3Worker1Promiser = self.sqlite3Worker1Promiser;
-const __ = _; // so t348 will not erase the import
-
-export default sqlite3InitModule;
-export { sqlite3Worker1Promiser };
+// Upstream @sqlite.org/sqlite-wasm 3.53.4-build1 dist, served at /lib/ (see sql-api/wasm.ts).
+// The worker, OPFS proxy and wasm resolve next to index.mjs via import.meta.url.
+export { default, sqlite3Worker1Promiser } from './index.mjs';

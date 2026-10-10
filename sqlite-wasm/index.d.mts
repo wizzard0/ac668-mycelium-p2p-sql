@@ -1,53 +1,47 @@
+//#region src/index.d.ts
 /** Types of values that can be passed to/retrieved from SQLite. */
-declare type SqlValue =
-  | string
-  | number
-  | null
-  | BigInt
-  | Uint8Array
-  | Int8Array
-  | ArrayBuffer;
-
+export type SqlValue = string | number | null | bigint | Uint8Array | Int8Array | ArrayBuffer;
+/** A PreparedStatement or a WASM pointer to one. */
+export type StmtPtr = PreparedStatement | WasmPointer;
+/** A Database or a WASM pointer to one. */
+export type DbPtr = Database | WasmPointer;
+/** An integer result code from a SQLite C API call. */
+export type Sqlite3Result = CAPI['SQLITE_OK'] | CAPI['SQLITE_ERROR'] | CAPI['SQLITE_INTERNAL'] | CAPI['SQLITE_PERM'] | CAPI['SQLITE_ABORT'] | CAPI['SQLITE_BUSY'] | CAPI['SQLITE_LOCKED'] | CAPI['SQLITE_NOMEM'] | CAPI['SQLITE_READONLY'] | CAPI['SQLITE_INTERRUPT'] | CAPI['SQLITE_IOERR'] | CAPI['SQLITE_CORRUPT'] | CAPI['SQLITE_NOTFOUND'] | CAPI['SQLITE_FULL'] | CAPI['SQLITE_CANTOPEN'] | CAPI['SQLITE_PROTOCOL'] | CAPI['SQLITE_EMPTY'] | CAPI['SQLITE_SCHEMA'] | CAPI['SQLITE_TOOBIG'] | CAPI['SQLITE_CONSTRAINT'] | CAPI['SQLITE_MISMATCH'] | CAPI['SQLITE_MISUSE'] | CAPI['SQLITE_NOLFS'] | CAPI['SQLITE_AUTH'] | CAPI['SQLITE_FORMAT'] | CAPI['SQLITE_RANGE'] | CAPI['SQLITE_NOTADB'] | CAPI['SQLITE_NOTICE'] | CAPI['SQLITE_WARNING'] | CAPI['SQLITE_ROW'] | CAPI['SQLITE_DONE'] | CAPI['SQLITE_ERROR_MISSING_COLLSEQ'] | CAPI['SQLITE_ERROR_RETRY'] | CAPI['SQLITE_ERROR_SNAPSHOT'] | CAPI['SQLITE_IOERR_READ'] | CAPI['SQLITE_IOERR_SHORT_READ'] | CAPI['SQLITE_IOERR_WRITE'] | CAPI['SQLITE_IOERR_FSYNC'] | CAPI['SQLITE_IOERR_DIR_FSYNC'] | CAPI['SQLITE_IOERR_TRUNCATE'] | CAPI['SQLITE_IOERR_FSTAT'] | CAPI['SQLITE_IOERR_UNLOCK'] | CAPI['SQLITE_IOERR_RDLOCK'] | CAPI['SQLITE_IOERR_DELETE'] | CAPI['SQLITE_IOERR_BLOCKED'] | CAPI['SQLITE_IOERR_NOMEM'] | CAPI['SQLITE_IOERR_ACCESS'] | CAPI['SQLITE_IOERR_CHECKRESERVEDLOCK'] | CAPI['SQLITE_IOERR_LOCK'] | CAPI['SQLITE_IOERR_CLOSE'] | CAPI['SQLITE_IOERR_DIR_CLOSE'] | CAPI['SQLITE_IOERR_SHMOPEN'] | CAPI['SQLITE_IOERR_SHMSIZE'] | CAPI['SQLITE_IOERR_SHMLOCK'] | CAPI['SQLITE_IOERR_SHMMAP'] | CAPI['SQLITE_IOERR_SEEK'] | CAPI['SQLITE_IOERR_DELETE_NOENT'] | CAPI['SQLITE_IOERR_MMAP'] | CAPI['SQLITE_IOERR_GETTEMPPATH'] | CAPI['SQLITE_IOERR_CONVPATH'] | CAPI['SQLITE_IOERR_VNODE'] | CAPI['SQLITE_IOERR_AUTH'] | CAPI['SQLITE_IOERR_BEGIN_ATOMIC'] | CAPI['SQLITE_IOERR_COMMIT_ATOMIC'] | CAPI['SQLITE_IOERR_ROLLBACK_ATOMIC'] | CAPI['SQLITE_IOERR_DATA'] | CAPI['SQLITE_IOERR_CORRUPTFS'] | CAPI['SQLITE_LOCKED_SHAREDCACHE'] | CAPI['SQLITE_LOCKED_VTAB'] | CAPI['SQLITE_BUSY_RECOVERY'] | CAPI['SQLITE_BUSY_SNAPSHOT'] | CAPI['SQLITE_BUSY_TIMEOUT'] | CAPI['SQLITE_CANTOPEN_NOTEMPDIR'] | CAPI['SQLITE_CANTOPEN_ISDIR'] | CAPI['SQLITE_CANTOPEN_FULLPATH'] | CAPI['SQLITE_CANTOPEN_CONVPATH'] | CAPI['SQLITE_CANTOPEN_SYMLINK'] | CAPI['SQLITE_CORRUPT_VTAB'] | CAPI['SQLITE_CORRUPT_SEQUENCE'] | CAPI['SQLITE_CORRUPT_INDEX'] | CAPI['SQLITE_READONLY_RECOVERY'] | CAPI['SQLITE_READONLY_CANTLOCK'] | CAPI['SQLITE_READONLY_ROLLBACK'] | CAPI['SQLITE_READONLY_DBMOVED'] | CAPI['SQLITE_READONLY_CANTINIT'] | CAPI['SQLITE_READONLY_DIRECTORY'] | CAPI['SQLITE_ABORT_ROLLBACK'] | CAPI['SQLITE_CONSTRAINT_CHECK'] | CAPI['SQLITE_CONSTRAINT_COMMITHOOK'] | CAPI['SQLITE_CONSTRAINT_FOREIGNKEY'] | CAPI['SQLITE_CONSTRAINT_FUNCTION'] | CAPI['SQLITE_CONSTRAINT_NOTNULL'] | CAPI['SQLITE_CONSTRAINT_PRIMARYKEY'] | CAPI['SQLITE_CONSTRAINT_TRIGGER'] | CAPI['SQLITE_CONSTRAINT_UNIQUE'] | CAPI['SQLITE_CONSTRAINT_VTAB'] | CAPI['SQLITE_CONSTRAINT_ROWID'] | CAPI['SQLITE_CONSTRAINT_PINNED'] | CAPI['SQLITE_CONSTRAINT_DATATYPE'] | CAPI['SQLITE_NOTICE_RECOVER_WAL'] | CAPI['SQLITE_NOTICE_RECOVER_ROLLBACK'] | CAPI['SQLITE_WARNING_AUTOINDEX'] | CAPI['SQLITE_AUTH_USER'] | CAPI['SQLITE_OK_LOAD_PERMANENTLY'];
+/** A destructor for a BLOB or TEXT binding. */
+export type DtorType = (() => void) | WasmPointer | CAPI['SQLITE_STATIC'] | CAPI['SQLITE_TRANSIENT'] | CAPI['SQLITE_WASM_DEALLOC'];
+/** Types of values that can be passed to SQLite. */
+export type BindableValue = SqlValue |
+/** Converted to NULL */
+undefined |
+/** Converted to INTEGER */
+boolean;
 /** Internal data types supported by SQLite3. */
-declare type SQLiteDataType =
-  | CAPI['SQLITE_INTEGER']
-  | CAPI['SQLITE_FLOAT']
-  | CAPI['SQLITE_TEXT']
-  | CAPI['SQLITE_BLOB']
-  | CAPI['SQLITE_NULL'];
-
+export type SQLiteDataType = CAPI['SQLITE_INTEGER'] | CAPI['SQLITE_FLOAT'] | CAPI['SQLITE_TEXT'] | CAPI['SQLITE_BLOB'] | CAPI['SQLITE_NULL'];
 /** Specifies parameter bindings. */
-declare type BindingSpec =
-  | readonly SqlValue[]
-  | { [paramName: string]: SqlValue }
-  /** Assumed to have binding index `1` */
-  | SqlValue;
-
+export type BindingSpec = readonly BindableValue[] | Record<string, BindableValue> |
+/** Assumed to have binding index `1` */
+(SqlValue | boolean);
 /**
  * Certain WASM-bound APIs, where explicitly noted, have additional string-type
  * argument conversions colloquially known as "flexible strings." This support
  * is generally reserved for arguments which expect SQL strings, as such strings
  * are often large and frequently come from external sources, e.g. byte arrays
  * loaded from local files, over XHR requests, or using `fetch()`. Functions
- * which take filename strings, and simlilar "small" strings, do not use this
+ * which take filename strings, and similar "small" strings, do not use this
  * feature.
  */
-declare type FlexibleString =
-  | string
-  /** WASM C-string pointer, passed on to WASM as-is. */
-  | WasmPointer
-  /** Assumed to hold UTF-8 encoded text, converted to `string` */
-  | Uint8Array
-  | Int8Array
-  | ArrayBuffer
-  /**
-   * Gets converted to a string using `theArray.join('')` (i.e. concatenated
-   * as-is, with no space between each entry). Though JS supports multi-line
-   * string literals with the backtick syntax, it is frequently convenient to
-   * write out longer SQL constructs as arrays.
-   */
-  | readonly string[];
-
+export type FlexibleString = string |
+/** WASM C-string pointer, passed on to WASM as-is. */
+WasmPointer |
+/** Assumed to hold UTF-8 encoded text, converted to `string` */
+Uint8Array | Int8Array | ArrayBuffer |
+/**
+ * Gets converted to a string using `theArray.join('')` (i.e. concatenated
+ * as-is, with no space between each entry). Though JS supports multi-line
+ * string literals with the backtick syntax, it is frequently convenient to
+ * write out longer SQL constructs as arrays.
+ */
+readonly string[];
 /**
  * Prepared statements are created solely through the {@link Database#prepare}
  * method. Calling the constructor directly will trigger an exception.
@@ -69,10 +63,9 @@ declare type FlexibleString =
  *   stmt.finalize();
  *   }
  */
-declare class PreparedStatement {
+export declare class PreparedStatement {
   /** Binds one more values to its bindable parameters. */
   bind(binding: BindingSpec): this;
-
   /**
    * Binds a value to a bindable parameter.
    *
@@ -80,24 +73,16 @@ declare class PreparedStatement {
    *   1-based!
    */
   bind(idx: number, binding: SqlValue): this;
-
   /**
    * Special case of {@link PreparedStatement#bind} which binds the given value
    * using the `BLOB` binding mechanism instead of the default selected one for
    * the value. Index can be the index number (**ACHTUNG**: 1-based!) or the
    * string corresponding to a named parameter.
    */
-  bindAsBlob(
-    value: string | null | undefined | Uint8Array | Int8Array | ArrayBuffer,
-  ): this;
-  bindAsBlob(
-    idx: number | string,
-    value: string | null | undefined | Uint8Array | Int8Array | ArrayBuffer,
-  ): this;
-
+  bindAsBlob(value: string | null | undefined | Uint8Array | Int8Array | ArrayBuffer): this;
+  bindAsBlob(idx: number | string, value: string | null | undefined | Uint8Array | Int8Array | ArrayBuffer): this;
   /** Clears all bound values. */
   clearBindings(): this;
-
   /**
    * "Finalizes" this statement. This is a no-op if the statement has already
    * been finalized. Returns the value of the underlying `sqlite3_finalize()`
@@ -108,7 +93,6 @@ declare class PreparedStatement {
    * in active use via a {@link Database#exec} callback.
    */
   finalize(): number | undefined;
-
   /**
    * Fetches the value from the given 0-based column index of the current data
    * row, throwing if index is out of range.
@@ -116,8 +100,8 @@ declare class PreparedStatement {
    * Requires that {@link PreparedStatement#step} has just returned a truthy
    * value, else an exception is thrown.
    *
-   * By default it will determine the data type of the result automatically. If
-   * passed a second arugment, it must be one of the enumeration values for
+   * By default, it will determine the data type of the result automatically. If
+   * passed a second argument, it must be one of the enumeration values for
    * sqlite3 types, which are defined as members of the sqlite3 namespace:
    * `SQLITE_INTEGER`, `SQLITE_FLOAT`, `SQLITE_TEXT`, `SQLITE_BLOB`. Any other
    * value, except for `undefined`, will trigger an exception. Passing
@@ -132,11 +116,11 @@ declare class PreparedStatement {
    *     const values = stmt.get([]);
    *
    * This will return an array which contains one entry for each result column
-   * of the statement's current row..
+   * of the statement's current row.
    *
-   * If the index is a plain object, this function behaves even differentlier:
-   * it assigns the properties of the object to the values of their
-   * corresponding result columns:
+   * If the index is a plain object, this function behaves even differential: it
+   * assigns the properties of the object to the values of their corresponding
+   * result columns:
    *
    *     const values = stmt.get({});
    *
@@ -158,23 +142,18 @@ declare class PreparedStatement {
    */
   get(ndx: number, asType?: SQLiteDataType): SqlValue;
   get(ndx: SqlValue[]): SqlValue[];
-  get(ndx: { [columnName: string]: SqlValue }): {
-    [columnName: string]: SqlValue;
-  };
-
+  get(ndx: Record<string, SqlValue>): Record<string, SqlValue>;
   /**
    * Equivalent to {@link PreparedStatement#get(ndx)} but coerces the result to a
    * `Uint8Array`.
    */
   getBlob(ndx: number): Uint8Array | null;
-
   /**
    * Returns the result column name of the given index, or throws if index is
    * out of bounds or this statement has been finalized. This may be used
    * without having run {@link PreparedStatement#step()} first.
    */
   getColumnName(ndx: number): string;
-
   /**
    * If this statement potentially has result columns, this function returns an
    * array of all such names. If passed an array, it is used as the target and
@@ -183,26 +162,22 @@ declare class PreparedStatement {
    * statement is prepared, holds the number of columns.
    */
   getColumnNames(target?: string[]): string[];
-
   /**
    * Equivalent to {@link PreparedStatement#get(ndx)} but coerces the result to a
    * number.
    */
   getFloat(ndx: number): number | null;
-
   /**
    * Equivalent to {@link PreparedStatement#get(ndx)} but coerces the result to
    * an integral number.
    */
   getInt(ndx: number): number | null;
-
   /**
    * Equivalent to {@link PreparedStatement#getString(ndx)} but returns passes
-   * the result of passing the fetched string string through `JSON.parse()`. If
-   * JSON parsing throws, that exception is propagated.
+   * the result of passing the fetched string through `JSON.parse()`. If JSON
+   * parsing throws, that exception is propagated.
    */
   getJSON(ndx: number): any;
-
   /**
    * If this statement has named bindable parameters and the given name matches
    * one, its 1-based bind index is returned. If no match is found, 0 is
@@ -210,13 +185,11 @@ declare class PreparedStatement {
    * returned.
    */
   getParamIndex(name: string): number | undefined;
-
   /**
    * Equivalent to {@link PreparedStatement#get(ndx)} but coerces the result to a
    * string.
    */
   getString(ndx: number): string | null;
-
   /**
    * Resets this statement so that it may be `step()`ed again from the
    * beginning. Returns `this`. Throws if this statement has been finalized, if
@@ -234,14 +207,12 @@ declare class PreparedStatement {
    * silent failure scenarios
    */
   reset(alsoClearBinds?: boolean): this;
-
   /**
    * Steps the statement one time. If the result indicates that a row of data is
    * available, a truthy value is returned. If no row of data is available, a
    * falsy value is returned. Throws on error.
    */
   step(): boolean;
-
   /**
    * Functions like {@link PreparedStatement#step} except that it calls
    * {@link PreparedStatement#finalize} on this statement immediately after
@@ -255,7 +226,6 @@ declare class PreparedStatement {
    *     ADb.prepare('INSERT INTO foo(a) VALUES(?)').bind(123).stepFinalize();
    */
   stepFinalize(): boolean;
-
   /**
    * Functions exactly like {@link PreparedStatement#step} except that...
    *
@@ -270,7 +240,6 @@ declare class PreparedStatement {
    * {@link PreparedStatement#get} after the step.
    */
   stepReset(): this;
-
   /**
    * The number of result columns this statement has, or 0 for statements which
    * do not have result columns.
@@ -282,10 +251,8 @@ declare class PreparedStatement {
    * if changes are made to the database schema while this statement is active.
    */
   columnCount: number;
-
   /** The number of bindable parameters this statement has. */
   parameterCount: number;
-
   /**
    * WASM pointer rwhich resolves to the `sqlite3_stmt*` which this object
    * wraps. This value may be passed to any WASM-bound functions which accept an
@@ -294,35 +261,31 @@ declare class PreparedStatement {
    */
   pointer: WasmPointer | undefined;
 }
-
-declare type ExecOptions = {
+export type ExecOptions = {
   /**
    * The SQL to run (unless it's provided as the first argument). The SQL may
    * contain any number of statements.
    */
   sql?: FlexibleString;
-
   /**
    * A single value valid as an argument for {@link PreparedStatement#bind}. This
    * is only applied to the first non-empty statement in the SQL which has any
    * bindable parameters. (Empty statements are skipped entirely.)
    */
   bind?: BindingSpec;
-
   /**
    * If set, the SQL of each executed statement is appended to this array before
    * the statement is executed (but after it is prepared - we don't have the
    * string until after that). Empty SQL statements are elided.
    */
   saveSql?: string[];
-
   /**
    * A string specifying what this function should return: The default value is
-   * (usually) `"this"`. The exceptions is if the caller passes neither of
+   * (usually) `"this"`. The exception occurs if the caller passes neither of
    * `callback` nor `returnValue` but does pass an explicit `rowMode` then the
    * default returnValue is `"resultRows"`, described below. The options are:
    *
-   * - `"this"` menas that the DB object itself should be returned.
+   * - `"this"` means that the DB object itself should be returned.
    * - `"resultRows"` means to return the value of the `resultRows` option. If
    *   `resultRows` is not set, this function behaves as if it were set to an
    *   empty array.
@@ -330,7 +293,6 @@ declare type ExecOptions = {
    *   is not set, this function behaves as if it were set to an empty array.
    */
   returnValue?: 'this' | 'resultRows' | 'saveSql';
-
   /**
    * A function which gets called for each row of the result set (see `rowMode`,
    * below), but only if that statement has any result rows. The callback's
@@ -356,15 +318,7 @@ declare type ExecOptions = {
    * but clients must also refrain from using any lower-level (C-style) APIs
    * which might modify the statement.
    */
-  callback?: (
-    row:
-      | SqlValue[]
-      | { [columnName: string]: SqlValue }
-      | PreparedStatement
-      | SqlValue,
-    stmt: PreparedStatement,
-  ) => void | false;
-
+  callback?: ((row: SqlValue[] | Record<string, SqlValue> | PreparedStatement | SqlValue, stmt: PreparedStatement) => void | false) | string;
   /**
    * If this is an array, the column names of the result set are stored in this
    * array before the `callback` (if any) is triggered (regardless of whether
@@ -378,7 +332,6 @@ declare type ExecOptions = {
    * **Achtung:** an SQL result may have multiple columns with identical names.
    */
   columnNames?: string[];
-
   /**
    * If this is an array, it functions similarly to the `callback` option: each
    * row of the result set (if any), with the exception that the `rowMode`
@@ -391,74 +344,64 @@ declare type ExecOptions = {
    * count, regardless of whether the statement actually produces any result
    * rows.
    */
-  resultRows?: (SqlValue[] | { [columnName: string]: SqlValue } | SqlValue)[];
-
+  resultRows?: (SqlValue[] | Record<string, SqlValue> | SqlValue)[];
   /**
    * Specifies the type of he `callback`'s first argument and the type of the
    * `resultRows` array entries.
    */
   rowMode?: 'array' | 'object' | 'stmt' | number | string;
 };
-
 /**
  * Derivate type of ExecOptions to be used as base mixin for method overloads on
  * `exec`
  */
-declare type ExecBaseOptions = Omit<
-  ExecOptions,
-  'callback' | 'resultRows' | 'rowMode' | 'returnValue' | 'sql'
->;
-
-declare type ExecReturnThisOptions = {
+export type ExecBaseOptions = {
+  bind?: BindingSpec;
+  saveSql?: string[];
+  columnNames?: string[];
+};
+export type ExecReturnThisOptions = {
   returnValue?: 'this';
 };
-
-declare type ExecReturnResultRowsOptions = {
+export type ExecReturnResultRowsOptions = {
   returnValue: 'resultRows';
 };
-
-declare type ExecReturnSaveSqlOptions = {
+export type ExecReturnSaveSqlOptions = {
   returnValue: 'saveSql';
 };
-
-declare type ExecRowModeArrayOptions = {
+export type ExecRowModeArrayOptions = {
   callback?: (row: SqlValue[]) => void | false;
   resultRows?: SqlValue[][];
   rowMode?: 'array';
 };
-
-declare type ExecRowModeObjectOptions = {
-  callback?: (row: { [columnName: string]: SqlValue }) => void | false;
-  resultRows?: { [columnName: string]: SqlValue }[];
+export type ExecRowModeObjectOptions = {
+  callback?: (row: Record<string, SqlValue>) => void | false;
+  resultRows?: Record<string, SqlValue>[];
   rowMode: 'object';
 };
-
-declare type ExecRowModeStmtOptions = {
+export type ExecRowModeStmtOptions = {
   callback?: (row: PreparedStatement) => void | false;
   resultRows?: undefined;
   rowMode: 'stmt';
 };
-
-declare type ExecRowModeScalarOptions = {
+export type ExecRowModeScalarOptions = {
   callback?: (row: SqlValue) => void | false;
   resultRows?: SqlValue[];
-
   /**
    * For number values: indicates a zero-based column in the result row. Only
-   * that one single value will be passed on. If string. For string values: A
-   * string with a minimum length of 2 and leading character of `$` will fetch
-   * the row as an object, extract that one field, and pass that field's value
-   * to the `callback`. Note that these keys are case-sensitive so must match
-   * the case used in the SQL. e.g. `"select a A from t"` with a `rowMode` of
-   * `'$A'` would work but `'$a'` would not. A reference to a column not in the
-   * result set will trigger an exception on the first row (as the check is not
+   * that one single value will be passed on. For string values: A string with a
+   * minimum length of 2 and leading character of `$` will fetch the row as an
+   * object, extract that one field, and pass that field's value to the
+   * `callback`. Note that these keys are case-sensitive so must match the case
+   * used in the SQL. e.g. `"select a A from t"` with a `rowMode` of `'$A'`
+   * would work but `'$a'` would not. A reference to a column not in the result
+   * set will trigger an exception on the first row (as the check is not
    * performed until rows are fetched).
    */
   rowMode: number | Exclude<string, 'stmt' | 'array' | 'object'>;
 };
-
 /** Options for creating a user-defined function that can be called from SQL. */
-declare type FunctionOptions = {
+export type FunctionOptions = {
   /**
    * Number of arguments which SQL calls to this function expect or require. The
    * default value is `X.length` MINUS 1, where X is either `xFunc` or `xStep`,
@@ -473,7 +416,6 @@ declare type FunctionOptions = {
    * argument is required in the interface.
    */
   arity?: number;
-
   /**
    * Corresponds to the `SQLITE_DETERMINISTIC` flag. Setting it means that the
    * new function always gives the same output when the input parameters are the
@@ -484,7 +426,6 @@ declare type FunctionOptions = {
    * factoring them out of inner loops.
    */
   deterministic?: boolean;
-
   /**
    * Corresponds to the `SQLITE_DIRECTONLY` flag.
    *
@@ -494,20 +435,19 @@ declare type FunctionOptions = {
    * indexes, or generated columns.
    *
    * The flag is recommended for any application-defined SQL function that has
-   * side-effects or that could potentially leak sensitive information. This
+   * side effects or that could potentially leak sensitive information. This
    * will prevent attacks in which an application is tricked into using a
-   * database file that has had its schema surreptiously modified to invoke the
-   * application-defined function in ways that are harmful.
+   * database file that has had its schema surreptitiously modified to invoke
+   * the application-defined function in ways that are harmful.
    *
    * Some people say it is good practice to set the flag on all
-   * application-defined SQL functions, regardless of whether or not they are
-   * security sensitive, as doing so prevents those functions from being used
-   * inside of the database schema, and thus ensures that the database can be
-   * inspected and modified using generic tools (such as the CLI) that do not
-   * have access to the application-defined functions.
+   * application-defined SQL functions, regardless of whether they are security
+   * sensitive, as doing so prevents those functions from being used inside the
+   * database schema, and thus ensures that the database can be inspected and
+   * modified using generic tools (such as the CLI) that do not have access to
+   * the application-defined functions.
    */
   directOnly?: boolean;
-
   /**
    * Corresponds to the `SQLITE_INNOCUOUS` flag.
    *
@@ -528,13 +468,11 @@ declare type FunctionOptions = {
    * built-in functions are innocuous. Developers are advised to avoid using the
    * `SQLITE_INNOCUOUS` flag for application-defined functions unless the
    * function has been carefully audited and found to be free of potentially
-   * security-adverse side-effects and information-leaks.
+   * security-adverse side effects and information-leaks.
    */
   innocuous?: boolean;
-
   /** Name of the user-defined function. */
   name?: string;
-
   /**
    * The options object may optionally have an xDestroy function-type property,
    * as per `sqlite3_create_function_v2()`. Its argument will be the
@@ -546,13 +484,11 @@ declare type FunctionOptions = {
    */
   xDestroy?: (pAppPtr: WasmPointer) => void;
 };
-
-declare type ScalarFunctionOptions = FunctionOptions & {
+export type ScalarFunctionOptions = FunctionOptions & {
   /** Scalar function to be defined. */
   xFunc: (ctxPtr: number, ...args: SqlValue[]) => SqlValue;
 };
-
-declare type AggregateFunctionOptions = FunctionOptions & {
+export type AggregateFunctionOptions = FunctionOptions & {
   /**
    * 'Step' callback for an aggregate function.
    *
@@ -561,7 +497,6 @@ declare type AggregateFunctionOptions = FunctionOptions & {
    * implementation of {@link AggregateFunctionOptions#xStep}.
    */
   xStep: (ctxPtr: number, ...rowValues: SqlValue[]) => void;
-
   /**
    * 'Final' callback for an aggregate function.
    *
@@ -571,8 +506,7 @@ declare type AggregateFunctionOptions = FunctionOptions & {
    */
   xFinal: (ctxPtr: number) => SqlValue;
 };
-
-declare type WindowFunctionOptions = FunctionOptions & {
+export type WindowFunctionOptions = FunctionOptions & {
   /**
    * 'Step' callback for a window function.
    *
@@ -581,7 +515,6 @@ declare type WindowFunctionOptions = FunctionOptions & {
    * implementation of {@link WindowFunctionOptions#xStep}.
    */
   xStep: (ctxPtr: number, ...args: any[]) => void;
-
   /**
    * 'Final' callback for a window function.
    *
@@ -590,7 +523,6 @@ declare type WindowFunctionOptions = FunctionOptions & {
    * earlier calls to {@link WindowFunctionOptions#xStep}.
    */
   xFinal: (ctxPtr: number) => SqlValue;
-
   /**
    * 'Value' callback for a window function. This method is invoked to return
    * the current value of the aggregate. Unlike
@@ -598,7 +530,6 @@ declare type WindowFunctionOptions = FunctionOptions & {
    * any context.
    */
   xValue: (ctxPtr: number) => SqlValue;
-
   /**
    * 'Inverse' callback for a window function.
    *
@@ -609,13 +540,12 @@ declare type WindowFunctionOptions = FunctionOptions & {
    */
   xInverse: (ctxPtr: number, ...args: any[]) => void;
 };
-
 /**
  * An instance of an implementing class corresponds to one `sqlite3*` created
  * using `sqlite3_open` or equivalent.
  *
  * @example
- *   ```typescript
+ *   ```ts
  *   const db = new sqlite3.DB();
  *   try {
  *     db.exec([
@@ -627,7 +557,7 @@ declare type WindowFunctionOptions = FunctionOptions & {
  *   }
  *   ```;
  */
-declare class Database {
+export declare class Database {
   /**
    * Creates a connection to the given file, optionally creating it if needed.
    *
@@ -637,8 +567,8 @@ declare class Database {
    *   default sqlite3 VFS. Note that the special sqlite3 db names `":memory:"`
    *   and `""` (temporary db) have their normal special meanings here.
    * @param options.flags The flags to use when opening the file. It must be a
-   *   string containing a sequence of letters (in any order, but case
-   *   sensitive) specifying the mode:
+   *   string containing a sequence of letters (in any order, but
+   *   case-sensitive) specifying the mode:
    *
    *   - `c`: create if it does not exist, else fail if it does not exist. Implies
    *       the `w` flag.
@@ -652,8 +582,11 @@ declare class Database {
    *       `c`. These modes are ignored for the special `":memory:"` and `""`
    *       names and may be ignored by specific VFSes.
    */
-  constructor(options?: { filename?: string; flags?: string; vfs?: string }); // ✓
-
+  constructor(options?: {
+    filename?: string;
+    flags?: string;
+    vfs?: string;
+  }); // ✓
   /**
    * Creates a connection to the given file, optionally creating it if needed.
    *
@@ -662,7 +595,7 @@ declare class Database {
    *   VFS. Note that the special sqlite3 db names `":memory:"` and `""`
    *   (temporary db) have their normal special meanings here.
    * @param flags The flags to use when opening the file. It must be a string
-   *   containing a sequence of letters (in any order, but case sensitive)
+   *   containing a sequence of letters (in any order, but case-sensitive)
    *   specifying the mode:
    *
    *   - `c`: create if it does not exist, else fail if it does not exist. Implies
@@ -678,28 +611,24 @@ declare class Database {
    *       names and may be ignored by specific VFSes.
    */
   constructor(filename?: string, flags?: string, vfs?: string); // ✓
-
   /** Filename which was passed to the constructor. */
   filename: string; // ✓
-
   /**
    * Resolves to the `sqlite3*` which this object wraps. This value may be
    * passed to any WASM-bound functions which accept an `sqlite3*` argument. It
    * resolves to `undefined` after this object is `close()`d.
    */
   pointer?: WasmPointer; // ✓
-
   /** Callbacks called immediately before/after database is closed. */
   onclose?: {
     before?: (db: Database) => void;
     after?: (db: Database) => void;
   }; // ✓
-
   /**
    * Executes SQL statements and optionally collects query results and/or calls
    * a callback for each result row.
    *
-   * _LOTS_ of overloads on this one one, depending on:
+   * _LOTS_ of overloads on this one, depending on:
    *
    * - `sql` as parameter or as option
    * - `returnValue`:
@@ -724,182 +653,81 @@ declare class Database {
    * is due to a limitation in TypeScript's type system which does not allow
    * restrictions on `string` types.
    */
-  exec(
-    sql: FlexibleString,
-    opts?: (ExecBaseOptions &
-      ExecRowModeArrayOptions &
-      ExecReturnThisOptions) & {
-      sql?: undefined;
-    },
-  ): this;
-  exec(
-    opts: (ExecBaseOptions &
-      ExecRowModeArrayOptions &
-      ExecReturnThisOptions) & { sql: FlexibleString },
-  ): this;
-  exec(
-    sql: FlexibleString,
-    opts: ExecBaseOptions &
-      ExecRowModeObjectOptions &
-      ExecReturnThisOptions & {
-        sql?: undefined;
-      },
-  ): this;
-  exec(
-    opts: ExecBaseOptions &
-      ExecRowModeObjectOptions &
-      ExecReturnThisOptions & {
-        sql: FlexibleString;
-      },
-  ): this;
-  exec(
-    sql: FlexibleString,
-    opts: ExecBaseOptions &
-      ExecRowModeStmtOptions &
-      ExecReturnThisOptions & {
-        sql?: undefined;
-      },
-  ): this;
-  exec(
-    opts: ExecBaseOptions &
-      ExecRowModeStmtOptions &
-      ExecReturnThisOptions & {
-        sql: FlexibleString;
-      },
-  ): this;
-  exec(
-    sql: FlexibleString,
-    opts: ExecBaseOptions &
-      ExecRowModeScalarOptions &
-      ExecReturnThisOptions & {
-        sql?: undefined;
-      },
-  ): this;
-  exec(
-    opts: ExecBaseOptions &
-      ExecRowModeScalarOptions &
-      ExecReturnThisOptions & {
-        sql: FlexibleString;
-      },
-  ): this;
-  exec(
-    sql: FlexibleString,
-    opts: ExecBaseOptions &
-      ExecRowModeArrayOptions &
-      ExecReturnResultRowsOptions & {
-        sql?: undefined;
-      },
-  ): SqlValue[][];
-  exec(
-    opts: ExecBaseOptions &
-      ExecRowModeArrayOptions &
-      ExecReturnResultRowsOptions & {
-        sql: FlexibleString;
-      },
-  ): SqlValue[][];
-  exec(
-    sql: FlexibleString,
-    opts: ExecBaseOptions &
-      ExecRowModeObjectOptions &
-      ExecReturnResultRowsOptions & {
-        sql?: undefined;
-      },
-  ): { [columnName: string]: SqlValue }[];
-  exec(
-    opts: ExecBaseOptions &
-      ExecRowModeObjectOptions &
-      ExecReturnResultRowsOptions & {
-        sql: FlexibleString;
-      },
-  ): { [columnName: string]: SqlValue }[];
-  exec(
-    sql: FlexibleString,
-    opts: ExecBaseOptions &
-      ExecRowModeScalarOptions &
-      ExecReturnResultRowsOptions & {
-        sql?: undefined;
-      },
-  ): SqlValue[];
-  exec(
-    opts: ExecBaseOptions &
-      ExecRowModeScalarOptions &
-      ExecReturnResultRowsOptions & {
-        sql: FlexibleString;
-      },
-  ): SqlValue[];
-  exec(
-    sql: FlexibleString,
-    opts: ExecBaseOptions &
-      ExecRowModeArrayOptions &
-      ExecReturnSaveSqlOptions & {
-        sql?: undefined;
-      },
-  ): string[];
-  exec(
-    opts: ExecBaseOptions &
-      ExecRowModeArrayOptions &
-      ExecReturnSaveSqlOptions & {
-        sql: FlexibleString;
-      },
-  ): string[];
-  exec(
-    sql: FlexibleString,
-    opts: ExecBaseOptions &
-      ExecRowModeObjectOptions &
-      ExecReturnSaveSqlOptions & {
-        sql?: undefined;
-      },
-  ): string[];
-  exec(
-    opts: ExecBaseOptions &
-      ExecRowModeObjectOptions &
-      ExecReturnSaveSqlOptions & {
-        sql: FlexibleString;
-      },
-  ): string[];
-  exec(
-    sql: FlexibleString,
-    opts: ExecBaseOptions &
-      ExecRowModeStmtOptions &
-      ExecReturnSaveSqlOptions & {
-        sql?: undefined;
-      },
-  ): string[];
-  exec(
-    opts: ExecBaseOptions &
-      ExecRowModeStmtOptions &
-      ExecReturnSaveSqlOptions & {
-        sql: FlexibleString;
-      },
-  ): string[];
-  exec(
-    sql: FlexibleString,
-    opts: ExecBaseOptions &
-      ExecRowModeScalarOptions &
-      ExecReturnSaveSqlOptions & {
-        sql?: undefined;
-      },
-  ): string[];
-  exec(
-    opts: ExecBaseOptions &
-      ExecRowModeScalarOptions &
-      ExecReturnSaveSqlOptions & {
-        sql: FlexibleString;
-      },
-  ): string[];
-
+  exec(sql: FlexibleString, opts?: (ExecBaseOptions & ExecRowModeArrayOptions & ExecReturnThisOptions) & {
+    sql?: undefined;
+  }): this;
+  exec(opts: (ExecBaseOptions & ExecRowModeArrayOptions & ExecReturnThisOptions) & {
+    sql: FlexibleString;
+  }): this;
+  exec(sql: FlexibleString, opts: ExecBaseOptions & ExecRowModeObjectOptions & ExecReturnThisOptions & {
+    sql?: undefined;
+  }): this;
+  exec(opts: ExecBaseOptions & ExecRowModeObjectOptions & ExecReturnThisOptions & {
+    sql: FlexibleString;
+  }): this;
+  exec(sql: FlexibleString, opts: ExecBaseOptions & ExecRowModeStmtOptions & ExecReturnThisOptions & {
+    sql?: undefined;
+  }): this;
+  exec(opts: ExecBaseOptions & ExecRowModeStmtOptions & ExecReturnThisOptions & {
+    sql: FlexibleString;
+  }): this;
+  exec(sql: FlexibleString, opts: ExecBaseOptions & ExecRowModeScalarOptions & ExecReturnThisOptions & {
+    sql?: undefined;
+  }): this;
+  exec(opts: ExecBaseOptions & ExecRowModeScalarOptions & ExecReturnThisOptions & {
+    sql: FlexibleString;
+  }): this;
+  exec(sql: FlexibleString, opts: ExecBaseOptions & ExecRowModeArrayOptions & ExecReturnResultRowsOptions & {
+    sql?: undefined;
+  }): SqlValue[][];
+  exec(opts: ExecBaseOptions & ExecRowModeArrayOptions & ExecReturnResultRowsOptions & {
+    sql: FlexibleString;
+  }): SqlValue[][];
+  exec(sql: FlexibleString, opts: ExecBaseOptions & ExecRowModeObjectOptions & ExecReturnResultRowsOptions & {
+    sql?: undefined;
+  }): Record<string, SqlValue>[];
+  exec(opts: ExecBaseOptions & ExecRowModeObjectOptions & ExecReturnResultRowsOptions & {
+    sql: FlexibleString;
+  }): Record<string, SqlValue>[];
+  exec(sql: FlexibleString, opts: ExecBaseOptions & ExecRowModeScalarOptions & ExecReturnResultRowsOptions & {
+    sql?: undefined;
+  }): SqlValue[];
+  exec(opts: ExecBaseOptions & ExecRowModeScalarOptions & ExecReturnResultRowsOptions & {
+    sql: FlexibleString;
+  }): SqlValue[];
+  exec(sql: FlexibleString, opts: ExecBaseOptions & ExecRowModeArrayOptions & ExecReturnSaveSqlOptions & {
+    sql?: undefined;
+  }): string[];
+  exec(opts: ExecBaseOptions & ExecRowModeArrayOptions & ExecReturnSaveSqlOptions & {
+    sql: FlexibleString;
+  }): string[];
+  exec(sql: FlexibleString, opts: ExecBaseOptions & ExecRowModeObjectOptions & ExecReturnSaveSqlOptions & {
+    sql?: undefined;
+  }): string[];
+  exec(opts: ExecBaseOptions & ExecRowModeObjectOptions & ExecReturnSaveSqlOptions & {
+    sql: FlexibleString;
+  }): string[];
+  exec(sql: FlexibleString, opts: ExecBaseOptions & ExecRowModeStmtOptions & ExecReturnSaveSqlOptions & {
+    sql?: undefined;
+  }): string[];
+  exec(opts: ExecBaseOptions & ExecRowModeStmtOptions & ExecReturnSaveSqlOptions & {
+    sql: FlexibleString;
+  }): string[];
+  exec(sql: FlexibleString, opts: ExecBaseOptions & ExecRowModeScalarOptions & ExecReturnSaveSqlOptions & {
+    sql?: undefined;
+  }): string[];
+  exec(opts: ExecBaseOptions & ExecRowModeScalarOptions & ExecReturnSaveSqlOptions & {
+    sql: FlexibleString;
+  }): string[];
   /**
    * Compiles the given SQL and returns a {@link PreparedStatement}. This is the
    * only way to create new {@link PreparedStatement} objects. Throws on error.
    */
   prepare(sql: FlexibleString): PreparedStatement;
-
   /** Returns true if the database handle is open, else false. */
   isOpen(): boolean;
-
   /** Throws if the given DB has been closed. */
   affirmOpen(): this;
-
   /**
    * Finalizes all still-open statements which were opened by this object and
    * closes this database connection. This is a no-op if the db has already been
@@ -921,7 +749,6 @@ declare class Database {
    * to implement close-time cleanup or maintenance of a db.
    */
   close(): void; // ✓
-
   /**
    * Returns the number of changes, as per `sqlite3_changes()` (if the first
    * argument is `false`) or `sqlite3_total_changes()` (if it's `true`). If the
@@ -929,26 +756,23 @@ declare class Database {
    * `sqlite3_total_changes64()`, which will trigger an exception if this build
    * does not have `BigInt` support enabled.
    */
-  changes(total?: boolean, sixtyFour?: boolean): number;
-
+  changes(total: boolean, sixtyFour: true): bigint;
+  changes(total?: boolean, sixtyFour?: false): Sqlite3Result;
   /**
    * Returns the filename associated with the given database name. Defaults to
    * `main`. Throws if this database is `close()`d.
    */
   dbFilename(dbName?: string): string | null;
-
   /**
    * Returns the name of the given 0-based db number. Defaults to `0`. Throws if
    * this database is `close()`d.
    */
   dbName(dbIndex?: number): string | null;
-
   /**
    * Returns the name of the sqlite_vfs for the given database. Defaults to
    * `main`. Throws if this database is `close()`d.
    */
   dbVfsName(dbName?: string | number): string | undefined;
-
   /**
    * Creates a new scalar, aggregate, or window function which is accessible via
    * SQL code.
@@ -969,30 +793,12 @@ declare class Database {
    * Creating an aggregate or window function requires the options-object form,
    * as described below.
    */
-  createFunction(
-    name: string,
-    func: (ctxPtr: number, ...values: SqlValue[]) => SqlValue,
-  ): this;
-  createFunction(
-    name: string,
-    func: (ctxPtr: number, ...values: SqlValue[]) => void,
-    options: FunctionOptions,
-  ): this;
-  createFunction(
-    name: string,
-    options:
-      | ScalarFunctionOptions
-      | AggregateFunctionOptions
-      | WindowFunctionOptions,
-  ): this;
-  createFunction(
-    options: (
-      | ScalarFunctionOptions
-      | AggregateFunctionOptions
-      | WindowFunctionOptions
-    ) & { name: string },
-  ): this;
-
+  createFunction(name: string, func: (ctxPtr: number, ...values: SqlValue[]) => SqlValue): this;
+  createFunction(name: string, func: (ctxPtr: number, ...values: SqlValue[]) => void, options: FunctionOptions): this;
+  createFunction(name: string, options: ScalarFunctionOptions | AggregateFunctionOptions | WindowFunctionOptions): this;
+  createFunction(options: (ScalarFunctionOptions | AggregateFunctionOptions | WindowFunctionOptions) & {
+    name: string;
+  }): this;
   /**
    * Prepares the given SQL, `step()`s it one time, and returns an array
    * containing the values of the first result row. If it has no results,
@@ -1002,7 +808,6 @@ declare class Database {
    * function. Throws on error.
    */
   selectArray(sql: FlexibleString, bind?: BindingSpec): SqlValue[] | undefined;
-
   /**
    * Runs the given SQL and returns an array of all results, with each row
    * represented as an array, as per the `'array'` `rowMode` option to
@@ -1011,7 +816,6 @@ declare class Database {
    * `exec()`. Throws on error.
    */
   selectArrays(sql: FlexibleString, bind?: BindingSpec): SqlValue[][];
-
   /**
    * Prepares the given SQL, `step()`s it one time, and returns an object
    * containing the key/value pairs of the first result row. If it has no
@@ -1021,21 +825,13 @@ declare class Database {
    * treated like an argument to Stmt.bind(), so may be any type supported by
    * that function. Throws on error.
    */
-  selectObject(
-    sql: FlexibleString,
-    bind?: BindingSpec,
-  ): { [columnName: string]: SqlValue } | undefined;
-
+  selectObject(sql: FlexibleString, bind?: BindingSpec): Record<string, SqlValue> | undefined;
   /**
    * Works identically to {@link Database#selectArrays} except that each value in
    * the returned array is an object, as per the `"object"` rowMode option to
    * {@link Database#exec}.
    */
-  selectObjects(
-    sql: FlexibleString,
-    bind?: BindingSpec,
-  ): { [columnName: string]: SqlValue }[];
-
+  selectObjects(sql: FlexibleString, bind?: BindingSpec): Record<string, SqlValue>[];
   /**
    * Prepares the given SQL, `step()`s the resulting {@link PreparedStatement}
    * one time, and returns the value of the first result column. If it has no
@@ -1047,28 +843,11 @@ declare class Database {
    * `undefined` value is the same as not passing a value. Throws on error (e.g.
    * malformed SQL).
    */
-  selectValue(
-    sql: FlexibleString,
-    bind: BindingSpec | undefined,
-    asType: CAPI['SQLITE_INTEGER'] | CAPI['SQLITE_FLOAT'],
-  ): number | undefined;
-  selectValue(
-    sql: FlexibleString,
-    bind: BindingSpec | undefined,
-    asType: CAPI['SQLITE_TEXT'],
-  ): string | undefined;
-  selectValue(
-    sql: FlexibleString,
-    bind: BindingSpec | undefined,
-    asType: CAPI['SQLITE_BLOB'],
-  ): Uint8Array | undefined;
-  selectValue(
-    sql: FlexibleString,
-    bind: BindingSpec | undefined,
-    asType: CAPI['SQLITE_NULL'],
-  ): null | undefined;
+  selectValue(sql: FlexibleString, bind: BindingSpec | undefined, asType: CAPI['SQLITE_INTEGER'] | CAPI['SQLITE_FLOAT']): number | undefined;
+  selectValue(sql: FlexibleString, bind: BindingSpec | undefined, asType: CAPI['SQLITE_TEXT']): string | undefined;
+  selectValue(sql: FlexibleString, bind: BindingSpec | undefined, asType: CAPI['SQLITE_BLOB']): Uint8Array | undefined;
+  selectValue(sql: FlexibleString, bind: BindingSpec | undefined, asType: CAPI['SQLITE_NULL']): null | undefined;
   selectValue(sql: FlexibleString, bind?: BindingSpec): SqlValue | undefined;
-
   /**
    * Runs the given query and returns an array of the values from the first
    * result column of each row of the result set. The 2nd argument is an
@@ -1078,20 +857,14 @@ declare class Database {
    * argument is desired but no bind data are needed, pass `undefined` for the
    * 2nd argument. If there are no result rows, an empty array is returned.
    */
-  selectValues(
-    sql: FlexibleString,
-    bind?: BindingSpec,
-    asType?: SQLiteDataType,
-  ): SqlValue[];
-
+  selectValues(sql: FlexibleString, bind?: BindingSpec, asType?: SQLiteDataType): SqlValue[];
   /**
    * Returns the number of currently-opened {@link PreparedStatement} handles for
    * this db handle, or 0 if this object is `close()`d. Note that only handles
    * prepared via {@link Database#prepare} are counted, and not handles prepared
    * using `capi.sqlite3_prepare_v3()` (or equivalent).
    */
-  openStatementCount(): number;
-
+  openStatementCount(): Sqlite3Result;
   /**
    * Starts a transaction, calls the given `callback`, and then either rolls
    * back or commits the transaction, depending on whether the `callback`
@@ -1111,11 +884,7 @@ declare class Database {
    * with a description of the problem.
    */
   transaction<T>(callback: (db: this) => T): T;
-  transaction<T>(
-    beginQualifier: 'DEFERRED' | 'IMMEDIATE' | 'EXCLUSIVE',
-    callback: (db: this) => T,
-  ): T;
-
+  transaction<T>(beginQualifier: 'DEFERRED' | 'IMMEDIATE' | 'EXCLUSIVE', callback: (db: this) => T): T;
   /**
    * This works similarly to {@link Database#transaction} but uses sqlite3's
    * `SAVEPOINT` feature. This function starts a savepoint (with an unspecified
@@ -1125,48 +894,53 @@ declare class Database {
    * returns the result of the callback.
    */
   savepoint<T>(callback: (db: this) => T): T;
-
   /**
-   * Expects to be given a `DatabaseApi` instance or an `sqlite3*` pointer (may
-   * be `null`) and an sqlite3 API result code. If the result code is not falsy,
-   * this function throws an `SQLite3Error` with an error message from
-   * `sqlite3_errmsg()`, using the given db handle, or `sqlite3_errstr()` if the
-   * db handle is falsy or is a `close()`ed DB instance. Note that if it's
-   * passed a non-error code like `SQLITE_ROW` or `SQLITE_DONE`, it will still
-   * throw but the error string might be `"Not an error."` The various non-0
-   * non-error codes need to be checked for in client code where they are
+   * Expects to be given a `DatabaseApi` instance or an `sqlite3*` pointer
+   * (which may be `null`) and a sqlite3 API result code. If the result code is
+   * not falsy, this function throws an `SQLite3Error` with an error message
+   * from `sqlite3_errmsg()`, using the given db handle, or `sqlite3_errstr()`
+   * if the db handle is falsy or is a `close()`ed DB instance. Note that if
+   * it's passed a non-error code like `SQLITE_ROW` or `SQLITE_DONE`, it will
+   * still throw but the error string might be `"Not an error."` The various
+   * non-0 non-error codes need to be checked for in client code where they are
    * expected. If it does not throw, it returns its `db` argument (`this`, if
    * called as a member function).
    */
-  static checkRc: (
-    db: Database | number | null,
-    resultCode: number,
-  ) => Database;
-
+  static checkRc: (db: Database | number | null, resultCode: number) => Database;
   /** Instance method version of {@link checkRc()}. */
   checkRc: (resultCode: number) => this;
 }
-
 /**
  * SQLite3 database backed by `localStorage` or `sessionStorage`.
  *
- * When the sqlite3 API is installed in the main thread, the this class is
- * added, which simplifies usage of the kvvfs.
+ * When the sqlite3 API is installed in the main thread, the class is added,
+ * which simplifies usage of the kvvfs.
  */
-declare class JsStorageDb extends Database {
+export declare class JsStorageDb extends Database {
   /** Create a new kvvfs-backed database in local or session storage. */
+  constructor(options?: {
+    filename?: 'local' | 'session';
+    flags?: string;
+  });
   constructor(mode: 'local' | 'session');
-
   /** Returns an _estimate_ of how many bytes of storage are used by the kvvfs. */
-  storageSize(): number;
-
+  storageSize(): Sqlite3Result;
   /**
    * Clears all kvvfs-owned state and returns the number of records it deleted
    * (one record per database page).
    */
-  clearStorage(): number;
+  clearStorage(): Sqlite3Result;
 }
-
+export type KvvfsNamespace = {
+  /** Clears all kvvfs-owned state for the given database. */
+  clear: (which?: string) => void;
+  /** Returns whether the kvvfs has storage for the given database. */
+  exists: (which: string) => boolean;
+  /** Returns an estimate of how many bytes of storage are used by kvvfs. */
+  estimateSize: (which?: string) => Sqlite3Result;
+  /** Removes the given kvvfs-backed database. */
+  unlink: (which: string) => void;
+};
 /**
  * SQLite3 database backed by the Origin Private File System API.
  *
@@ -1194,7 +968,7 @@ declare class JsStorageDb extends Database {
  * Safari versions less than version 17 are incompatible with the current OPFS
  * VFS implementation because of a bug in storage handling from sub-workers.
  * There is no workaround for that - supporting it will require a separate VFS
- * implementation and we do not, as of July 2023, have an expected time frame
+ * implementation, and we do not, as of July 2023, have an expected time frame
  * for its release. Both the `SharedAccessHandle` pool VFS and the WASMFS
  * support offers alternatives which should work with Safari versions 16.4 or
  * higher.
@@ -1214,13 +988,13 @@ declare class JsStorageDb extends Database {
  * communication between the synchronous and asynchronous parts of the
  * `sqlite3_vfs` OPFS proxy.
  *
- * The COEP header may also have a value of `credentialless`, but whether or not
- * that will work in the context of any given application depends on how it uses
+ * The COEP header may also have a value of `credentialless`, but whether that
+ * will work in the context of any given application depends on how it uses
  * other remote assets.
  *
  * How to emit those headers depends on the underlying web server.
  */
-declare class OpfsDatabase extends Database {
+export declare class OpfsDatabase extends Database {
   /**
    * Creates a connection to the given file, optionally creating it if needed.
    *
@@ -1229,11 +1003,11 @@ declare class OpfsDatabase extends Database {
    *   VFS. Note that the special sqlite3 db names `":memory:"` and `""`
    *   (temporary db) have their normal special meanings here.
    * @param flags The flags to use when opening the file. It must be a string
-   *   containing a sequence of letters (in any order, but case sensitive)
+   *   containing a sequence of letters (in any order, but case-sensitive)
    *   specifying the mode:
    *
    *   - `c`: create if it does not exist, else fail if it does not exist. Implies
-   *       the `w` flag. Will create all directorries leading up to the file.
+   *       the `w` flag. Will create all directories leading up to the file.
    *   - `w`: write. Implies `r`: a db cannot be write-only.
    *   - `r`: read-only if neither `w` nor `c` are provided, else it is ignored.
    *   - `t`: enable tracing of SQL executed on this database handle, sending it to
@@ -1245,24 +1019,17 @@ declare class OpfsDatabase extends Database {
    *       names and may be ignored by specific VFSes.
    */
   constructor(filename: string, flags?: string);
-
   /**
    * Import a database into OPFS storage. It only works with database files and
    * will throw if passed a different file type.
    */
-  static importDb(
-    filename: string,
-    data: Uint8Array | ArrayBuffer,
-  ): Promise<number>;
+  static importDb(filename: string, data: Uint8Array | ArrayBuffer | (() => Uint8Array | ArrayBuffer | undefined) | (() => Promise<Uint8Array | ArrayBuffer | undefined>)): Promise<number>;
 }
-
-declare class OpfsSAHPoolDatabase extends OpfsDatabase {
+export declare class OpfsSAHPoolDatabase extends OpfsDatabase {
   constructor(filename: string);
 }
-
-type SAHPoolUtil = {
+export type SAHPoolUtil = {
   OpfsSAHPoolDb: typeof OpfsSAHPoolDatabase;
-
   /**
    * Adds `numEntries` entries to the current pool.
    *
@@ -1273,7 +1040,6 @@ type SAHPoolUtil = {
    * as needed.
    */
   addCapacity: (numEntries: number) => Promise<number>;
-
   /**
    * Synchronously reads the contents of the given file into a `Uint8Array` and
    * returns it.
@@ -1285,22 +1051,19 @@ type SAHPoolUtil = {
    * SAHs.
    */
   exportFile: (filename: string) => Promise<Uint8Array>;
-
   /**
    * Returns the number of files currently contained in the SAH pool.
    *
    * The default capacity is only large enough for one or two databases and
    * their associated temp files.
    */
-  getCapacity: () => number;
-
+  getCapacity: () => Sqlite3Result;
   /**
    * Returns the number of files from the pool currently allocated to VFS slots.
    *
    * This is not the same as the files being "opened".
    */
-  getFileCount: () => number;
-
+  getFileCount: () => Sqlite3Result;
   /**
    * Returns an array of the names of the files currently allocated to VFS
    * slots.
@@ -1308,7 +1071,6 @@ type SAHPoolUtil = {
    * This list is the same length as `getFileCount()`.
    */
   getFileNames: () => string[];
-
   /**
    * Imports the contents of an SQLite database, provided as a byte array or
    * ArrayBuffer, under the given name, overwriting any existing content.
@@ -1339,14 +1101,7 @@ type SAHPoolUtil = {
    * On a write error, the handle is removed from the pool and made available
    * for re-use.
    */
-  importDb: (
-    name: string,
-    data:
-      | Uint8Array
-      | ArrayBuffer
-      | (() => Promise<Uint8Array | ArrayBuffer | undefined>),
-  ) => Promise<number>;
-
+  importDb: (name: string, data: Uint8Array | ArrayBuffer | (() => Uint8Array | ArrayBuffer | undefined) | (() => Promise<Uint8Array | ArrayBuffer | undefined>)) => Promise<number>;
   /**
    * Removes up to `numEntries` entries from the pool, with the caveat that it
    * can only remove currently-unused entries.
@@ -1355,7 +1110,6 @@ type SAHPoolUtil = {
    * removed.
    */
   reduceCapacity: (numEntries: number) => Promise<number>;
-
   /**
    * Unregisters the VFS and removes its directory from OPFS (which means all
    * client content is destroyed). After calling this, the VFS may no longer be
@@ -1372,7 +1126,6 @@ type SAHPoolUtil = {
    * whether the higher-level directories contain data which should be removed.
    */
   removeVfs: () => Promise<boolean>;
-
   /**
    * If the current capacity is less than `minCapacity`, the capacity is
    * increased to `minCapacity`, else this returns with no side effects.
@@ -1380,7 +1133,6 @@ type SAHPoolUtil = {
    * The resulting Promise resolves to the new capacity.
    */
   reserveMinimumCapacity: (minCapacity: number) => Promise<number>;
-
   /**
    * If a virtual file exists with the given name, disassociates it from the
    * pool and returns true, else returns false without side effects. Results are
@@ -1388,36 +1140,215 @@ type SAHPoolUtil = {
    * use absolute paths (starting with a slash).
    */
   unlink: (filename: string) => boolean;
-
   /** The SQLite VFS name under which this pool's VFS is registered. */
   vfsName: string;
-
   /**
    * Clears all client-defined state of all SAHs and makes all of them available
    * for re-use by the pool. Results are undefined if any such handles are
-   * currently in use, e.g. by an sqlite3 db.
+   * currently in use, e.g. by a sqlite3 db.
    */
   wipeFiles: () => Promise<void>;
+  /**
+   * Unregister this VFS and release file access handles, without clearing
+   * files. The database must be closed before calling this.
+   */
+  pauseVfs: () => SAHPoolUtil;
+  /** Returns `true` if this VFS pool is paused */
+  isPaused: () => boolean;
+  /**
+   * Re-register this VFS and re-acquire file access handles. Any previously
+   * open databases will have to be re-opened after calling this.
+   */
+  unpauseVfs: () => Promise<SAHPoolUtil>;
 };
-
 /** Exception class for reporting WASM-side allocation errors. */
-declare class WasmAllocError extends Error {
+export declare class WasmAllocError extends Error {
   constructor(message: string);
-  toss: any;
+  toss: (...args: unknown[]) => never;
 }
-
 /** Exception class used primarily by the oo1 API. */
-declare class SQLite3Error extends Error {
+export declare class SQLite3Error extends Error {
   constructor(message: string);
   resultCode: number;
 }
-
 /** A pointer to a location in WASM heap memory. */
-declare type WasmPointer = number;
-
-declare type NullPointer = 0 | null | undefined;
-
-declare type StructPtrMapper<T> = {
+export type WasmPointer = number;
+export type NullPointer = 0 | null | undefined;
+/** Common envelope for all Worker API #1 messages. */
+type Worker1MessageBusEnvelope = {
+  /** One of: 'open', 'close', 'exec', 'export', 'config-get' */
+  type: string;
+  /**
+   * Optional arbitrary value. The worker will copy it as-is into response
+   * messages to assist in client-side dispatching.
+   */
+  messageId?: unknown;
+  /**
+   * A db identifier string (returned by 'open') which tells the operation which
+   * database instance to work on. If not provided, the first-opened db is
+   * used.
+   */
+  dbId?: string;
+};
+/** Worker API #1 input message envelope. */
+type Worker1InputEnvelope<T extends string, Args = unknown> = Worker1MessageBusEnvelope & {
+  type: T;
+  args?: Args;
+  /** Timestamp set by the promiser before posting a message. */
+  departureTime?: number;
+};
+/** Worker API #1 output message envelope. */
+type Worker1OutputEnvelope<T extends string, Result = unknown> = Worker1MessageBusEnvelope & {
+  type: T;
+  result: Result;
+};
+/**
+ * Worker API #1 per-row callback payload for promiser `exec()` callback
+ * functions.
+ */
+type Worker1ExecRowMessage = {
+  /** Internally synthesized callback message type. */
+  type: `${string}:row`;
+  /** Current row value in the shape implied by `rowMode`. */
+  row?: SqlValue[] | Record<string, SqlValue> | SqlValue;
+  /** 1-based row number, or null as end-of-result-set sentinel. */
+  rowNumber: number | null;
+  /** Column names populated when requested by options. */
+  columnNames?: string[];
+};
+/** Worker API #1 exec options accepted by the promiser wrapper. */
+type Worker1ExecArgs = Omit<ExecOptions, 'callback'> & {
+  /**
+   * Promiser-specific callback mode. String callback IDs are not accepted by
+   * the promiser wrapper.
+   */
+  callback?: (row: Worker1ExecRowMessage) => void;
+};
+/** Worker API #1 'open' arguments. */
+type Worker1OpenArgs = {
+  /** The db filename. */
+  filename?: string;
+  /** Sqlite3_vfs name. */
+  vfs?: string;
+};
+/** Worker API #1 'open' result. */
+type Worker1OpenResult = {
+  /** Db filename, possibly differing from the input. */
+  filename: string;
+  /** Opaque ID value for the opened db. */
+  dbId: string;
+  /** True if the given filename resides in the known-persistent storage. */
+  persistent: boolean;
+  /** Name of the VFS the "main" db is using. */
+  vfs: string;
+};
+/** Worker API #1 'close' arguments. */
+type Worker1CloseArgs = {
+  /** If truthy, the database will be unlinked (deleted) after closing it. */
+  unlink?: boolean;
+};
+/** Worker API #1 'close' result. */
+type Worker1CloseResult = {
+  /** Filename of closed db, or undefined if no db was closed. */
+  filename?: string;
+};
+/** Worker API #1 'exec' result. */
+type Worker1ExecResult = ExecOptions & {
+  /** Number of changes made by the SQL. (v3.43+) */
+  changeCount?: number | bigint;
+  /** Result of sqlite3_last_insert_rowid(). (v3.50.0+) */
+  lastInsertRowId?: bigint;
+};
+/** Worker API #1 'export' result. */
+type Worker1ExportResult = {
+  /** The exported database as a byte array. */
+  byteArray: Uint8Array;
+  /** The db filename. */
+  filename: string;
+  /** "application/x-sqlite3" */
+  mimetype: string;
+};
+/** Worker API #1 'config-get' result. */
+type Worker1ConfigGetResult = {
+  /** Sqlite3.version object */
+  version: {
+    libVersion: string;
+    libVersionNumber: number;
+    sourceId: string;
+    downloadVersion: number;
+  };
+  /** True if BigInt support is enabled. */
+  bigIntEnabled: boolean;
+  /** Result of sqlite3.capi.sqlite3_js_vfs_list() */
+  vfsList: string[];
+};
+/** Map of Worker API #1 operation types to their argument types. */
+type Worker1ArgsMap = {
+  open: Worker1OpenArgs;
+  close: Worker1CloseArgs;
+  exec: Worker1ExecArgs | string;
+  export: Record<string, never>;
+  'config-get': Record<string, never>;
+};
+/** Map of Worker API #1 operation types to their result types. */
+type Worker1ResultMap = {
+  open: Worker1OpenResult;
+  close: Worker1CloseResult;
+  exec: Worker1ExecResult;
+  export: Worker1ExportResult;
+  'config-get': Worker1ConfigGetResult;
+};
+/**
+ * @deprecated Sqlite3Worker1Promiser is deprecated as of 2026-04-15. Function
+ *   type returned by Worker1PromiserFactory.
+ */
+export type Worker1Promiser = {
+  /**
+   * Sends a message to the worker and returns a Promise which resolves to the
+   * response message.
+   */
+  <T extends keyof Worker1ArgsMap>(type: T, args: Worker1ArgsMap[T]): Promise<Worker1OutputEnvelope<T, Worker1ResultMap[T]>>;
+  /**
+   * Sends a message to the worker and returns a Promise which resolves to the
+   * response message.
+   */
+  <T extends keyof Worker1ArgsMap>(msg: Worker1InputEnvelope<T, Worker1ArgsMap[T]>): Promise<Worker1OutputEnvelope<T, Worker1ResultMap[T]>>;
+};
+/**
+ * @deprecated Sqlite3Worker1Promiser is deprecated as of 2026-04-15.
+ *   Configuration for Worker1PromiserFactory.
+ */
+type Worker1PromiserConfig = {
+  /** A Worker instance or a function which returns one. */
+  worker?: Worker | (() => Worker);
+  /** Callback called when the worker is ready. */
+  onready?: (promiser: Worker1Promiser) => void | Promise<void>;
+  /** Callback for unhandled worker messages. */
+  onunhandled?: (event: MessageEvent) => void;
+  /** Optional function to generate unique message IDs. */
+  generateMessageId?: (msg: Worker1InputEnvelope<string, unknown>) => string;
+  /** Optional debug logging function. */
+  debug?: (...args: unknown[]) => void;
+  /** Optional error logging function (undocumented). */
+  onerror?: (...args: unknown[]) => void;
+};
+/**
+ * @deprecated Sqlite3Worker1Promiser is deprecated as of 2026-04-15. Factory
+ *   for creating Worker1Promiser instances.
+ */
+type Worker1PromiserFactory = {
+  /** Creates a Worker1Promiser. */
+  (config?: Worker1PromiserConfig): Worker1Promiser;
+  /** Creates a Worker1Promiser from a ready callback. */
+  (onready: (promiser: Worker1Promiser) => void): Worker1Promiser;
+  /** V2 variant which returns a Promise that resolves to the promiser. */
+  v2(config?: Worker1PromiserConfig): Promise<Worker1Promiser>;
+  /** V2 variant which returns a Promise that resolves to the promiser. */
+  v2(onready: (promiser: Worker1Promiser) => void): Promise<Worker1Promiser>;
+  /** Default configuration. */
+  defaultConfig: Worker1PromiserConfig;
+};
+export type StructPtrMapper<T> = {
   StructType: T;
   /**
    * Creates a new StructType object, writes its `pointer` value to the given
@@ -1432,7 +1363,6 @@ declare type StructPtrMapper<T> = {
    * `ppOut` is not a pointer-type value.
    */
   create: (ptr: WasmPointer) => T;
-
   /**
    * Returns the StructType object previously mapped to the given pointer using
    * `create()`. Its intended usage depends on `StructType`:
@@ -1448,7 +1378,6 @@ declare type StructPtrMapper<T> = {
    * function.
    */
   get: (ptr: WasmPointer) => T;
-
   /**
    * Identical to get() but also disconnects the mapping between the given
    * pointer and the returned StructType object, such that future calls to this
@@ -1465,12 +1394,10 @@ declare type StructPtrMapper<T> = {
    * returned object when they're done with it.
    */
   unget: (ptr: WasmPointer, val: T) => void;
-
   /** Works like `unget()` plus it calls `dispose()` on the `StructType` object. */
   dispose: (ptr: WasmPointer) => void;
 };
-
-declare class SQLiteStruct {
+export declare class SQLiteStruct {
   /**
    * Calling a constructor with no arguments creates a new instance in the WASM
    * heap in order to connect it to C. In this case, client JavaScript code owns
@@ -1492,10 +1419,8 @@ declare class SQLiteStruct {
    *     functionTakingMyStructPointers(m.pointer);
    */
   constructor(pointer?: WasmPointer);
-
   /** The WASM pointer to the struct. */
   pointer: WasmPointer;
-
   /**
    * When client code is finished with an instance, and no C-level code is using
    * its memory, the struct instance must be cleaned up by calling
@@ -1506,7 +1431,6 @@ declare class SQLiteStruct {
    * the struct memory.
    */
   dispose(): void;
-
   /**
    * If a given JS-side struct instance has a property named `ondispose`, that
    * property is used when `dispose()` is called in order to free up any
@@ -1533,10 +1457,7 @@ declare class SQLiteStruct {
    * Any exceptions thrown by ondispose callbacks are ignored but may induce a
    * warning in the console.
    */
-  ondispose?:
-    | (() => void)
-    | ((() => void) | SQLiteStruct | WasmPointer | string)[];
-
+  ondispose?: (() => void) | ((() => void) | SQLiteStruct | WasmPointer | string)[];
   /**
    * Client code may call `aStructInstance.addOnDispose()` to push one or more
    * arguments onto the disposal list. That function will create an `ondispose`
@@ -1544,7 +1465,6 @@ declare class SQLiteStruct {
    * `ondispose` array. It returns its `this`.
    */
   addOnDispose(val: (() => void) | SQLiteStruct | WasmPointer | string): this;
-
   /**
    * Overwrites (without freeing) any existing value in that member, replaces it
    * with a newly-allocated C-string, and stores that C-string in the instance's
@@ -1553,17 +1473,14 @@ declare class SQLiteStruct {
    * instead adds each string set this way to the ondispose list.
    */
   setMemberCString(memberName: string, jsString: string): void;
-
   /**
    * Fetches the member's value. If it's `NULL`, `null` is returned, else it is
    * assumed to be a valid C-style string and a copy of it is returned as a JS
    * string.
    */
   memberToJsString(memberName: string): string | null;
-
   /** Returns true if the given member name is specifically tagged as a string. */
   memberIsString(memberName: string): boolean;
-
   /**
    * Installs a StructBinder-bound function pointer member of the given name and
    * function in this object.
@@ -1576,7 +1493,7 @@ declare class SQLiteStruct {
    * `wasm.functionEntry()` is used to validate that it is a known function. If
    * so, it is used as-is with no extra level of proxying or cleanup, else an
    * exception is thrown. It is legal to pass a value of 0, indicating a `NULL`
-   * pointer, with the caveat that 0 is a legal function pointer in WASM but it
+   * pointer, with the caveat that 0 is a legal function pointer in WASM, but it
    * will not be accepted as such here. (Justification: the function at address
    * zero must be one which initially came from the WASM module, not a method we
    * want to bind to client-level extension code.)
@@ -1601,18 +1518,9 @@ declare class SQLiteStruct {
    * as exceptions passing through such methods will leave the C environment in
    * an undefined state.
    */
-  installMethod(
-    name: string,
-    func: Function | WasmPointer,
-    applyArgcCheck?: boolean,
-  ): (name: string, func: Function | WasmPointer) => this;
-
+  installMethod(name: string, func: Function | WasmPointer, applyArgcCheck?: boolean): (name: string, func: Function | WasmPointer) => this;
   /** Behaves exactly like {@link SQLiteStruct#installMethods}. */
-  installMethod(
-    methodsObject: { [methodName: string]: Function },
-    applyArgcCheck?: boolean,
-  ): this;
-
+  installMethod(methodsObject: Record<string, Function>, applyArgcCheck?: boolean): this;
   /**
    * Installs methods into this StructType-type instance. Each entry in the
    * given methods object must map to a known member of the given StructType,
@@ -1628,230 +1536,125 @@ declare class SQLiteStruct {
    *
    * On success, returns this object. Throws on error.
    */
-  installMethods(
-    methodsObject: { [methodName: string]: Function },
-    applyArgcCheck?: boolean,
-  ): this;
+  installMethods(methodsObject: Record<string, Function>, applyArgcCheck?: boolean): this;
 }
-
-declare class sqlite3_vfs extends SQLiteStruct {
-  iVersion: number;
-  szOsFile: number;
-  mxPathname: number;
+export declare class sqlite3_vfs extends SQLiteStruct {
+  $iVersion: number;
+  $szOsFile: number;
+  $mxPathname: number;
   pNext: WasmPointer;
-  zName: WasmPointer;
+  $zName: WasmPointer;
   pAppData: WasmPointer;
-
   constructor(pointer?: WasmPointer);
-  xOpen: (
-    vfsPtr: WasmPointer,
-    zName: WasmPointer,
-    file: WasmPointer,
-    flags: number,
-    pOutputFlags: WasmPointer,
-  ) => number;
-  xDelete: (vfsPtr: WasmPointer, zName: WasmPointer, syncDir: number) => number;
-  xAccess: (
-    vfsPtr: WasmPointer,
-    zName: WasmPointer,
-    flags: number,
-    pResOut: WasmPointer,
-  ) => number;
-  xFullPathname: (
-    vfsPtr: WasmPointer,
-    zName: WasmPointer,
-    nOut: number,
-    zOut: WasmPointer,
-  ) => number;
+  xOpen: (vfsPtr: WasmPointer, zName: WasmPointer, file: WasmPointer, flags: number, pOutputFlags: WasmPointer) => Sqlite3Result;
+  xDelete: (vfsPtr: WasmPointer, zName: WasmPointer, syncDir: number) => Sqlite3Result;
+  xAccess: (vfsPtr: WasmPointer, zName: WasmPointer, flags: number, pResOut: WasmPointer) => Sqlite3Result;
+  xFullPathname: (vfsPtr: WasmPointer, zName: WasmPointer, nOut: number, zOut: WasmPointer) => Sqlite3Result;
   xDlOpen: (vfsPtr: WasmPointer, zFilename: WasmPointer) => WasmPointer;
   xDlError: (vfsPtr: WasmPointer, nByte: number, zErrMsg: WasmPointer) => void;
-  xDlSym: (
-    vfsPtr: WasmPointer,
-    pHandle: WasmPointer,
-    zSymbol: WasmPointer,
-  ) => WasmPointer;
+  xDlSym: (vfsPtr: WasmPointer, pHandle: WasmPointer, zSymbol: WasmPointer) => WasmPointer;
   xDlClose: (vfsPtr: WasmPointer, pHandle: WasmPointer) => void;
-  xRandomness: (
-    vfsPtr: WasmPointer,
-    nByte: number,
-    zOut: WasmPointer,
-  ) => number;
-  xSleep: (vfsPtr: WasmPointer, microseconds: number) => number;
-  xCurrentTime: (vfsPtr: WasmPointer, pTimeOut: WasmPointer) => number;
+  xRandomness: (vfsPtr: WasmPointer, nByte: number, zOut: WasmPointer) => Sqlite3Result;
+  xSleep: (vfsPtr: WasmPointer, microseconds: number) => Sqlite3Result;
+  xCurrentTime: (vfsPtr: WasmPointer, pTimeOut: WasmPointer) => Sqlite3Result;
   xGetLastError: (vfsPtr: WasmPointer, nBuf: number, zBuf: WasmPointer) => void;
-  xCurrentTimeInt64: (vfsPtr: WasmPointer, pTimeOut: WasmPointer) => number;
-  xSetSystemCall: (
-    vfsPtr: WasmPointer,
-    zName: WasmPointer,
-    pCall: WasmPointer,
-  ) => number;
-  xGetSystemCall: (
-    vfsPtr: WasmPointer,
-    zName: WasmPointer,
-    pCall: WasmPointer,
-  ) => WasmPointer;
+  xCurrentTimeInt64: (vfsPtr: WasmPointer, pTimeOut: WasmPointer) => Sqlite3Result;
+  xSetSystemCall: (vfsPtr: WasmPointer, zName: WasmPointer, pCall: WasmPointer) => Sqlite3Result;
+  xGetSystemCall: (vfsPtr: WasmPointer, zName: WasmPointer, pCall: WasmPointer) => WasmPointer;
   xNextSystemCall: (vfsPtr: WasmPointer, zName: WasmPointer) => WasmPointer;
 }
-
-declare class sqlite3_io_methods extends SQLiteStruct {
+export declare class sqlite3_io_methods extends SQLiteStruct {
   iVersion: number;
-
   constructor(pointer?: WasmPointer);
-  xClose: (file: WasmPointer) => number;
-  xRead: (
-    file: WasmPointer,
-    buf: WasmPointer,
-    iAmt: number,
-    iOfst: number,
-  ) => number;
-  xWrite: (
-    file: WasmPointer,
-    buf: WasmPointer,
-    iAmt: number,
-    iOfst: number,
-  ) => number;
-  xTruncate: (file: WasmPointer, size: number) => number;
-  xSync: (file: WasmPointer, flags: number) => number;
-  xFileSize: (file: WasmPointer, pSize: WasmPointer) => number;
-  xLock: (file: WasmPointer, lockType: number) => number;
-  xUnlock: (file: WasmPointer, lockType: number) => number;
-  xCheckReservedLock: (file: WasmPointer, pResOut: WasmPointer) => number;
-  xFileControl: (file: WasmPointer, op: number, pArg: WasmPointer) => number;
-  xSectorSize: (file: WasmPointer) => number;
-  xDeviceCharacteristics: (file: WasmPointer) => number;
-  xShmMap: (
-    file: WasmPointer,
-    iPg: number,
-    pgsz: number,
-    bExtend: number,
-    pp: WasmPointer,
-  ) => number;
-  xShmLock: (
-    file: WasmPointer,
-    offset: number,
-    n: number,
-    flags: number,
-  ) => number;
+  xClose: (file: WasmPointer) => Sqlite3Result;
+  xRead: (file: WasmPointer, buf: WasmPointer, iAmt: number, iOfst: number) => Sqlite3Result;
+  xWrite: (file: WasmPointer, buf: WasmPointer, iAmt: number, iOfst: number) => Sqlite3Result;
+  xTruncate: (file: WasmPointer, size: number) => Sqlite3Result;
+  xSync: (file: WasmPointer, flags: number) => Sqlite3Result;
+  xFileSize: (file: WasmPointer, pSize: WasmPointer) => Sqlite3Result;
+  xLock: (file: WasmPointer, lockType: number) => Sqlite3Result;
+  xUnlock: (file: WasmPointer, lockType: number) => Sqlite3Result;
+  xCheckReservedLock: (file: WasmPointer, pResOut: WasmPointer) => Sqlite3Result;
+  xFileControl: (file: WasmPointer, op: number, pArg: WasmPointer) => Sqlite3Result;
+  xSectorSize: (file: WasmPointer) => Sqlite3Result;
+  xDeviceCharacteristics: (file: WasmPointer) => Sqlite3Result;
+  xShmMap: (file: WasmPointer, iPg: number, pgsz: number, bExtend: number, pp: WasmPointer) => Sqlite3Result;
+  xShmLock: (file: WasmPointer, offset: number, n: number, flags: number) => Sqlite3Result;
   xShmBarrier: (file: WasmPointer) => void;
-  xShmUnmap: (file: WasmPointer, deleteFlag: number) => number;
-  xFetch: (
-    file: WasmPointer,
-    iOfst: number,
-    iAmt: number,
-    pp: WasmPointer,
-  ) => number;
-  xUnfetch: (file: WasmPointer, iOfst: number, p: WasmPointer) => number;
+  xShmUnmap: (file: WasmPointer, deleteFlag: number) => Sqlite3Result;
+  xFetch: (file: WasmPointer, iOfst: number, iAmt: number, pp: WasmPointer) => Sqlite3Result;
+  xUnfetch: (file: WasmPointer, iOfst: number, p: WasmPointer) => Sqlite3Result;
 }
-
-declare class sqlite3_file extends SQLiteStruct {
-  pMethods: WasmPointer;
-
+export declare class sqlite3_file extends SQLiteStruct {
+  $pMethods: WasmPointer;
+  structInfo: {
+    sizeof: number;
+    name: string;
+    members: Record<string, {
+      offset: number;
+      signature: string;
+      sizeof: number;
+      name: string;
+      key: string;
+    }>;
+  };
   constructor(pointer?: WasmPointer);
 }
-
-declare class sqlite3_vtab extends SQLiteStruct {
+export declare class sqlite3_vtab extends SQLiteStruct {
   pModule: WasmPointer;
   nRef: number;
   zErrMsg: WasmPointer;
-
   constructor(pointer?: WasmPointer);
 }
-
-declare class sqlite3_vtab_cursor extends SQLiteStruct {
+export declare class sqlite3_vtab_cursor extends SQLiteStruct {
   pVtab: WasmPointer;
-
   constructor(pointer?: WasmPointer);
 }
-
-declare class sqlite3_module extends SQLiteStruct {
+export declare class sqlite3_module extends SQLiteStruct {
   iVersion: number;
-
   constructor(pointer?: WasmPointer);
-  xCreate: (
-    db: WasmPointer,
-    pAux: WasmPointer,
-    argc: number,
-    argv: WasmPointer,
-    ppVtab: WasmPointer,
-    pzErr: WasmPointer,
-  ) => number;
-  xConnect: (
-    db: WasmPointer,
-    pAux: WasmPointer,
-    argc: number,
-    argv: WasmPointer,
-    ppVtab: WasmPointer,
-    pzErr: WasmPointer,
-  ) => number;
-  xBestIndex: (
-    pVtab: WasmPointer,
-    pIndexInfo: WasmPointer,
-    pp: WasmPointer,
-    pCost: WasmPointer,
-  ) => number;
-  xDisconnect: (pVtab: WasmPointer) => number;
-  xDestroy: (pVtab: WasmPointer) => number;
-  xOpen: (pVtab: WasmPointer, ppCursor: WasmPointer) => number;
-  xClose: (pCursor: WasmPointer) => number;
-  xFilter: (
-    pCursor: WasmPointer,
-    idxNum: number,
-    idxStr: WasmPointer,
-    argc: number,
-    argv: WasmPointer,
-  ) => number;
-  xNext: (pCursor: WasmPointer) => number;
-  xEof: (pCursor: WasmPointer) => number;
-  xColumn: (pCursor: WasmPointer, pContext: WasmPointer, i: number) => number;
-  xRowid: (pCursor: WasmPointer, pRowid: WasmPointer) => number;
-  xUpdate: (
-    pVtab: WasmPointer,
-    argc: number,
-    argv: WasmPointer,
-    pRowid: WasmPointer,
-  ) => number;
-  xBegin: (pVtab: WasmPointer) => number;
-  xSync: (pVtab: WasmPointer) => number;
-  xCommit: (pVtab: WasmPointer) => number;
-  xRollback: (pVtab: WasmPointer) => number;
-  xFindFunction: (
-    pVtab: WasmPointer,
-    nArg: number,
-    zName: WasmPointer,
-    pxFunc: WasmPointer,
-    ppArg: WasmPointer,
-  ) => number;
-  xRename: (pVtab: WasmPointer, zNew: WasmPointer) => number;
-  xSavepoint: (pVtab: WasmPointer, iSavepoint: number) => number;
-  xRelease: (pVtab: WasmPointer, iSavepoint: number) => number;
-  xRollbackTo: (pVtab: WasmPointer, iSavepoint: number) => number;
-  xShadowName: (tableName: WasmPointer) => number;
+  xCreate: (db: WasmPointer, pAux: WasmPointer, argc: number, argv: WasmPointer, ppVtab: WasmPointer, pzErr: WasmPointer) => Sqlite3Result;
+  xConnect: (db: WasmPointer, pAux: WasmPointer, argc: number, argv: WasmPointer, ppVtab: WasmPointer, pzErr: WasmPointer) => Sqlite3Result;
+  xBestIndex: (pVtab: WasmPointer, pIndexInfo: WasmPointer, pp: WasmPointer, pCost: WasmPointer) => Sqlite3Result;
+  xDisconnect: (pVtab: WasmPointer) => Sqlite3Result;
+  xDestroy: (pVtab: WasmPointer) => Sqlite3Result;
+  xOpen: (pVtab: WasmPointer, ppCursor: WasmPointer) => Sqlite3Result;
+  xClose: (pCursor: WasmPointer) => Sqlite3Result;
+  xFilter: (pCursor: WasmPointer, idxNum: number, idxStr: WasmPointer, argc: number, argv: WasmPointer) => Sqlite3Result;
+  xNext: (pCursor: WasmPointer) => Sqlite3Result;
+  xEof: (pCursor: WasmPointer) => Sqlite3Result;
+  xColumn: (pCursor: WasmPointer, pContext: WasmPointer, i: number) => Sqlite3Result;
+  xRowid: (pCursor: WasmPointer, pRowid: WasmPointer) => Sqlite3Result;
+  xUpdate: (pVtab: WasmPointer, argc: number, argv: WasmPointer, pRowid: WasmPointer) => Sqlite3Result;
+  xBegin: (pVtab: WasmPointer) => Sqlite3Result;
+  xSync: (pVtab: WasmPointer) => Sqlite3Result;
+  xCommit: (pVtab: WasmPointer) => Sqlite3Result;
+  xRollback: (pVtab: WasmPointer) => Sqlite3Result;
+  xFindFunction: (pVtab: WasmPointer, nArg: number, zName: WasmPointer, pxFunc: WasmPointer, ppArg: WasmPointer) => Sqlite3Result;
+  xRename: (pVtab: WasmPointer, zNew: WasmPointer) => Sqlite3Result;
+  xSavepoint: (pVtab: WasmPointer, iSavepoint: number) => Sqlite3Result;
+  xRelease: (pVtab: WasmPointer, iSavepoint: number) => Sqlite3Result;
+  xRollbackTo: (pVtab: WasmPointer, iSavepoint: number) => Sqlite3Result;
+  xShadowName: (tableName: WasmPointer) => Sqlite3Result;
 }
-
-declare class sqlite3_index_constraint extends SQLiteStruct {
+export declare class sqlite3_index_constraint extends SQLiteStruct {
   iColumn: number;
   op: number;
   usable: number;
   iTermOffset: number;
-
   constructor(pointer?: WasmPointer);
 }
-
-declare class sqlite3_index_constraint_usage extends SQLiteStruct {
+export declare class sqlite3_index_constraint_usage extends SQLiteStruct {
   argvIndex: number;
   omit: number;
-
   constructor(pointer?: WasmPointer);
 }
-
-declare class sqlite3_index_orderby extends SQLiteStruct {
+export declare class sqlite3_index_orderby extends SQLiteStruct {
   iColumn: number;
   desc: number;
-
   constructor(pointer?: WasmPointer);
 }
-
-declare class sqlite3_index_info extends SQLiteStruct {
+export declare class sqlite3_index_info extends SQLiteStruct {
   nConstraint: number;
   aConstraint: WasmPointer;
   nOrderBy: number;
@@ -1862,33 +1665,31 @@ declare class sqlite3_index_info extends SQLiteStruct {
   needToFreeIdxStr: number;
   orderByConsumed: number;
   estimatedCost: number;
-  estimatedRows: BigInt;
+  estimatedRows: bigint;
   idxFlags: number;
-  colUsed: BigInt;
+  colUsed: bigint;
   sqlite3_index_constraint: sqlite3_index_constraint;
   sqlite3_index_orderby: sqlite3_index_orderby;
   sqlite3_index_constraint_usage: sqlite3_index_constraint_usage;
-
   constructor(pointer?: WasmPointer);
 }
-
-declare type Sqlite3Static = {
+export type Sqlite3Static = {
   /** The namespace for the C-style APIs. */
   capi: CAPI;
-
+  /** Convenience helpers for interacting with the kvvfs. */
+  kvvfs: KvvfsNamespace;
   /**
    * WASM-specific utilities, abstracted to be independent of, and configurable
    * for use with, arbitrary WASM runtime environments.
    */
   wasm: WASM_API;
-
   /** The OO API #1. */
   oo1: {
     OpfsDb: typeof OpfsDatabase;
+    OpfsWlDb: typeof OpfsDatabase;
     JsStorageDb: typeof JsStorageDb;
     DB: typeof Database;
   };
-
   /** Version numbers */
   version: {
     libVersion: string;
@@ -1896,27 +1697,26 @@ declare type Sqlite3Static = {
     sourceId: string;
     downloadVersion: number;
   };
-
   /**
    * Initializes the Worker API.
    *
-   * Required to to permit this API to be loaded in Worker threads without
+   * Required to permit this API to be loaded in Worker threads without
    * automatically registering onmessage handlers
    *
    * If this function is called from a non-worker thread then it throws an
    * exception. It must only be called once per Worker.
    */
   initWorker1API(): void;
-
+  /** Promise-based proxy for the sqlite3 Worker API #1. */
+  Worker1Promiser: Worker1PromiserFactory;
   installOpfsSAHPoolVfs(opts: {
     /**
      * If truthy (default=false) contents and filename mapping are removed from
-     * each SAH it is acquired during initalization of the VFS, leaving the
+     * each SAH it is acquired during initialization of the VFS, leaving the
      * VFS's storage in a pristine state. Use this only for databases which need
      * not survive a page reload.
      */
     clearOnInit?: boolean;
-
     /**
      * (default=6) Specifies the default capacity of the VFS.
      *
@@ -1930,7 +1730,6 @@ declare type Sqlite3Static = {
      * are used.
      */
     initialCapacity?: number;
-
     /**
      * (default="."+options.name) Specifies the OPFS directory name in which to
      * store metadata for the VFS.
@@ -1948,7 +1747,6 @@ declare type Sqlite3Static = {
      * or otherwise modified by the VFS.
      */
     directory?: string;
-
     /**
      * (default="opfs-sahpool") sets the name to register this VFS under.
      *
@@ -1966,16 +1764,13 @@ declare type Sqlite3Static = {
      */
     name?: string;
   }): Promise<SAHPoolUtil>;
-
   WasmAllocError: typeof WasmAllocError;
-
   SQLite3Error: typeof SQLite3Error;
-
   /**
-   * The options with which the API was configured. Whether or not modifying
-   * them after the bootstrapping process will have any useful effect is
-   * unspecified and may change with any given version. Clients must not rely on
-   * that capability.
+   * The options with which the API was configured. Whether modifying them after
+   * the bootstrapping process will have any useful effect is unspecified and
+   * may change with any given version. Clients must not rely on that
+   * capability.
    */
   config: {
     exports: any;
@@ -1991,14 +1786,12 @@ declare type Sqlite3Static = {
     deallocExportName: string;
     reallocExportName: string;
   };
-
   /**
    * The library reserves this property for client-side use and promises to
    * never define a property with this name nor to ever rely on specific
    * contents of it. It makes no such guarantees for other properties.
    */
   client: any;
-
   /* Utility code for creating sqlite3_vfs's. */
   vfs: {
     /**
@@ -2034,27 +1827,18 @@ declare type Sqlite3Static = {
     installVfs: (obj: {
       io?: {
         struct: sqlite3_io_methods;
-        methods: {
-          [K in keyof sqlite3_io_methods as K extends `x${string}`
-            ? K
-            : never]?: sqlite3_io_methods[K];
-        };
+        methods: { [K in keyof sqlite3_io_methods as K extends `x${string}` ? K : never]?: sqlite3_io_methods[K]; };
         applyArgcCheck?: boolean;
       };
       vfs?: {
         struct: sqlite3_vfs;
-        methods: {
-          [K in keyof sqlite3_vfs as K extends `x${string}`
-            ? K
-            : never]?: sqlite3_vfs[K];
-        };
+        methods: { [K in keyof sqlite3_vfs as K extends `x${string}` ? K : never]?: sqlite3_vfs[K]; };
         applyArgcCheck?: boolean;
         name?: string;
         asDefault?: boolean;
       };
     }) => Sqlite3Static['vfs'];
   };
-
   /** Utility code for creating virtual table implementations. */
   vtab: {
     /**
@@ -2062,13 +1846,11 @@ declare type Sqlite3Static = {
      * `sqlite3_module` methods to `capi.sqlite3_vtab` objects.
      */
     xVtab: StructPtrMapper<sqlite3_vtab>;
-
     /**
      * A lifetime-management object for mapping `sqlite3_vtab_cursor*` instances
      * in sqlite3_module methods to `capi.sqlite3_vtab_cursor` objects.
      */
     xCursor: StructPtrMapper<sqlite3_vtab_cursor>;
-
     /**
      * Convenience form of creating an `sqlite3_index_info` wrapper, intended
      * for use in `xBestIndex` implementations. Note that the caller is expected
@@ -2077,7 +1859,6 @@ declare type Sqlite3Static = {
      * it is nonetheless good form.
      */
     xIndexInfo: (pIdxInfo: WasmPointer) => sqlite3_index_info;
-
     /**
      * Given an `sqlite3_module` method name and error object, this function
      * returns `sqlite3.capi.SQLITE_NOMEM` if `(e instanceof
@@ -2106,7 +1887,6 @@ declare type Sqlite3Static = {
     xError: ((methodName: string, err: Error, defaultRc: number) => number) & {
       errorReporter?: (errorStr: string) => void;
     };
-
     /**
      * A helper for `sqlite3_vtab::xRowid()` and `xUpdate()` implementations. It
      * must be passed the final argument to one of those methods (an output
@@ -2123,7 +1903,6 @@ declare type Sqlite3Static = {
      *     };
      */
     xRowid: (ppRowId64: WasmPointer, value: number) => WASM_API;
-
     /**
      * A helper to initialize and set up an `sqlite3_module` object for later
      * installation into individual databases using `sqlite3_create_module()`.
@@ -2168,39 +1947,32 @@ declare type Sqlite3Static = {
        * - If `methods.xDisconnect` is true then the value of `methods.xDestroy`
        *   is used in its place, and vice versa.
        */
-      methods: Omit<sqlite3_module, 'iVersion'> &
-        (
-          | {
-              xConnect: undefined;
-            }
-          | { xCreate: undefined }
-        ) &
-        (
-          | {
-              xDisconnect: undefined;
-            }
-          | { xDestroy: undefined }
-        );
-
+      methods: Omit<sqlite3_module, 'iVersion'> & ({
+        xConnect: undefined;
+      } | {
+        xCreate: undefined;
+      }) & ({
+        xDisconnect: undefined;
+      } | {
+        xDestroy: undefined;
+      });
       /**
        * (default=false): if truthy, the given methods are not mapped as-is, but
        * are instead wrapped inside wrappers which translate exceptions into
        * result codes of SQLITE_ERROR or SQLITE_NOMEM, depending on whether the
-       * exception is an sqlite3.WasmAllocError. In the case of the xConnect and
+       * exception is a sqlite3.WasmAllocError. In the case of the xConnect and
        * xCreate methods, the exception handler also sets the output error
        * string to the exception's error string.
        */
       catchExceptions?: boolean;
-
       /**
        * A `sqlite3.capi.sqlite3_module()` instance. If not set, one will be
        * created automatically. If the current `"this"` is-a `sqlite3_module`
        * then it is unconditionally used in place of `struct`.
        */
       struct?: sqlite3_module;
-
       /**
-       * If set, it must be an integer value and it gets assigned to the
+       * If set, it must be an integer value, and it gets assigned to the
        * `$iVersion` member of the struct object. If it's _not_ set, and the
        * passed-in `struct` object's `$iVersion` is 0 (the default) then this
        * function attempts to define a value for that property based on the list
@@ -2210,36 +1982,21 @@ declare type Sqlite3Static = {
     };
   };
 };
-
-declare type InitOptions = {
-  locateFile?: (path: string, prefix: string) => string;
-  print?: (msg: string) => void;
-  printErr?: (msg: string) => void;
-};
-
 /**
- * A function installed by Emscripten to load and initialize the module. It
- * accepts an optional object to act as the so-called Emscripten Module, with
- * which the client may be notified of loading progress an errors.
+ * A function installed by Emscripten to load and initialize the module.
  *
- * See the [Emscripten docs on the topic][1] for full details.
- *
- * Note that this project has no influence over those options and the Emscripten
- * project may change them at any time, so we neither document nor support them.
- * Note, also, that this project may attempt to internally override any specific
- * option, potentially leading to undesired side effects if client code does the
- * same.
- *
- * [1] https://emscripten.org/docs/api_reference/module.html
+ * NOTE: The omission of the function parameter list from this declaration is
+ * intentional. Please do not reintroduce the removed details. See
+ * https://github.com/sqlite/sqlite-wasm/pull/129 for details.
  */
-export default function init(opts?: InitOptions): Promise<Sqlite3Static>;
-
-declare type ListLike<T> = {
+export default function init(): Promise<Sqlite3Static>;
+/** @deprecated Sqlite3Worker1Promiser is deprecated as of 2026-04-15. */
+export declare const sqlite3Worker1Promiser: Worker1PromiserFactory;
+export type ListLike<T> = {
   length: number;
   forEach: (cb: (val: T) => void) => void;
 };
-
-declare type WASM_API = {
+export type WASM_API = {
   /**
    * The `sqlite3.wasm.exports` namespace object is a WASM-standard part of the
    * WASM module file and contains all "exported" C functions which are built
@@ -2256,16 +2013,14 @@ declare type WASM_API = {
    * namespace.
    */
   exports: any;
-
   /* ==========================================================================
    * Memory Management
    * ==========================================================================
-   * Just like in C, WASM offers a memory "heap," and transfering values
+   * Just like in C, WASM offers a memory "heap," and transferring values
    * between JS and WASM often requires manipulation of that memory, including
    * low-level allocation and deallocation of it. The following subsections
    * describe the various memory management APIs.
    */
-
   /* --------------------------------------------------------------------------
    * Low-level Management
    * --------------------------------------------------------------------------
@@ -2277,11 +2032,10 @@ declare type WASM_API = {
    * instead of `malloc()`, `realloc()`, and `free()`, but the semantics of both
    * pairs are effectively identical.
    */
-
   /**
    * Allocates n bytes of memory from the WASM heap and returns the address of
    * the first byte in the block. `alloc()` throws a {@link WasmAllocError} if
-   * allocation fails. If non-thowing allocation is required, use
+   * allocation fails. If non-throwing allocation is required, use
    * {@link WASM_API#alloc.impl}, which returns a WASM NULL pointer (the integer
    * 0) if allocation fails.
    *
@@ -2293,28 +2047,20 @@ declare type WASM_API = {
   alloc: ((numBytes: number) => WasmPointer) & {
     impl: (numBytes: number) => WasmPointer;
   };
-
   /**
    * Uses {@link WASM_API#alloc} to allocate enough memory for the byte-length of
    * the given JS string, plus 1 (for a `NUL` terminator), copies the given JS
    * string to that memory using `jstrcpy()`, `NUL`-terminates it, and returns
-   * the pointer to that C-string. Ownership of the pointer is transfered to the
-   * caller, who must eventually pass the pointer to {@link WASM_API#dealloc} to
-   * free it.
+   * the pointer to that C-string. Ownership of the pointer is transferred to
+   * the caller, who must eventually pass the pointer to {@link WASM_API#dealloc}
+   * to free it.
    *
    * If passed a truthy 2nd argument then its return semantics change: it
    * returns `[ptr,n]`, where `ptr` is the C-string's pointer and n is its
    * cstrlen().
    */
-  allocCString(
-    jsString: string,
-    returnPtrAndLength: undefined | false,
-  ): WasmPointer;
-  allocCString(
-    jsString: string,
-    returnPtrAndLength: true,
-  ): [WasmPointer, number];
-
+  allocCString(jsString: string, returnPtrAndLength: undefined | false): WasmPointer;
+  allocCString(jsString: string, returnPtrAndLength: true): [WasmPointer, number];
   /**
    * Creates a C-style array, using `alloc()`, suitable for passing to a C-level
    * `main()` routine. The input is a collection with a `length` property and a
@@ -2326,13 +2072,14 @@ declare type WASM_API = {
    *
    * Throws if `list.length` is falsy.
    *
-   * Note that the returned value is troublesome to deallocate but it is
+   * Note that the returned value is troublesome to deallocate, but it is
    * intended for use with calling a C-level `main()` function, where the
    * strings must live as long as the application. See `scopedAllocMainArgv()`
    * for a variant which is trivial to deallocate.
    */
-  allocMainArgv: (list: ListLike<{ toString(): string }>) => WasmPointer;
-
+  allocMainArgv: (list: ListLike<{
+    toString(): string;
+  }>) => WasmPointer;
   /**
    * Allocates one or more pointers as a single chunk of memory and zeroes them
    * out.
@@ -2365,14 +2112,12 @@ declare type WASM_API = {
    */
   allocPtr(howMany: 1 | undefined, safePtrSize?: boolean): WasmPointer;
   allocPtr(howMany: number, safePtrSize?: boolean): WasmPointer[];
-
   /**
    * Frees memory returned by `alloc()`. Results are undefined if it is passed
    * any value other than a value returned by `alloc()` or
    * `null`/`undefined`/`0` (all of which are no-ops).
    */
   dealloc: (ptr: WasmPointer) => void;
-
   /**
    * Semantically equivalent to `realloc(3)` or `sqlite3_realloc()`, this
    * routine reallocates memory allocated via this routine or `alloc()`. Its
@@ -2394,7 +2139,6 @@ declare type WASM_API = {
   realloc: ((ptr: WasmPointer, numBytes: number) => WasmPointer) & {
     impl: (ptr: WasmPointer, numBytes: number) => WasmPointer;
   };
-
   /**
    * For the given IR-like string in the set ('i8', 'i16', 'i32', 'f32',
    * 'float', 'i64', 'f64', 'double', '_'), or any string value ending in '_',
@@ -2404,20 +2148,7 @@ declare type WASM_API = {
    * Some allocation routines use this enable callers to pass them an IR value
    * instead of an integer.
    */
-  sizeofIR: (
-    irStr:
-      | 'i8'
-      | 'i16'
-      | 'i32'
-      | 'f32'
-      | 'float'
-      | 'i64'
-      | 'f64'
-      | 'double'
-      | '_'
-      | string,
-  ) => number;
-
+  sizeofIR: (irStr: 'i8' | 'i16' | 'i32' | 'f32' | 'float' | 'i64' | 'f64' | 'double' | '_' | string) => Sqlite3Result;
   /* --------------------------------------------------------------------------
    * "Scoped" Allocation Management
    * --------------------------------------------------------------------------
@@ -2427,7 +2158,6 @@ declare type WASM_API = {
    * when that block exits. This API provides "scoped" allocation routines
    * which work this way.
    */
-
   /**
    * Opens a new "scope" for allocations. All allocations made via the
    * `scopedAllocXyz()` APIs will store their results into the current (most
@@ -2458,7 +2188,6 @@ declare type WASM_API = {
    *     }
    */
   scopedAllocPush: () => WasmPointer;
-
   /**
    * Works just like `alloc(n)` but stores the result of the allocation in the
    * current scope.
@@ -2466,15 +2195,17 @@ declare type WASM_API = {
    * This function's read-only `level` property resolves to the current
    * allocation scope dep
    */
-  scopedAlloc: ((numBytes: number) => WasmPointer) & { level: number };
-
+  scopedAlloc: ((numBytes: number) => WasmPointer) & {
+    level: number;
+  };
   /**
    * This functions exactly like `allocMainArgv()` but is scoped to the current
    * allocation scope and its contents will be freed when the current allocation
    * scoped is popped.
    */
-  scopedAllocMainArgv: (list: ListLike<{ toString(): string }>) => WasmPointer;
-
+  scopedAllocMainArgv: (list: ListLike<{
+    toString(): string;
+  }>) => WasmPointer;
   /**
    * Calls `scopedAllocPush()`, calls the given `callback`, and then calls
    * `scopedAllocPop()`, propagating any exception from the callback or
@@ -2488,27 +2219,18 @@ declare type WASM_API = {
    *     }
    */
   scopedAllocCall: <T>(callback: () => T) => T;
-
   /**
    * Works just like `allocCString()` but stores the result of the allocation in
    * the current scope.
    */
-  scopedAllocCString(
-    jsString: string,
-    returnWithLength: undefined | false,
-  ): WasmPointer;
-  scopedAllocCString(
-    jsString: string,
-    returnPtrAndLength: true,
-  ): [WasmPointer, number];
-
+  scopedAllocCString(jsString: string, returnWithLength: undefined | false): WasmPointer;
+  scopedAllocCString(jsString: string, returnPtrAndLength: true): [WasmPointer, number];
   /**
    * Works just like `allocPtr()` but stores the result of the allocation in the
    * current scope.
    */
   scopedAllocPt(howMany: 1 | undefined, safePtrSize?: boolean): WasmPointer;
   scopedAllocPtr(howMany: number, safePtrSize?: boolean): WasmPointer[];
-
   /**
    * Given a value returned from `scopedAllocPush()`, this "pops" that
    * allocation scope and frees all memory allocated in that scope by the
@@ -2521,32 +2243,30 @@ declare type WASM_API = {
    * check impossible.
    */
   scopedAllocPop: (opaque: WasmPointer) => void;
-
   /* --------------------------------------------------------------------------
-     * "PStack" Allocation
-     * --------------------------------------------------------------------------
-     * The "pstack" (pseudo-stack) API is a special-purpose allocator intended
-     * solely for use with allocating small amounts of memory such as that
-     * needed for output pointers. It is more efficient than the scoped
-     * allocation API, and covers many of the use cases for that API, but it has
-     * a tiny static memory limit (with an unspecified total size no less than
-     * 4kb).
-
-     * The pstack API is typically used like:
-     *
-     *    const pstack = sqlite3.wasm.pstack;
-     *    const stackPtr = pstack.pointer;
-     *    try {
-     *       const ptr = pstack.alloc(8);
-     *       // ==> pstack.pointer === ptr
-     *       const otherPtr = pstack.alloc(8);
-     *       // ==> pstack.pointer === otherPtr
-     *       ...
-     *    } finally {
-     *       pstack.restore(stackPtr);
-     *       // ==> pstack.pointer === stackPtr
-     *    }
-     */
+   * "PStack" Allocation
+   * --------------------------------------------------------------------------
+   * The "pstack" (pseudo-stack) API is a special-purpose allocator intended
+   * solely for use with allocating small amounts of memory such as that
+   * needed for output pointers. It is more efficient than the scoped
+   * allocation API, and covers many of the use cases for that API, but it has
+   * a tiny static memory limit (with an unspecified total size no less than
+   * 4kb).
+   * The pstack API is typically used like:
+   *
+   *    const pstack = sqlite3.wasm.pstack;
+   *    const stackPtr = pstack.pointer;
+   *    try {
+   *       const ptr = pstack.alloc(8);
+   *       // ==> pstack.pointer === ptr
+   *       const otherPtr = pstack.alloc(8);
+   *       // ==> pstack.pointer === otherPtr
+   *       ...
+   *    } finally {
+   *       pstack.restore(stackPtr);
+   *       // ==> pstack.pointer === stackPtr
+   *    }
+   */
   pstack: {
     /**
      * Attempts to allocate the given number of bytes from the pstack. On
@@ -2565,7 +2285,6 @@ declare type WASM_API = {
      * address is always 8-byte aligned.
      */
     alloc: (n: number | string) => WasmPointer;
-
     /**
      * `Alloc()`'s `n` chunks, each `sz` bytes, as a single memory block and
      * returns the addresses as an array of `n` element, each holding the
@@ -2582,7 +2301,6 @@ declare type WASM_API = {
      *     Const[(p1, p2, p3)] = pstack.allocChunks(3, 4);
      */
     allocChunks: (n: number, sz: number | string) => WasmPointer[];
-
     /**
      * A convenience wrapper for `allocChunks()` which sizes each chunk as
      * either 8 bytes (`safePtrSize` is truthy) or `wasm.ptrSizeof` (if
@@ -2603,7 +2321,6 @@ declare type WASM_API = {
      */
     allocPtr(howMany?: 1 | undefined, safePtrSize?: boolean): WasmPointer;
     allocPtr(howMany: number, safePtrSize?: boolean): WasmPointer[];
-
     /**
      * This property resolves to the current pstack position pointer. This value
      * is intended only to be saved for passing to `restore()`. Writing to this
@@ -2611,17 +2328,14 @@ declare type WASM_API = {
      * leads to undefined results.
      */
     pointer: WasmPointer;
-
     /**
      * This property resolves to the total number of bytes available in the
      * pstack, including any space which is currently allocated. This value is a
      * compile-time constant.unknown
      */
     quota: number;
-
     /** This property resolves to the amount of space remaining in the pstack. */
     remaining: number;
-
     /**
      * Sets the current pstack position to the given pointer. Results are
      * `undefined` if the passed-in value did not come from `pstack.pointer` or
@@ -2630,7 +2344,6 @@ declare type WASM_API = {
      */
     restore: (pstackptr: WasmPointer) => void;
   };
-
   /* --------------------------------------------------------------------------
    * Getting/Setting Memory Values
    * --------------------------------------------------------------------------
@@ -2662,7 +2375,7 @@ declare type WASM_API = {
    * - `i8`: 8-bit signed integer
    * - `i16`: 16-bit signed integer
    * - `i32`: 32-bit signed integer. Aliases: `int`, `*`, `**` (noting that
-   *    `*` and `**` may be remapped dynamically to to i64 when WASM environments
+   *    `*` and `**` may be remapped dynamically to i64 when WASM environments
    *    gain 64-bit pointer capabilities).
    * - `i64`: 64-bit signed integer. APIs which use this require that the
    *    application has been built with BigInt support, and will throw if that is
@@ -2673,7 +2386,6 @@ declare type WASM_API = {
    * These are used extensively by the memory accessor APIs and need to be
    * committed to memory.
    */
-
   /**
    * The first form fetches a single value from memory. The second form fetches
    * the value from each pointer in the given array and returns the array of
@@ -2683,36 +2395,28 @@ declare type WASM_API = {
    * If the 2nd argument ends with `"*"` then the pointer-sized representation
    * is always used (currently always 32 bits).
    */
-  peek(addr: WasmPointer, representation?: string): number;
+  peek(addr: WasmPointer, representation?: string): Sqlite3Result;
   peek(addrs: WasmPointer[], representation?: string): number[];
-
   /**
    * Equivalent to `peek(X,'*')`. Most frequently used for fetching output
    * pointer values.
    */
-  peekPtr: (addr: WasmPointer) => number;
-
+  peekPtr: (addr: WasmPointer) => Sqlite3Result;
   /** Equivalent to peek(X,'i8') */
-  peek8: (addr: WasmPointer) => number;
-
+  peek8: (addr: WasmPointer) => Sqlite3Result;
   /** Equivalent to peek(X,'i16') */
-  peek16: (addr: WasmPointer) => number;
-
+  peek16: (addr: WasmPointer) => Sqlite3Result;
   /** Equivalent to peek(X,'i32') */
-  peek32: (addr: WasmPointer) => number;
-
+  peek32: (addr: WasmPointer) => Sqlite3Result;
   /**
    * Equivalent to peek(X,'i64'). Will throw if the environment is not
    * configured with BigInt support.
    */
-  peek64: (addr: WasmPointer) => BigInt;
-
+  peek64: (addr: WasmPointer) => bigint;
   /** Equivalent to peek(X,'f32') */
-  peek32f: (addr: WasmPointer) => number;
-
+  peek32f: (addr: WasmPointer) => Sqlite3Result;
   /** Equivalent to peek(X,'f64') */
-  peek64f: (addr: WasmPointer) => number;
-
+  peek64f: (addr: WasmPointer) => Sqlite3Result;
   /**
    * Requires `n` to be one of:
    *
@@ -2735,7 +2439,7 @@ declare type WASM_API = {
    * heap, so do not hold a reference longer than needed and do not use a
    * reference after any operation which may allocate. Instead, re-fetch the
    * reference by calling this function again, which automatically refreshes the
-   * view if need.
+   * view if needed.
    *
    * Throws if passed an invalid `n`.
    *
@@ -2758,31 +2462,22 @@ declare type WASM_API = {
   heapForSize(n: 64, unsigned: true): BigUint64Array;
   heapForSize(n: typeof Int32Array): BigInt64Array;
   heapForSize(n: typeof Uint32Array): BigUint64Array;
-
   /** Faster convenience method to get a Int8Array view of the WASM heap. */
   heap8: () => Int8Array;
-
   /** Faster convenience method to get a UInt8Array view of the WASM heap. */
   heap8u: () => Uint8Array;
-
   /** Faster convenience method to get a Int16Array view of the WASM heap. */
   heap16: () => Int16Array;
-
   /** Faster convenience method to get a UInt16Array view of the WASM heap. */
   heap16u: () => Uint16Array;
-
   /** Faster convenience method to get a Int32Array view of the WASM heap. */
   heap32: () => Int32Array;
-
   /** Faster convenience method to get a UInt32Array view of the WASM heap. */
   heap32u: () => Uint32Array;
-
   /** Faster convenience method to get a BigInt64Array view of the WASM heap. */
   heap64: () => BigInt64Array;
-
   /** Faster convenience method to get a BigUint64Array view of the WASM heap. */
   heap64u: () => BigUint64Array;
-
   /**
    * Fetches the `heapForSize()` for the given representation then writes the
    * given numeric value to it. Only numbers may be written this way, and
@@ -2793,31 +2488,23 @@ declare type WASM_API = {
    */
   poke(addr: WasmPointer, value: number, representation?: string): WASM_API;
   poke(addrs: WasmPointer[], value: number, representation?: string): WASM_API;
-
   /**
    * Equivalent to `poke(X,Y,'*')`. Most frequently used for clearing output
    * pointer values.
    */
   pokePtr: (addr: WasmPointer, value: number) => WASM_API;
-
   /** Equivalent to poke(X,Y,'i8') */
   poke8: (addr: WasmPointer, value: number) => WASM_API;
-
   /** Equivalent to poke(X,Y,'i16') */
   poke16: (addr: WasmPointer, value: number) => WASM_API;
-
   /** Equivalent to poke(X,Y,'i32') */
   poke32: (addr: WasmPointer, value: number) => WASM_API;
-
   /** Equivalent to poke(X,Y,'i64') */
   poke64: (addr: WasmPointer, value: number | bigint) => WASM_API;
-
   /** Equivalent to poke(X,Y,'f32') */
   poke32f: (addr: WasmPointer, value: number) => WASM_API;
-
   /** Equivalent to poke(X,Y,'f64') */
   poke64f: (addr: WasmPointer, value: number) => WASM_API;
-
   /* --------------------------------------------------------------------------
    * String Conversion and Utilities
    * --------------------------------------------------------------------------
@@ -2825,7 +2512,6 @@ declare type WASM_API = {
    * and C code represent strings varies significantly. The following routines
    * are available for conversion of strings and related algorithms.
    */
-
   /**
    * Expects to be given a C-style string array and its length. It returns a JS
    * array of strings and/or null values: any entry in the `pArgv` array which
@@ -2838,11 +2524,7 @@ declare type WASM_API = {
    * To be clear, the expected C-style arguments to be passed to this function
    * are `(int, char **)` (optionally const-qualified).
    */
-  cArgvToJs: (
-    argc: number,
-    pArgv: WasmPointer,
-  ) => (string | null)[] | undefined;
-
+  cArgvToJs: (argc: number, pArgv: WasmPointer) => (string | null)[] | undefined;
   /**
    * Expects its argument to be a pointer into the WASM heap memory which refers
    * to a NUL-terminated C-style string encoded as UTF-8. This function counts
@@ -2851,16 +2533,14 @@ declare type WASM_API = {
    * `null` is returned.
    */
   cstrToJs: (ptr: WasmPointer) => string | null;
-
   /**
    * Expects its argument to be a pointer into the WASM heap memory which refers
    * to a NUL-terminated C-style string encoded as UTF-8. Returns the length, in
    * bytes, of the string, as for `strlen(3)`. As a special case, if the
-   * argument is falsy then it it returns null. Throws if the argument is out of
+   * argument is falsy, then it returns null. Throws if the argument is out of
    * range for `wasm.heap8u()`.
    */
   cstrlen: (ptr: WasmPointer) => number | null;
-
   /**
    * Works similarly to C's `strncpy(3)`, copying, at most, `n` bytes (not
    * characters) from `srcPtr` to `tgtPtr`. It copies until `n` bytes have been
@@ -2880,11 +2560,10 @@ declare type WASM_API = {
    *   length.
    *
    * **ACHTUNG:** when passing in a non-negative `n` value, it is possible to
-   * copy partial multi-byte characters this way, and converting such strings
+   * copy partial multibyte characters this way, and converting such strings
    * back to JS strings will have undefined results.
    */
-  cstrncpy: (tgtPtr: WasmPointer, srcPtr: WasmPointer, n: number) => number;
-
+  cstrncpy: (tgtPtr: WasmPointer, srcPtr: WasmPointer, n: number) => Sqlite3Result;
   /**
    * Forewarning: this API is somewhat complicated and is, in practice, never
    * needed from client code.
@@ -2900,9 +2579,9 @@ declare type WASM_API = {
    * length of `tgt`, starting at the given offset.
    *
    * If writing the last character would surpass the `maxBytes` count because
-   * the character is multi-byte, that character will not be written (as opposed
-   * to writing a truncated multi-byte character). This can lead to it writing
-   * as many as 3 fewer bytes than `maxBytes` specifies.
+   * the character is multibyte, that character will not be written (as opposed
+   * to writing a truncated multibyte character). This can lead to it writing as
+   * many as 3 fewer bytes than `maxBytes` specifies.
    *
    * Returns the number of bytes written to the target, including the NUL
    * terminator (if any). If it returns 0, it wrote nothing at all, which can
@@ -2911,25 +2590,17 @@ declare type WASM_API = {
    *     jsString is empty and addNul is false.
    *     offset < 0.
    *     maxBytes === 0.
-   *     maxBytes is less than the byte length of a multi-byte jsString[0].
+   *     maxBytes is less than the byte length of a multibyte jsString[0].
    *
    * Throws if `tgt` is not an `Int8Array` or `Uint8Array`.
    */
-  jstrcpy: (
-    jsString: string,
-    tgt: Int8Array | Uint8Array,
-    offset?: number,
-    maxBytes?: number,
-    addNul?: boolean,
-  ) => number;
-
+  jstrcpy: (jsString: string, tgt: Int8Array | Uint8Array, offset?: number, maxBytes?: number, addNul?: boolean) => Sqlite3Result;
   /**
    * Given a JS string, this function returns its UTF-8 length in bytes. Returns
    * `null` if its argument is not a string. This is a relatively expensive
    * calculation and should be avoided when not necessary.
    */
   jstrlen: (jsString: string) => number | null;
-
   /**
    * For the given JS string, returns a `Uint8Array` of its contents encoded as
    * UTF-8. If `addNul` is true, the returned array will have a trailing 0
@@ -2940,12 +2611,10 @@ declare type WASM_API = {
    * achieved with new TextEncoder().encode(str).
    */
   jstrToUintArray: (jsString: string, addNul?: boolean) => Uint8Array;
-
   /* --------------------------------------------------------------------------
    * String Conversion and Utilities
    * --------------------------------------------------------------------------
    */
-
   /**
    * `wasm.alloc()`'s `srcTypedArray.byteLength` bytes, populates them with the
    * values from the source `TypedArray`, and returns the pointer to that
@@ -2960,10 +2629,7 @@ declare type WASM_API = {
    * sets it to the value 0. Even in such cases, calls must behave as if the
    * allocated memory has exactly `srcTypedArray.byteLength` usable bytes.
    */
-  allocFromTypedArray: (
-    srcTypedArray: Uint8Array | Int8Array | ArrayBuffer,
-  ) => WasmPointer;
-
+  allocFromTypedArray: (srcTypedArray: Uint8Array | Int8Array | ArrayBuffer) => WasmPointer;
   /* ==========================================================================
    * Bridging JS/WASM Functions
    * ==========================================================================
@@ -2986,7 +2652,6 @@ declare type WASM_API = {
    * for the user, but there are cases where client code will need to, or want
    * to, perform such conversions itself.
    */
-
   /* --------------------------------------------------------------------------
    * WASM Function Table
    * --------------------------------------------------------------------------
@@ -2995,24 +2660,20 @@ declare type WASM_API = {
    * bound to WASM at runtime, are exposed to clients via a `WebAssembly.Table`
    * instance. The following APIs are available for working with that.
    */
-
   /**
    * Given a function pointer, returns the WASM function table entry if found,
    * else returns a falsy value.
    */
   functionEntry: (fnPtr: WasmPointer) => Function | undefined;
-
   /** Returns the WASM module's indirect function table. */
   functionTable: () => WebAssembly.Table;
-
   /* --------------------------------------------------------------------------
    * Calling and Wrapping Functions
    * --------------------------------------------------------------------------
    */
-
   /**
    * Calls a WASM-exported function by name, passing on all supplied arguments
-   * (which may optionally be supplied as an array). If throws if the function
+   * (which may optionally be supplied as an array). It throws if the function
    * is not exported or if the argument count does not match. This routine does
    * no type conversion and is essentially equivalent to:
    *
@@ -3023,13 +2684,12 @@ declare type WASM_API = {
    */
   xCall(fn: string | Function, ...args: any[]): any;
   xCall(fn: string | Function, args: any[]): any;
-
   /**
    * Functions like `xCall()` but performs argument and result type conversions
    * as for `xWrap()`.
    *
-   * The first argument is the name of the exported function to call. The 2nd
-   * its the name of its result type, as documented for `xWrap()`. The 3rd is an
+   * The first argument is the name of the exported function to call. The 2nd is
+   * the name of its result type, as documented for `xWrap()`. The 3rd is an
    * array of argument type names, as documented for `xWrap()`. The 4th+
    * arguments are arguments for the call, with the special case that if the 4th
    * argument is an array, it is used as the arguments for the call.
@@ -3042,25 +2702,13 @@ declare type WASM_API = {
    * calls, however, this variant is arguably more efficient because it will
    * hypothetically free the wrapper function quickly.
    */
-  xCallWrapped(
-    functionName: string,
-    resultType: string,
-    argTypes: readonly string[],
-    ...args: any[]
-  ): any;
-  xCallWrapped(
-    functionName: string,
-    resultType: string,
-    argTypes: readonly string[],
-    args: any[],
-  ): any;
-
+  xCallWrapped(functionName: string, resultType: string, argTypes: readonly string[], ...args: any[]): any;
+  xCallWrapped(functionName: string, resultType: string, argTypes: readonly string[], args: any[]): any;
   /**
    * Returns a WASM-exported function by name, or throws if the function is not
    * found.
    */
   xGet: (functionName: string) => Function;
-
   /**
    * `xWrap()` creates a JS function which calls a WASM-exported function, as
    * described for `xCall(`).
@@ -3141,12 +2789,12 @@ declare type WASM_API = {
    *       client-side code is required to create the string, then pass its
    *       pointer to the function.
    *   - Else the arg is assumed to be a pointer to a string the client has already
-   *       allocated and it's passed on as a WASM pointer.
+   *       allocated, and it's passed on as a WASM pointer.
    * - `string` or `utf8` (results): treats the result value as a const C-string,
    *   encoded as UTF-8, copies it to a JS string, and returns that JS string.
    * - `string:dealloc` or `utf8:dealloc` (results): treats the result value as a
    *   non-const C-string, encoded as UTF-8, ownership of which has just been
-   *   transfered to the caller. It copies the C-string to a JS string, frees
+   *   transferred to the caller. It copies the C-string to a JS string, frees
    *   the C-string using `dealloc()`, and returns the JS string. If such a
    *   result value is NULL, the JS result is null. **Achtung:** when using an
    *   API which returns results from a specific allocator, this conversion is
@@ -3159,8 +2807,8 @@ declare type WASM_API = {
    * - `string:static` (args): if passed a pointer, returns it as is. Anything
    *   else: gets coerced to a JS string for use as a map key. If a matching
    *   entry is found (as described next), it is returned, else
-   *   `wasm.allocCString()` is used to create a a new string, map its pointer
-   *   to `(''+v)` for the remainder of the application's life, and returns that
+   *   `wasm.allocCString()` is used to create a new string, map its pointer to
+   *   `(''+v)` for the remainder of the application's life, and returns that
    *   pointer value for this call and all future calls which are passed a
    *   string-equivalent argument. This conversion is intended for cases which
    *   require static/long-lived string arguments, e.g. `sqlite3_bind_pointer()`
@@ -3170,7 +2818,7 @@ declare type WASM_API = {
    *   `null` if the C-string is a NULL pointer. Propagates any exception from
    *   `JSON.parse()`.
    * - `json:dealloc` (results): works exactly like `string:dealloc` but returns
-   *   the same thing as the json adapter. Note the warning in `string:dealloc`
+   *   the same thing as the JSON adapter. Note the warning in `string:dealloc`
    *   about the allocator and deallocator.
    *
    * The type names for results and arguments are validated when `xWrap()` is
@@ -3244,17 +2892,8 @@ declare type WASM_API = {
    * result values depends entirely on client-side semantics of memory
    * management.
    */
-  xWrap(
-    functionName: string,
-    resultType: string | undefined,
-    ...argTypes: readonly string[]
-  ): Function;
-  xWrap(
-    functionName: string,
-    resultType: string | undefined,
-    argTypes: readonly string[],
-  ): Function;
-
+  xWrap(functionName: string, resultType: string | undefined, ...argTypes: readonly string[]): Function;
+  xWrap(functionName: string, resultType: string | undefined, argTypes: readonly string[]): Function;
   /* --------------------------------------------------------------------------
    * (Un)Installing WASM Functions
    * --------------------------------------------------------------------------
@@ -3266,7 +2905,6 @@ declare type WASM_API = {
    * arguments to the provided JS function, and returns the result of that JS
    * function. The details are ugly, but usage is simple...
    */
-
   /**
    * Expects a JS function and signature, exactly as for `wasm.jsFuncToWasm()`.
    * It uses that function to create a WASM-exported function, installs that
@@ -3286,7 +2924,6 @@ declare type WASM_API = {
    */
   installFunction(func: Function, signature: string): WasmPointer;
   installFunction(signature: string, func: Function): WasmPointer;
-
   /**
    * Creates a WASM function which wraps the given JS function and returns the
    * JS binding of that WASM function. The function signature string must be in
@@ -3319,7 +2956,6 @@ declare type WASM_API = {
    */
   jsFuncToWasm(func: Function, signature: string): Function;
   jsFuncToWasm(signature: string, func: Function): Function;
-
   /**
    * This works exactly like `installFunction()` except that the installation is
    * scoped to the current allocation scope and is uninstalled when the current
@@ -3328,7 +2964,6 @@ declare type WASM_API = {
    */
   scopedInstallFunction(func: Function, signature: string): WasmPointer;
   scopedInstallFunction(signature: string, func: Function): WasmPointer;
-
   /**
    * Requires a pointer value previously returned from `wasm.installFunction()`.
    * Removes that function from the WASM function table, marks its table slot as
@@ -3338,12 +2973,10 @@ declare type WASM_API = {
    * passed back to `installFunction()` to reinstall it.
    */
   uninstallFunction: (fnPtr: WasmPointer) => Function;
-
   /* ==========================================================================
    * Generic Utility Functions
    * ==========================================================================
    */
-
   /**
    * Returns true if its value is a WASM pointer type. That is, it's a a 32-bit
    * integer greater than or equal to zero.
@@ -3354,16 +2987,13 @@ declare type WASM_API = {
    * option.
    */
   isPtr: (v: unknown) => v is WasmPointer;
-
   /** See {@link WASM_API#isPtr} */
   isPtr32: (v: unknown) => v is WasmPointer;
-
   /** Size of a WASM pointer in bytes. */
   ptrSizeof: number;
 };
-
 // generated by Object.keys(sqlite3.capi).map(k => `${k}: any;`).join('\n')
-declare type CAPI = {
+export type CAPI = {
   sqlite3_vfs: typeof sqlite3_vfs;
   sqlite3_io_methods: typeof sqlite3_io_methods;
   sqlite3_file: typeof sqlite3_file;
@@ -3371,7 +3001,6 @@ declare type CAPI = {
   sqlite3_vtab_cursor: typeof sqlite3_vtab_cursor;
   sqlite3_module: typeof sqlite3_module;
   sqlite3_index_info: typeof sqlite3_index_info;
-
   /**
    * Returns a string corresponding to the {@link CAPI#SQLITE_VERSION} macro.
    * This function is provided for use in DLLs.
@@ -3383,12 +3012,11 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/libversion.html
    */
   sqlite3_libversion: () => string;
-
   /**
-   * Returns returns a string constant whose value is the same as the
-   * `SQLITE_SOURCE_ID` C preprocessor macro. Except if SQLite is built using an
-   * edited copy of the amalgamation, then the last four characters of the hash
-   * might be different from `SQLITE_SOURCE_ID`.
+   * Returns a string constant whose value is the same as the `SQLITE_SOURCE_ID`
+   * C preprocessor macro. Except if SQLite is built using an edited copy of the
+   * amalgamation, then the last four characters of the hash might be different
+   * from `SQLITE_SOURCE_ID`.
    *
    * C Signature:
    *
@@ -3397,7 +3025,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/libversion.html
    */
   sqlite3_sourceid: () => string;
-
   /**
    * Returns an integer equal to {@link CAPI#SQLITE_VERSION_NUMBER}.
    *
@@ -3408,7 +3035,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/libversion.html
    */
   sqlite3_libversion_number: () => number;
-
   /**
    * Allows iterating over the list of options that were defined at compile time
    * by returning the `idx`-th compile time option string. If `idx` is out of
@@ -3421,7 +3047,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/compileoption_get.html
    */
   sqlite3_compileoption_get: (idx: number) => string;
-
   /**
    * Returns 0 or 1 indicating whether the specified option `optName` was
    * defined at compile time.
@@ -3432,8 +3057,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/compileoption_get.html
    */
-  sqlite3_compileoption_used: (optName: string) => number;
-
+  sqlite3_compileoption_used: (optName: string) => Sqlite3Result;
   /**
    * Destructor for the `sqlite3` object.
    *
@@ -3443,9 +3067,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/close.html
    */
-
-  sqlite3_close_v2: (db: Database | WasmPointer) => number;
-
+  sqlite3_close_v2: (db: DbPtr) => Sqlite3Result;
   /**
    * A convenience wrapper around `sqlite3_prepare_v2()`, `sqlite3_step()`, and
    * `sqlite3_finalize()`, that allows an application to run multiple statements
@@ -3463,14 +3085,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/exec.html
    */
-  sqlite3_exec: (
-    db: Database | WasmPointer,
-    sql: FlexibleString,
-    callback: ((values: SqlValue[], names: string[]) => number) | WasmPointer,
-    pCbArg: WasmPointer,
-    pzErrMsg: WasmPointer,
-  ) => number;
-
+  sqlite3_exec: (db: DbPtr, sql: FlexibleString, callback: ((values: SqlValue[], names: string[]) => number) | WasmPointer, pCbArg: WasmPointer, pzErrMsg: WasmPointer) => Sqlite3Result;
   /**
    * Initializes the SQLite library.
    *
@@ -3480,8 +3095,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/initialize.html
    */
-  sqlite3_initialize: () => number;
-
+  sqlite3_initialize: () => Sqlite3Result;
   /**
    * Deallocates any resources that were allocated by `sqlite3_initialize()`.
    *
@@ -3491,8 +3105,29 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/initialize.html
    */
-  sqlite3_shutdown: () => number;
-
+  sqlite3_shutdown: () => Sqlite3Result;
+  /**
+   * The sqlite3_interrupt(D) interface will cause any pending database
+   * operation to abort and return at its earliest opportunity.
+   *
+   * C Signature:
+   *
+   *     void sqlite3_interrupt(sqlite3*);
+   *
+   * See https://www.sqlite.org/c3ref/interrupt.html
+   */
+  sqlite3_interrupt: (db: DbPtr) => void;
+  /**
+   * The sqlite3_is_interrupted(D) interface can be used to determine whether an
+   * interrupt is currently pending for database connection D.
+   *
+   * C Signature:
+   *
+   *     int sqlite3_is_interrupted(sqlite3*);
+   *
+   * See https://www.sqlite.org/c3ref/interrupt.html
+   */
+  sqlite3_is_interrupted: (db: DbPtr) => number;
   /**
    * Used to make global configuration changes to SQLite in order to tune SQLite
    * to the specific needs of the application. The default configuration is
@@ -3505,23 +3140,9 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/config.html
    */
-  sqlite3_config(
-    op:
-      | CAPI['SQLITE_CONFIG_COVERING_INDEX_SCAN']
-      | CAPI['SQLITE_CONFIG_MEMSTATUS']
-      | CAPI['SQLITE_CONFIG_SMALL_MALLOC']
-      | CAPI['SQLITE_CONFIG_SORTERREF_SIZE']
-      | CAPI['SQLITE_CONFIG_STMTJRNL_SPILL']
-      | CAPI['SQLITE_CONFIG_URI'],
-    arg: number,
-  ): number;
-  sqlite3_config(
-    op: CAPI['SQLITE_CONFIG_LOOKASIDE'],
-    arg1: number,
-    arg2: number,
-  ): number;
-  sqlite3_config(op: CAPI['SQLITE_CONFIG_MEMDB_MAXSIZE'], arg: BigInt): number;
-
+  sqlite3_config(op: CAPI['SQLITE_CONFIG_COVERING_INDEX_SCAN'] | CAPI['SQLITE_CONFIG_MEMSTATUS'] | CAPI['SQLITE_CONFIG_SMALL_MALLOC'] | CAPI['SQLITE_CONFIG_SORTERREF_SIZE'] | CAPI['SQLITE_CONFIG_STMTJRNL_SPILL'] | CAPI['SQLITE_CONFIG_URI'], arg: number): Sqlite3Result;
+  sqlite3_config(op: CAPI['SQLITE_CONFIG_LOOKASIDE'], arg1: number, arg2: number): Sqlite3Result;
+  sqlite3_config(op: CAPI['SQLITE_CONFIG_MEMDB_MAXSIZE'], arg: bigint): Sqlite3Result;
   /**
    * Used to make configuration changes to a database connection. The interface
    * is similar to `sqlite3_config()` except that the changes apply to a single
@@ -3533,31 +3154,9 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/db_config.html
    */
-  // TODO: Type out the arguments for every option via overloading
-  sqlite3_db_config: (
-    db: Database | WasmPointer,
-    op:
-      | CAPI['SQLITE_DBCONFIG_LOOKASIDE']
-      | CAPI['SQLITE_DBCONFIG_ENABLE_FKEY']
-      | CAPI['SQLITE_DBCONFIG_ENABLE_TRIGGER']
-      | CAPI['SQLITE_DBCONFIG_ENABLE_VIEW']
-      | CAPI['SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER']
-      | CAPI['SQLITE_DBCONFIG_ENABLE_LOAD_EXTENSION']
-      | CAPI['SQLITE_DBCONFIG_MAINDBNAME']
-      | CAPI['SQLITE_DBCONFIG_NO_CKPT_ON_CLOSE']
-      | CAPI['SQLITE_DBCONFIG_ENABLE_QPSG']
-      | CAPI['SQLITE_DBCONFIG_TRIGGER_EQP']
-      | CAPI['SQLITE_DBCONFIG_RESET_DATABASE']
-      | CAPI['SQLITE_DBCONFIG_DEFENSIVE']
-      | CAPI['SQLITE_DBCONFIG_WRITABLE_SCHEMA']
-      | CAPI['SQLITE_DBCONFIG_LEGACY_ALTER_TABLE']
-      | CAPI['SQLITE_DBCONFIG_DQS_DML']
-      | CAPI['SQLITE_DBCONFIG_DQS_DDL']
-      | CAPI['SQLITE_DBCONFIG_TRUSTED_SCHEMA']
-      | CAPI['SQLITE_DBCONFIG_LEGACY_FILE_FORMAT'],
-    ...args: number[]
-  ) => number;
-
+  sqlite3_db_config(db: DbPtr, op: CAPI['SQLITE_DBCONFIG_ENABLE_FKEY'] | CAPI['SQLITE_DBCONFIG_ENABLE_TRIGGER'] | CAPI['SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER'] | CAPI['SQLITE_DBCONFIG_ENABLE_LOAD_EXTENSION'] | CAPI['SQLITE_DBCONFIG_NO_CKPT_ON_CLOSE'] | CAPI['SQLITE_DBCONFIG_ENABLE_QPSG'] | CAPI['SQLITE_DBCONFIG_TRIGGER_EQP'] | CAPI['SQLITE_DBCONFIG_RESET_DATABASE'] | CAPI['SQLITE_DBCONFIG_DEFENSIVE'] | CAPI['SQLITE_DBCONFIG_WRITABLE_SCHEMA'] | CAPI['SQLITE_DBCONFIG_LEGACY_ALTER_TABLE'] | CAPI['SQLITE_DBCONFIG_DQS_DML'] | CAPI['SQLITE_DBCONFIG_DQS_DDL'] | CAPI['SQLITE_DBCONFIG_ENABLE_VIEW'] | CAPI['SQLITE_DBCONFIG_LEGACY_FILE_FORMAT'] | CAPI['SQLITE_DBCONFIG_TRUSTED_SCHEMA'] | CAPI['SQLITE_DBCONFIG_STMT_SCANSTATUS'] | CAPI['SQLITE_DBCONFIG_REVERSE_SCANORDER'] | CAPI['SQLITE_DBCONFIG_ENABLE_ATTACH_CREATE'] | CAPI['SQLITE_DBCONFIG_ENABLE_ATTACH_WRITE'] | CAPI['SQLITE_DBCONFIG_ENABLE_COMMENTS'] | CAPI['SQLITE_DBCONFIG_FP_DIGITS'], onoff: number, pOut?: WasmPointer | number): Sqlite3Result;
+  sqlite3_db_config(db: DbPtr, op: CAPI['SQLITE_DBCONFIG_LOOKASIDE'], pBuf: WasmPointer | number, sz: number, cnt: number): Sqlite3Result;
+  sqlite3_db_config(db: DbPtr, op: CAPI['SQLITE_DBCONFIG_MAINDBNAME'], zName: string): Sqlite3Result;
   /**
    * Enables or disables the `extended result codes` feature of SQLite. The
    * extended result codes are disabled by default for historical
@@ -3569,11 +3168,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/extended_result_codes.html
    */
-  sqlite3_extended_result_codes: (
-    db: Database | WasmPointer,
-    onoff: number,
-  ) => number;
-
+  sqlite3_extended_result_codes: (db: DbPtr, onoff: number) => Sqlite3Result;
   /**
    * Usually returns the `rowid` of the most recent successful `INSERT` into a
    * rowid table or virtual table on database connection `db`. Inserts into
@@ -3587,8 +3182,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/last_insert_rowid.html
    */
-  sqlite3_last_insert_rowid: (db: Database | WasmPointer) => BigInt;
-
+  sqlite3_last_insert_rowid: (db: DbPtr) => bigint;
   /**
    * Allows the application to set the value returned by calling
    * `sqlite3_last_insert_rowid(db)` to `rowid` without inserting a row into the
@@ -3600,16 +3194,12 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/set_last_insert_rowid.html
    */
-  sqlite3_set_last_insert_rowid: (
-    db: Database | WasmPointer,
-    rowid: BigInt,
-  ) => void;
-
+  sqlite3_set_last_insert_rowid: (db: DbPtr, rowid: bigint) => void;
   /**
    * Returns the number of rows modified, inserted or deleted by the most
    * recently completed `INSERT`, `UPDATE` or `DELETE` statement on the database
    * connection specified by the only parameter. Executing any other type of SQL
-   * statement does not modify the value returned by these functions. REturn
+   * statement does not modify the value returned by these functions. Return
    * value is undefined if the number of changes is bigger than 32 bits. Use
    * `sqlite3_changes64()` instead in these cases.
    *
@@ -3619,8 +3209,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/changes.html
    */
-  sqlite3_changes: (db: Database | WasmPointer) => number;
-
+  sqlite3_changes: (db: DbPtr) => number;
   /**
    * Returns the number of rows modified, inserted or deleted by the most
    * recently completed `INSERT`, `UPDATE` or `DELETE` statement on the database
@@ -3633,8 +3222,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/changes.html
    */
-  sqlite3_changes64: (db: Database | WasmPointer) => BigInt;
-
+  sqlite3_changes64: (db: DbPtr) => bigint;
   /**
    * Return the total number of rows inserted, modified or deleted by all
    * `INSERT`, `UPDATE` or `DELETE` statements completed since the database
@@ -3650,8 +3238,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/total_changes.html
    */
-  sqlite3_total_changes: (db: Database | WasmPointer) => number;
-
+  sqlite3_total_changes: (db: DbPtr) => number;
   /**
    * Return the total number of rows inserted, modified or deleted by all
    * `INSERT`, `UPDATE` or `DELETE` statements completed since the database
@@ -3665,8 +3252,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/total_changes.html
    */
-  sqlite3_total_changes64: (db: Database | WasmPointer) => BigInt;
-
+  sqlite3_total_changes64: (db: DbPtr) => bigint;
   /**
    * Useful during command-line input to determine if the currently entered text
    * seems to form a complete SQL statement or if additional input is needed
@@ -3680,8 +3266,7 @@ declare type CAPI = {
    *
    * @returns 1 if the input string appears to be a complete SQL statement, or 0
    */
-  sqlite3_complete: (sql: string | WasmPointer) => number;
-
+  sqlite3_complete: (sql: string | WasmPointer) => 0 | 1;
   /**
    * Register A Callback To Handle `SQLITE_BUSY` Errors.
    *
@@ -3698,12 +3283,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/busy_handler.html
    */
-  sqlite3_busy_handler: (
-    db: Database | WasmPointer,
-    callback: ((cbArg: WasmPointer, nTries: number) => number) | WasmPointer,
-    cbArg: WasmPointer,
-  ) => number;
-
+  sqlite3_busy_handler: (db: DbPtr, callback: ((cbArg: WasmPointer, nTries: number) => number) | WasmPointer, cbArg: WasmPointer) => Sqlite3Result;
   /**
    * Set A Busy Timeout.
    *
@@ -3719,8 +3299,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/busy_timeout.html
    */
-  sqlite3_busy_timeout: (db: Database | WasmPointer, ms: number) => number;
-
+  sqlite3_busy_timeout: (db: DbPtr, ms: number) => Sqlite3Result;
   /**
    * Returns a pointer to a block of memory at least `size` bytes in length. ^If
    * `sqlite3_malloc()` is unable to obtain sufficient free memory, it throws a
@@ -3733,7 +3312,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/free.html
    */
   sqlite3_malloc: (size: number) => WasmPointer;
-
   /**
    * Returns a pointer to a block of memory at least `size` bytes in length. ^If
    * `sqlite3_malloc()` is unable to obtain sufficient free memory, it throws a
@@ -3745,8 +3323,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/free.html
    */
-  sqlite3_malloc64: (numBytes: BigInt) => WasmPointer;
-
+  sqlite3_malloc64: (numBytes: bigint) => WasmPointer;
   /**
    * Attempts to resize a prior memory allocation X to be at least N bytes.
    *
@@ -3766,7 +3343,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/free.html
    */
   sqlite3_realloc: (ptr: WasmPointer, size: number) => WasmPointer;
-
   /**
    * Attempts to resize a prior memory allocation X to be at least N bytes.
    *
@@ -3785,8 +3361,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/free.html
    */
-  sqlite3_realloc64: (ptr: WasmPointer, numBytes: BigInt) => WasmPointer;
-
+  sqlite3_realloc64: (ptr: WasmPointer, numBytes: bigint) => WasmPointer;
   /**
    * Calling `sqlite3_free()` with a pointer previously returned by
    * `sqlite3_malloc()` or `sqlite3_realloc()` releases that memory so that it
@@ -3807,7 +3382,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/free.html
    */
   sqlite3_free: (ptr: WasmPointer) => void;
-
   /**
    * If `ptr` is a memory allocation previously obtained from
    * `sqlite3_malloc()`, `sqlite3_malloc64()`, `sqlite3_realloc()`, or
@@ -3820,8 +3394,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/free.html
    */
-  sqlite3_msize: (ptr: WasmPointer) => BigInt;
-
+  sqlite3_msize: (ptr: WasmPointer) => bigint;
   /**
    * Pseudo-Random Number Generator
    *
@@ -3836,7 +3409,6 @@ declare type CAPI = {
    */
   sqlite3_randomness(N: number, P: WasmPointer): void;
   sqlite3_randomness<T extends Uint8Array | Int8Array>(arr: T): T;
-
   /**
    * This routine registers an authorizer callback with a particular database
    * connection, supplied in the first argument. The authorizer callback is
@@ -3864,19 +3436,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/set_authorizer.html
    */
-  sqlite3_set_authorizer: (
-    db: Database | WasmPointer,
-    xAuth: (
-      cbArg: WasmPointer,
-      actionCode: number,
-      arg1: string | 0,
-      arg2: string | 0,
-      arg3: string | 0,
-      arg4: string | 0,
-    ) => number,
-    cbArg: WasmPointer,
-  ) => number;
-
+  sqlite3_set_authorizer: (db: DbPtr, xAuth: (cbArg: WasmPointer, actionCode: number, arg1: string | 0, arg2: string | 0, arg3: string | 0, arg4: string | 0) => number | NullPointer, cbArg: WasmPointer) => Sqlite3Result;
   /**
    * Registers a trace callback function `xCallback` against database connection
    * `db`, using property mask `mask` and context pointer `cbArg`. If the
@@ -3896,20 +3456,10 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/trace_v2.html
    */
-  sqlite3_trace_v2: (
-    db: Database | WasmPointer,
-    mask: number,
-    xCallback: (
-      reason: number,
-      cbArg: WasmPointer,
-      arg1: WasmPointer,
-      arg2: WasmPointer,
-    ) => number,
-  ) => number;
-
+  sqlite3_trace_v2: (db: DbPtr, mask: number, xCallback: (reason: number, cbArg: WasmPointer, arg1: WasmPointer, arg2: WasmPointer) => number) => Sqlite3Result;
   /**
    * Causes the callback function `callback` to be invoked periodically during
-   * long running calls to `sqlite3_step()` and `sqlite3_prepare()` and similar
+   * long-running calls to `sqlite3_step()` and `sqlite3_prepare()` and similar
    * for database connection `db`. An example use for this interface is to keep
    * a GUI updated during a large query.
    *
@@ -3919,13 +3469,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/progress_handler.html
    */
-  sqlite3_progress_handler: (
-    db: Database | WasmPointer,
-    nOps: number,
-    callback: ((cbArg: WasmPointer) => number) | WasmPointer,
-    cbArg: WasmPointer,
-  ) => void;
-
+  sqlite3_progress_handler: (db: DbPtr, nOps: number, callback: ((cbArg: WasmPointer) => number) | WasmPointer, cbArg: WasmPointer) => void;
   /**
    * Open an SQLite database file as specified by the `filename` argument
    *
@@ -3938,8 +3482,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/open.html
    */
-  sqlite3_open: (filename: string | WasmPointer, ppDb: WasmPointer) => number;
-
+  sqlite3_open: (filename: string | WasmPointer, ppDb: WasmPointer) => Sqlite3Result;
   /**
    * Open an SQLite database file as specified by the `filename` argument
    *
@@ -3954,13 +3497,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/open.html
    */
-  sqlite3_open_v2: (
-    filename: string | WasmPointer,
-    ppDb: WasmPointer,
-    flags: number,
-    vfs: string | WasmPointer,
-  ) => number;
-
+  sqlite3_open_v2: (filename: string | WasmPointer, ppDb: WasmPointer, flags: number, vfs: string | WasmPointer) => Sqlite3Result;
   /**
    * Checks if a database file `uri` was a URI that contained a specific query
    * parameter `param`, and if so obtains the value of that query parameter.
@@ -3971,11 +3508,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/uri_parameter.html
    */
-  sqlite3_uri_parameter: (
-    uri: string | WasmPointer,
-    param: string | WasmPointer,
-  ) => string | null;
-
+  sqlite3_uri_parameter: (uri: string | WasmPointer, param: string | WasmPointer) => string | null;
   /**
    * Assumes that `param` is a boolean parameter and returns true (1) or false
    * (0) according to the value of `param`.
@@ -3986,12 +3519,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/uri_boolean.html
    */
-  sqlite3_uri_boolean: (
-    uri: string | WasmPointer,
-    param: string | WasmPointer,
-    dflt: number,
-  ) => number;
-
+  sqlite3_uri_boolean: (uri: string | WasmPointer, param: string | WasmPointer, dflt: number) => Sqlite3Result;
   /**
    * Converts the value of `paramName` into a 64-bit signed integer and returns
    * that integer, or `defaultVal` if `paramName` does not exist. If the value
@@ -4003,12 +3531,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/uri_boolean.html
    */
-  sqlite3_uri_int64: (
-    uri: string | WasmPointer,
-    paramName: string | WasmPointer,
-    defaultVal: BigInt,
-  ) => BigInt;
-
+  sqlite3_uri_int64: (uri: string | WasmPointer, paramName: string | WasmPointer, defaultVal: bigint) => bigint;
   /**
    * Returns a pointer to the name (not the value) of the `idx`-th query
    * parameter for filename `uri`.
@@ -4020,7 +3543,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/uri_boolean.html
    */
   sqlite3_uri_key: (uri: string | WasmPointer, idx: number) => string | null;
-
   /**
    * If the most recent `sqlite3_*` API call associated with database connection
    * `db` failed, then the `sqlite3_errcode(db)` interface returns the numeric
@@ -4032,8 +3554,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/errcode.html
    */
-  sqlite3_errcode: (db: Database | WasmPointer) => number;
-
+  sqlite3_errcode: (db: DbPtr) => Sqlite3Result;
   /**
    * If the most recent `sqlite3_*` API call associated with database connection
    * `db` failed, then the `sqlite3_extended_errcode(db)` interface returns the
@@ -4046,12 +3567,11 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/errcode.html
    */
-  sqlite3_extended_errcode: (db: Database | WasmPointer) => number;
-
+  sqlite3_extended_errcode: (db: DbPtr) => Sqlite3Result;
   /**
    * If the most recent `sqlite3_*` API call associated with database connection
-   * `db` failed, then the `sqlite3_errmsg(db)` interface returns English-
-   * language text that describes the error.
+   * `db` failed, then the `sqlite3_errmsg(db)` interface returns
+   * English-language text that describes the error.
    *
    * C Signature:
    *
@@ -4059,8 +3579,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/errcode.html
    */
-  sqlite3_errmsg: (db: Database | WasmPointer) => string;
-
+  sqlite3_errmsg: (db: DbPtr) => string;
   /**
    * Returns the English-language text that describes the result code,
    *
@@ -4071,7 +3590,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/errcode.html
    */
   sqlite3_errstr: (rc: number) => string;
-
   /**
    * If the most recent error references a specific token in the input SQL, the
    * `sqlite3_error_offset()` interface returns the byte offset of the start of
@@ -4087,8 +3605,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/errcode.html
    */
-  sqlite3_error_offset: (db: Database | WasmPointer) => number;
-
+  sqlite3_error_offset: (db: DbPtr) => Sqlite3Result;
   /**
    * This interface allows the size of various constructs to be limited on a
    * connection by connection basis. The first parameter is the database
@@ -4102,24 +3619,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/limit.html
    */
-  sqlite3_limit: (
-    db: Database | WasmPointer,
-    id:
-      | CAPI['SQLITE_LIMIT_LENGTH']
-      | CAPI['SQLITE_LIMIT_SQL_LENGTH']
-      | CAPI['SQLITE_LIMIT_COLUMN']
-      | CAPI['SQLITE_LIMIT_EXPR_DEPTH']
-      | CAPI['SQLITE_LIMIT_COMPOUND_SELECT']
-      | CAPI['SQLITE_LIMIT_VDBE_OP']
-      | CAPI['SQLITE_LIMIT_FUNCTION_ARG']
-      | CAPI['SQLITE_LIMIT_ATTACHED']
-      | CAPI['SQLITE_LIMIT_LIKE_PATTERN_LENGTH']
-      | CAPI['SQLITE_LIMIT_VARIABLE_NUMBER']
-      | CAPI['SQLITE_LIMIT_TRIGGER_DEPTH']
-      | CAPI['SQLITE_LIMIT_WORKER_THREADS'],
-    newVal: number,
-  ) => number;
-
+  sqlite3_limit: (db: DbPtr, id: CAPI['SQLITE_LIMIT_LENGTH'] | CAPI['SQLITE_LIMIT_SQL_LENGTH'] | CAPI['SQLITE_LIMIT_COLUMN'] | CAPI['SQLITE_LIMIT_EXPR_DEPTH'] | CAPI['SQLITE_LIMIT_COMPOUND_SELECT'] | CAPI['SQLITE_LIMIT_VDBE_OP'] | CAPI['SQLITE_LIMIT_FUNCTION_ARG'] | CAPI['SQLITE_LIMIT_ATTACHED'] | CAPI['SQLITE_LIMIT_LIKE_PATTERN_LENGTH'] | CAPI['SQLITE_LIMIT_VARIABLE_NUMBER'] | CAPI['SQLITE_LIMIT_TRIGGER_DEPTH'] | CAPI['SQLITE_LIMIT_WORKER_THREADS'] | CAPI['SQLITE_LIMIT_PARSER_DEPTH'], newVal: number) => Sqlite3Result;
   /**
    * Compiles a prepared statement.
    *
@@ -4141,14 +3641,7 @@ declare type CAPI = {
    * @param ppStmt OUT: Statement handle
    * @param pzTail OUT: Pointer to unused portion of SQL statement
    */
-  sqlite3_prepare_v2: (
-    db: Database | WasmPointer,
-    sql: string | WasmPointer,
-    nByte: number,
-    ppStmt: WasmPointer,
-    pzTail: WasmPointer,
-  ) => number;
-
+  sqlite3_prepare_v2: (db: DbPtr, sql: string | WasmPointer, nByte: number, ppStmt: WasmPointer, pzTail: WasmPointer) => Sqlite3Result;
   /**
    * Compiles a prepared statement.
    *
@@ -4172,23 +3665,8 @@ declare type CAPI = {
    * @param ppStmt OUT: Statement handle
    * @param pzTail OUT: Pointer to unused portion of SQL statement
    */
-  sqlite3_prepare_v3(
-    db: Database | WasmPointer,
-    sql: Exclude<FlexibleString, WasmPointer>,
-    nByte: -1,
-    prepFlags: number,
-    ppStmt: WasmPointer,
-    pzTail: null,
-  ): number;
-  sqlite3_prepare_v3(
-    db: Database | WasmPointer,
-    sql: WasmPointer,
-    nByte: number,
-    prepFlags: number,
-    ppStmt: WasmPointer,
-    pzTail: WasmPointer,
-  ): number;
-
+  sqlite3_prepare_v3(db: DbPtr, sql: Exclude<FlexibleString, WasmPointer>, nByte: -1, prepFlags: number, ppStmt: WasmPointer, pzTail: null): Sqlite3Result;
+  sqlite3_prepare_v3(db: DbPtr, sql: WasmPointer, nByte: number, prepFlags: number, ppStmt: WasmPointer, pzTail: WasmPointer): Sqlite3Result;
   /**
    * Returns a pointer to a copy of the UTF-8 SQL text used to create prepared
    * statement `stmt` if `stmt` was created by `sqlite3_prepare_v2()` or
@@ -4200,8 +3678,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/sql.html
    */
-  sqlite3_sql: (stmt: PreparedStatement | WasmPointer) => string;
-
+  sqlite3_sql: (stmt: StmtPtr) => string;
   /**
    * Returns a pointer to a UTF-8 string containing the SQL text of prepared
    * statement `stmt` with bound parameters expanded.
@@ -4212,8 +3689,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/expanded_sql.html
    */
-  sqlite3_expanded_sql: (stmt: PreparedStatement | WasmPointer) => string;
-
+  sqlite3_expanded_sql: (stmt: StmtPtr) => string;
   /**
    * Returns true (non-zero) if and only if the prepared statement `stmt` makes
    * no direct changes to the content of the database file.
@@ -4224,8 +3700,19 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/stmt_readonly.html
    */
-  sqlite3_stmt_readonly: (stmt: PreparedStatement | WasmPointer) => number;
-
+  sqlite3_stmt_readonly: (stmt: StmtPtr) => number;
+  /**
+   * The sqlite3_stmt_busy(S) interface returns true (non-zero) if the prepared
+   * statement S has been stepped at least once but has not yet run to
+   * completion and/or has not been reset.
+   *
+   * C Signature:
+   *
+   *     int sqlite3_stmt_busy(sqlite3_stmt*);
+   *
+   * See https://www.sqlite.org/c3ref/stmt_busy.html
+   */
+  sqlite3_stmt_busy: (stmt: StmtPtr) => number;
   /**
    * Returns 1 if the prepared statement `stmt` is an `EXPLAIN` statement, or 2
    * if the statement `stmt` is an `EXPLAIN QUERY PLAN`. Returns 0 if `stmt` is
@@ -4237,8 +3724,30 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/stmt_isexplain.html
    */
-  sqlite3_stmt_isexplain: (stmt: PreparedStatement | WasmPointer) => 0 | 1 | 2;
-
+  sqlite3_stmt_isexplain: (stmt: StmtPtr) => 0 | 1 | 2;
+  /**
+   * Set the explain mode for a statement.
+   *
+   * C Signature:
+   *
+   *     int sqlite3_stmt_explain(sqlite3_stmt *pStmt, int eMode);
+   *
+   * See https://sqlite.org/c3ref/stmt_explain.html
+   */
+  sqlite3_stmt_explain: (stmt: StmtPtr, eMode: number) => Sqlite3Result;
+  /**
+   * Return a pointer to the next prepared statement after `pStmt` associated
+   * with database connection `db`. If `pStmt` is null, return the first
+   * prepared statement for the database connection. Return 0 if there are no
+   * more.
+   *
+   * C Signature:
+   *
+   *     sqlite3_stmt * sqlite3_next_stmt(sqlite3 * pDb, sqlite3_stmt * pStmt);
+   *
+   * See https://sqlite.org/c3ref/next_stmt.html
+   */
+  sqlite3_next_stmt: (db: DbPtr, pStmt: StmtPtr | 0) => StmtPtr | 0;
   /**
    * Bind a `BLOB` value to a parameter in a prepared statement.
    *
@@ -4255,25 +3764,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/bind_blob.html
    */
-  sqlite3_bind_blob: (
-    stmt: PreparedStatement | WasmPointer,
-    idx: number,
-    blob:
-      | WasmPointer
-      | string
-      | readonly string[]
-      | Int8Array
-      | Uint8Array
-      | ArrayBuffer,
-    n: number,
-    dtor:
-      | (() => void)
-      | WasmPointer
-      | CAPI['SQLITE_STATIC']
-      | CAPI['SQLITE_TRANSIENT']
-      | CAPI['SQLITE_WASM_DEALLOC'],
-  ) => number;
-
+  sqlite3_bind_blob: (stmt: StmtPtr, idx: number, blob: WasmPointer | string | readonly string[] | Int8Array | Uint8Array | ArrayBuffer, n: number, dtor: DtorType) => Sqlite3Result;
   /**
    * Bind a double precision floating point number to a parameter in a prepared
    * statement.
@@ -4284,12 +3775,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/bind_blob.html
    */
-  sqlite3_bind_double: (
-    stmt: PreparedStatement | WasmPointer,
-    idx: number,
-    value: number,
-  ) => number;
-
+  sqlite3_bind_double: (stmt: StmtPtr, idx: number, value: number) => Sqlite3Result;
   /**
    * Bind an integer number to a parameter in a prepared statement.
    *
@@ -4299,14 +3785,9 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/bind_blob.html
    */
-  sqlite3_bind_int: (
-    stmt: PreparedStatement | WasmPointer,
-    idx: number,
-    value: number,
-  ) => number;
-
+  sqlite3_bind_int: (stmt: StmtPtr, idx: number, value: number) => Sqlite3Result;
   /**
-   * Bind a 64 bit integer number to a parameter in a prepared statement.
+   * Bind a 64-bit integer number to a parameter in a prepared statement.
    *
    * C Signature:
    *
@@ -4314,8 +3795,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/bind_blob.html
    */
-  sqlite3_bind_int64: (stmt: WasmPointer, idx: number, value: BigInt) => number;
-
+  sqlite3_bind_int64: (stmt: StmtPtr, idx: number, value: bigint) => Sqlite3Result;
   /**
    * Bind a `NULL` value to a parameter in a prepared statement.
    *
@@ -4325,11 +3805,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/bind_blob.html
    */
-  sqlite3_bind_null: (
-    stmt: PreparedStatement | WasmPointer,
-    idx: number,
-  ) => number;
-
+  sqlite3_bind_null: (stmt: StmtPtr, idx: number) => Sqlite3Result;
   /**
    * Bind a `TEXT` value to a parameter in a prepared statement.
    *
@@ -4346,25 +3822,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/bind_blob.html
    */
-  sqlite3_bind_text: (
-    stmt: PreparedStatement | WasmPointer,
-    idx: number,
-    text:
-      | string
-      | WasmPointer
-      | readonly string[]
-      | Int8Array
-      | Uint8Array
-      | ArrayBuffer,
-    n: number,
-    dtor:
-      | (() => void)
-      | WasmPointer
-      | CAPI['SQLITE_STATIC']
-      | CAPI['SQLITE_TRANSIENT']
-      | CAPI['SQLITE_WASM_DEALLOC'],
-  ) => number;
-
+  sqlite3_bind_text: (stmt: StmtPtr, idx: number, text: string | WasmPointer | readonly string[] | Int8Array | Uint8Array | ArrayBuffer, n: number, dtor: DtorType) => Sqlite3Result;
   /**
    * Causes the `idx`-th parameter in prepared statement `stmt` to have an SQL
    * value of `NULL`, but to also be associated with the pointer `ptr` of type
@@ -4385,19 +3843,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/bind_blob.html
    */
-  sqlite3_bind_pointer: (
-    stmt: PreparedStatement | WasmPointer,
-    idx: number,
-    ptr: WasmPointer,
-    type: string | WasmPointer,
-    dtor:
-      | (() => void)
-      | WasmPointer
-      | CAPI['SQLITE_STATIC']
-      | CAPI['SQLITE_TRANSIENT']
-      | CAPI['SQLITE_WASM_DEALLOC'],
-  ) => number;
-
+  sqlite3_bind_pointer: (stmt: StmtPtr, idx: number, ptr: WasmPointer, type: string | WasmPointer, dtor: (() => void) | WasmPointer | CAPI['SQLITE_STATIC'] | CAPI['SQLITE_TRANSIENT'] | CAPI['SQLITE_WASM_DEALLOC']) => Sqlite3Result;
   /**
    * Used to find the number of SQL parameters in a prepared statement. SQL
    * parameters are tokens of the form `?`, `?NNN`, `:AAA`, `$AAA`, or `@AAA`
@@ -4410,10 +3856,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/bind_parameter_count.html
    */
-  sqlite3_bind_parameter_count: (
-    stmt: PreparedStatement | WasmPointer,
-  ) => number;
-
+  sqlite3_bind_parameter_count: (stmt: StmtPtr) => number;
   /**
    * Return the index of an SQL parameter given its name. The index value
    * returned is suitable for use as the second parameter to `sqlite3_bind()`. A
@@ -4425,11 +3868,18 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/bind_parameter_index.html
    */
-  sqlite3_bind_parameter_index: (
-    stmt: PreparedStatement | WasmPointer,
-    name: string | WasmPointer,
-  ) => number;
-
+  sqlite3_bind_parameter_index: (stmt: StmtPtr, name: string | WasmPointer) => Sqlite3Result;
+  /**
+   * The sqlite3_bind_parameter_name(P,N) interface returns the name of the N-th
+   * parameter in prepared statement P.
+   *
+   * C Signature:
+   *
+   *     const char *sqlite3_bind_parameter_name(sqlite3_stmt*, int);
+   *
+   * See https://www.sqlite.org/c3ref/bind_parameter_name.html
+   */
+  sqlite3_bind_parameter_name: (stmt: StmtPtr, N: number) => string | null;
   /**
    * Use this routine to reset all host parameters to NULL.
    *
@@ -4439,8 +3889,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/clear_bindings.html
    */
-  sqlite3_clear_bindings: (db: Database | WasmPointer) => number;
-
+  sqlite3_clear_bindings: (db: DbPtr) => Sqlite3Result;
   /**
    * Returns the number of columns in the result set returned by the prepared
    * statement.
@@ -4451,8 +3900,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/column_count.html
    */
-  sqlite3_column_count: (stmt: PreparedStatement | WasmPointer) => number;
-
+  sqlite3_column_count: (stmt: StmtPtr) => number;
   /**
    * Returns the name assigned to a particular column in the result set of a
    * `SELECT statement`.
@@ -4463,11 +3911,48 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/column_name.html
    */
-  sqlite3_column_name: (
-    stmt: PreparedStatement | WasmPointer,
-    colIdx: number,
-  ) => string;
-
+  sqlite3_column_name: (stmt: StmtPtr, N: number) => string;
+  /**
+   * The sqlite3_column_decltype(S,N) routine returns the declared type of the
+   * N-th column in the result set of the prepared statement S.
+   *
+   * C Signature:
+   *
+   *     const char *sqlite3_column_decltype(sqlite3_stmt*, int);
+   *
+   * See https://www.sqlite.org/c3ref/column_decltype.html
+   */
+  sqlite3_column_decltype: (stmt: StmtPtr, N: number) => string | null;
+  /**
+   * Return the name of the database from which a result column derives. Returns
+   * null if the column is not an unambiguous reference to a database column.
+   *
+   * C Signature:
+   *
+   *     const char *sqlite3_column_database_name(sqlite3_stmt *pStmt, int N);
+   */
+  sqlite3_column_database_name: (stmt: StmtPtr, N: number) => string | null;
+  /**
+   * Return the name of the table from which a result column derives. Returns
+   * null if the column is not an unambiguous reference to a database column.
+   *
+   * C Signature:
+   *
+   *     const char *sqlite3_column_table_name(sqlite3_stmt *pStmt, int N);
+   *
+   * See https://sqlite.org/c3ref/column_database_name.html
+   */
+  sqlite3_column_table_name: (stmt: StmtPtr, N: number) => string | null;
+  /**
+   * Return the name of the table column from which a result column derives.
+   * Returns null if the column is not an unambiguous reference to a database
+   * column.
+   *
+   * C Signature:
+   *
+   *     const char *sqlite3_column_origin_name(sqlite3_stmt *pStmt, int N);
+   */
+  sqlite3_column_origin_name: (stmt: StmtPtr, N: number) => string | null;
   /**
    * Returns the result of passing the result of
    * `sqlite3_column_value(pStmt,iCol)` to `sqlite3_value_to_js()`. The 3rd
@@ -4478,17 +3963,8 @@ declare type CAPI = {
    * argument. If the 3rd argument is falsy and conversion fails, `undefined`
    * will be returned.
    */
-  sqlite3_column_js(
-    stmt: PreparedStatement | WasmPointer,
-    colIdx: number,
-    throwIfCannotConvert?: true,
-  ): SqlValue | undefined;
-  sqlite3_column_js(
-    stmt: PreparedStatement | WasmPointer,
-    colIdx: number,
-    throwIfCannotConvert: false,
-  ): SqlValue | undefined;
-
+  sqlite3_column_js(stmt: StmtPtr, colIdx: number, throwIfCannotConvert?: true): SqlValue | undefined;
+  sqlite3_column_js(stmt: StmtPtr, colIdx: number, throwIfCannotConvert: false): SqlValue | undefined;
   /**
    * After a prepared statement has been prepared using any of
    * `sqlite3_prepare_v2()`, `sqlite3_prepare_v3()`, `sqlite3_prepare16_v2()`,
@@ -4502,8 +3978,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/step.html
    */
-  sqlite3_step: (stmt: PreparedStatement | WasmPointer) => number;
-
+  sqlite3_step: (stmt: StmtPtr) => Sqlite3Result;
   /**
    * Returns the number of columns in the current row of the result set of
    * prepared statement `stmt`.
@@ -4514,8 +3989,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/data_count.html
    */
-  sqlite3_data_count: (stmt: PreparedStatement | WasmPointer) => number;
-
+  sqlite3_data_count: (stmt: StmtPtr) => number;
   /**
    * Get a BLOB result value from a column in the current result row.
    *
@@ -4525,11 +3999,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/column_blob.html
    */
-  sqlite3_column_blob: (
-    stmt: PreparedStatement | WasmPointer,
-    colIdx: number,
-  ) => WasmPointer;
-
+  sqlite3_column_blob: (stmt: StmtPtr, colIdx: number) => WasmPointer;
   /**
    * Get a double precision floating point result value from a column in the
    * current result row.
@@ -4540,11 +4010,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/column_blob.html
    */
-  sqlite3_column_double: (
-    stmt: PreparedStatement | WasmPointer,
-    colIdx: number,
-  ) => number;
-
+  sqlite3_column_double: (stmt: StmtPtr, colIdx: number) => number;
   /**
    * Get an integer result value from a column in the current result row.
    *
@@ -4554,11 +4020,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/column_blob.html
    */
-  sqlite3_column_int: (
-    stmt: PreparedStatement | WasmPointer,
-    colIdx: number,
-  ) => number;
-
+  sqlite3_column_int: (stmt: StmtPtr, colIdx: number) => number;
   /**
    * Get a 64bit integer result value from a column in the current result row.
    *
@@ -4568,8 +4030,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/column_blob.html
    */
-  sqlite3_column_int64: (db: Database | WasmPointer, colIdx: number) => BigInt;
-
+  sqlite3_column_int64: (stmt: StmtPtr, colIdx: number) => bigint;
   /**
    * Get a TEXT result value from a column in the current result row.
    *
@@ -4579,11 +4040,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/column_blob.html
    */
-  sqlite3_column_text: (
-    stmt: PreparedStatement | WasmPointer,
-    colIdx: number,
-  ) => string;
-
+  sqlite3_column_text: (stmt: StmtPtr, colIdx: number) => string;
   /**
    * Get a `sql_value*` result value from a column in the current result row.
    *
@@ -4593,11 +4050,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/column_blob.html
    */
-  sqlite3_column_value: (
-    stmt: PreparedStatement | WasmPointer,
-    colIdx: number,
-  ) => WasmPointer;
-
+  sqlite3_column_value: (stmt: StmtPtr, colIdx: number) => WasmPointer;
   /**
    * Returns the initial data type of the result column in the current result
    * row.
@@ -4608,11 +4061,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/column_blob.html
    */
-  sqlite3_column_bytes: (
-    stmt: PreparedStatement | WasmPointer,
-    colIdx: number,
-  ) => number;
-
+  sqlite3_column_bytes: (stmt: StmtPtr, colIdx: number) => number;
   /**
    * Get the length in bytes of a BLOB or TEXT column in the current result row.
    *
@@ -4622,11 +4071,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/column_blob.html
    */
-  sqlite3_column_type: (
-    stmt: PreparedStatement | WasmPointer,
-    colIdx: number,
-  ) => number;
-
+  sqlite3_column_type: (stmt: StmtPtr, colIdx: number) => number;
   /**
    * The `sqlite3_finalize()` function is called to delete a prepared statement.
    * If the most recent evaluation of the statement encountered no errors or if
@@ -4641,8 +4086,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/finalize.html
    */
-  sqlite3_finalize: (stmt: PreparedStatement | WasmPointer) => number;
-
+  sqlite3_finalize: (stmt: StmtPtr) => Sqlite3Result;
   /**
    * Called to reset a [prepared statement] object back to its initial state,
    * ready to be re-executed. Any SQL statement variables that had values bound
@@ -4655,8 +4099,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/reset.html
    */
-  sqlite3_reset: (stmt: PreparedStatement | WasmPointer) => number;
-
+  sqlite3_reset: (stmt: StmtPtr) => Sqlite3Result;
   /**
    * Add SQL function or aggregation or redefine the behavior of an existing SQL
    * function or aggregation.
@@ -4676,19 +4119,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/create_function.html
    */
-  sqlite3_create_function: (
-    db: Database | WasmPointer,
-    functionName: string | WasmPointer,
-    nArg: number,
-    eTextRep: CAPI['SQLITE_UTF8'],
-    pApp: WasmPointer,
-    xFunc:
-      | ((ctx: WasmPointer, ...values: SqlValue[]) => SqlValue)
-      | WasmPointer,
-    xStep: ((ctx: WasmPointer, ...values: SqlValue[]) => void) | WasmPointer,
-    xFinal: ((ctx: WasmPointer) => SqlValue) | WasmPointer,
-  ) => number;
-
+  sqlite3_create_function: (db: DbPtr, functionName: string | WasmPointer, nArg: number, eTextRep: CAPI['SQLITE_UTF8'], pApp: WasmPointer, xFunc: ((ctx: WasmPointer, ...values: SqlValue[]) => SqlValue) | WasmPointer, xStep: ((ctx: WasmPointer, ...values: SqlValue[]) => void) | WasmPointer, xFinal: ((ctx: WasmPointer) => SqlValue) | WasmPointer) => Sqlite3Result;
   /**
    * Add SQL function or aggregation or redefine the behavior of an existing SQL
    * function or aggregation.
@@ -4709,20 +4140,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/create_function.html
    */
-  sqlite3_create_function_v2: (
-    db: Database | WasmPointer,
-    functionName: string | WasmPointer,
-    nArg: number,
-    eTextRep: CAPI['SQLITE_UTF8'],
-    pApp: WasmPointer,
-    xFunc:
-      | ((ctx: WasmPointer, ...values: SqlValue[]) => SqlValue)
-      | WasmPointer,
-    xStep: ((ctx: WasmPointer, ...values: SqlValue[]) => void) | WasmPointer,
-    xFinal: ((ctx: WasmPointer) => SqlValue) | WasmPointer,
-    xDestroy: (() => void) | WasmPointer,
-  ) => number;
-
+  sqlite3_create_function_v2: (db: DbPtr, functionName: string | WasmPointer, nArg: number, eTextRep: CAPI['SQLITE_UTF8'], pApp: WasmPointer, xFunc: ((ctx: WasmPointer, ...values: SqlValue[]) => SqlValue) | WasmPointer, xStep: ((ctx: WasmPointer, ...values: SqlValue[]) => void) | WasmPointer, xFinal: ((ctx: WasmPointer) => SqlValue) | WasmPointer, xDestroy: (() => void) | WasmPointer) => Sqlite3Result;
   /**
    * Add SQL aggregate window function or redefine the behavior of an existing
    * SQL aggregate window function.
@@ -4744,21 +4162,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/create_function.html
    */
-  sqlite3_create_window_function: (
-    db: Database | WasmPointer,
-    functionName: string | WasmPointer,
-    nArg: number,
-    eTextRep: CAPI['SQLITE_UTF8'],
-    pApp: WasmPointer,
-    xStep:
-      | ((ctx: WasmPointer, ...values: SqlValue[]) => SqlValue)
-      | WasmPointer,
-    xFinal: ((ctx: WasmPointer) => SqlValue) | WasmPointer,
-    xValue: ((ctx: WasmPointer) => void) | WasmPointer,
-    xInverse: ((ctx: WasmPointer, ...values: SqlValue[]) => void) | WasmPointer,
-    xDestroy: (() => void) | WasmPointer,
-  ) => number;
-
+  sqlite3_create_window_function: (db: DbPtr, functionName: string | WasmPointer, nArg: number, eTextRep: CAPI['SQLITE_UTF8'], pApp: WasmPointer, xStep: ((ctx: WasmPointer, ...values: SqlValue[]) => SqlValue) | WasmPointer, xFinal: ((ctx: WasmPointer) => SqlValue) | WasmPointer, xValue: ((ctx: WasmPointer) => void) | WasmPointer, xInverse: ((ctx: WasmPointer, ...values: SqlValue[]) => void) | WasmPointer, xDestroy: (() => void) | WasmPointer) => Sqlite3Result;
   /**
    * Extract a `BLOB` value from a protected `sqlite3_value` object.
    *
@@ -4772,7 +4176,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/value_blob.html
    */
   sqlite3_value_blob: (sqliteValue: WasmPointer) => WasmPointer;
-
   /**
    * Extract a `REAL` value from a protected `sqlite3_value` object.
    *
@@ -4782,8 +4185,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/value_blob.html
    */
-  sqlite3_value_double: (sqliteValue: WasmPointer) => number;
-
+  sqlite3_value_double: (sqliteValue: WasmPointer) => Sqlite3Result;
   /**
    * Extract a `INTEGER` value from a protected `sqlite3_value` object.
    *
@@ -4793,8 +4195,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/value_blob.html
    */
-  sqlite3_value_int: (sqliteValue: WasmPointer) => number;
-
+  sqlite3_value_int: (sqliteValue: WasmPointer) => Sqlite3Result;
   /**
    * Extract a 64-bit `INTEGER` value from a protected `sqlite3_value` object.
    *
@@ -4804,8 +4205,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/value_blob.html
    */
-  sqlite3_value_int64: (sqliteValue: WasmPointer) => BigInt;
-
+  sqlite3_value_int64: (sqliteValue: WasmPointer) => bigint;
   /**
    * Extract a pointer value from a protected `sqlite3_value` object. If the
    * object was not initialized using `sqlite3_bind_pointer` or
@@ -4817,11 +4217,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/value_blob.html
    */
-  sqlite3_value_pointer: (
-    sqliteValue: WasmPointer,
-    type: string | WasmPointer,
-  ) => WasmPointer;
-
+  sqlite3_value_pointer: (sqliteValue: WasmPointer, type: string | WasmPointer) => WasmPointer;
   /**
    * Extract a `TEXT` value from a protected `sqlite3_value` object.
    *
@@ -4835,7 +4231,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/value_blob.html
    */
   sqlite3_value_text: (sqliteValue: WasmPointer) => string;
-
   /**
    * Get the size of a `BLOB` or `TEXT` value in bytes from a protected
    * `sqlite3_value` object.
@@ -4846,8 +4241,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/value_blob.html
    */
-  sqlite3_value_bytes: (sqliteValue: WasmPointer) => number;
-
+  sqlite3_value_bytes: (sqliteValue: WasmPointer) => Sqlite3Result;
   /**
    * Get the default datatype of the value from a protected `sqlite3_value`
    * object.
@@ -4858,8 +4252,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/value_blob.html
    */
-  sqlite3_value_type: (sqliteValue: WasmPointer) => number;
-
+  sqlite3_value_type: (sqliteValue: WasmPointer) => Sqlite3Result;
   /**
    * Get the best numeric datatype of the value from a protected `sqlite3_value`
    * object.
@@ -4870,14 +4263,13 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/value_blob.html
    */
-  sqlite3_value_numeric_type: (sqliteValue: WasmPointer) => number;
-
+  sqlite3_value_numeric_type: (sqliteValue: WasmPointer) => Sqlite3Result;
   /**
    * Within the `xUpdate` method of a virtual table, the
    * `sqlite3_value_nochange(sqliteValue)` interface returns true if and only if
    * the column corresponding to `sqliteValue` is unchanged by the `UPDATE`
    * operation that the `xUpdate` method call was invoked to implement and if
-   * and the prior `xColumn` method call that was invoked to extracted the value
+   * and the prior `xColumn` method call that was invoked to extract the value
    * for that column returned without setting a result (probably because it
    * queried `sqlite3_vtab_nochange()` and found that the column was
    * unchanging).
@@ -4888,8 +4280,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/value_blob.html
    */
-  sqlite3_value_nochange: (sqliteValue: WasmPointer) => number;
-
+  sqlite3_value_nochange: (sqliteValue: WasmPointer) => Sqlite3Result;
   /**
    * Returns non-zero if the value `sqliteValue` originated from one of the
    * `sqlite3_bind()` interfaces. If `sqliteValue` comes from an SQL literal
@@ -4902,8 +4293,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/value_blob.html
    */
-  sqlite3_value_frombind: (sqliteValue: WasmPointer) => number;
-
+  sqlite3_value_frombind: (sqliteValue: WasmPointer) => Sqlite3Result;
   /**
    * Returns the subtype for an application-defined SQL function argument
    * `sqliteValue`. The subtype information can be used to pass a limited amount
@@ -4917,8 +4307,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/value_subtype.html
    */
-  sqlite3_value_subtype: (sqliteValue: WasmPointer) => number;
-
+  sqlite3_value_subtype: (sqliteValue: WasmPointer) => Sqlite3Result;
   /**
    * Makes a copy of the `sqlite3_value` object `sqliteValue` and returns a
    * pointer to that copy. The `sqlite3_value` returned is a protected
@@ -4932,7 +4321,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/value_dup.html
    */
   sqlite3_value_dup: (sqliteValue: WasmPointer) => WasmPointer;
-
   /**
    * Frees an `sqlite3_value` object previously obtained from
    * `sqlite3_value_dup()`.
@@ -4944,7 +4332,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/value_dup.html
    */
   sqlite3_value_free: (sqliteValue: WasmPointer) => void;
-
   /**
    * Implementations of aggregate SQL functions use this routine to allocate
    * memory for storing their state.
@@ -4956,7 +4343,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/aggregate_context.html
    */
   sqlite3_aggregate_context: (ctx: WasmPointer, nBytes: number) => WasmPointer;
-
   /**
    * A thin wrapper around `sqlite3_aggregate_context()` which behaves the same
    * except that if that function returns 0 and `nBytes` is truthy, it throws a
@@ -4967,11 +4353,7 @@ declare type CAPI = {
    * See
    * https://sqlite.org/wasm/doc/trunk/api-c-style.md#sqlite3_js_aggregate_context
    */
-  sqlite3_js_aggregate_context: (
-    ctx: WasmPointer,
-    nBytes: number,
-  ) => WasmPointer;
-
+  sqlite3_js_aggregate_context: (ctx: WasmPointer, nBytes: number) => WasmPointer;
   /**
    * Returns a copy of the pointer that was the `pUserData` parameter (the 5th
    * parameter) of the `sqlite3_create_function()` routine that originally
@@ -4984,7 +4366,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/user_data.html
    */
   sqlite3_user_data: (ctx: WasmPointer) => WasmPointer;
-
   /**
    * Returns a copy of the pointer to the database connection (the 1st
    * parameter) of the `sqlite3_create_function()` routine that originally
@@ -4997,7 +4378,19 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/context_db_handle.html
    */
   sqlite3_context_db_handle: (ctx: WasmPointer) => WasmPointer;
-
+  /**
+   * The sqlite3_get_autocommit() interface returns non-zero or zero if the
+   * given database connection is or is not in autocommit mode, respectively.
+   * Autocommit mode is on by default. Autocommit mode is disabled by a BEGIN
+   * statement. Autocommit mode is re-enabled by a COMMIT or ROLLBACK.
+   *
+   * C Signature:
+   *
+   *     int sqlite3_get_autocommit(sqlite3*);
+   *
+   * See https://www.sqlite.org/c3ref/get_autocommit.html
+   */
+  sqlite3_get_autocommit(db: DbPtr): number;
   /**
    * Returns a pointer to the metadata associated by the
    * `sqlite3_set_auxdata(ctx, n , pAux, xDelete)` function with the `n`th
@@ -5011,7 +4404,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/get_auxdata.html
    */
   sqlite3_get_auxdata: (ctx: WasmPointer, n: number) => WasmPointer;
-
   /**
    * Saves `pAux` as metadata for the `n`-th argument of the application-defined
    * function.
@@ -5027,13 +4419,12 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/get_auxdata.html
    */
-  sqlite3_set_auxdata: (
-    ctx: WasmPointer,
-    n: number,
-    pAux: WasmPointer,
-    xDelete: (() => void) | WasmPointer,
-  ) => void;
-
+  sqlite3_set_auxdata: (ctx: WasmPointer, n: number, pAux: WasmPointer, xDelete: (() => void) | WasmPointer) => void;
+  /**
+   * Sqlite3_set_errmsg() is a WASM-internal-use-only function which is like
+   * sqlite3_result_error() but targets a database connection's error state.
+   */
+  sqlite3_set_errmsg: (db: DbPtr, errCode: number, msg: string | WasmPointer) => Sqlite3Result;
   /**
    * Sets the result from an application-defined function to be the `BLOB` whose
    * content is pointed to by the second parameter and which is `blobLen` bytes
@@ -5050,18 +4441,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
-  sqlite3_result_blob: (
-    ctx: WasmPointer,
-    blob: WasmPointer,
-    blobLen: number,
-    dtor:
-      | (() => void)
-      | WasmPointer
-      | CAPI['SQLITE_STATIC']
-      | CAPI['SQLITE_TRANSIENT']
-      | CAPI['SQLITE_WASM_DEALLOC'],
-  ) => void;
-
+  sqlite3_result_blob: (ctx: WasmPointer, blob: WasmPointer, blobLen: number, dtor: (() => void) | WasmPointer | CAPI['SQLITE_STATIC'] | CAPI['SQLITE_TRANSIENT'] | CAPI['SQLITE_WASM_DEALLOC']) => void;
   /**
    * Sets the result from an application-defined function to be a floating point
    * value specified by its 2nd argument.
@@ -5073,7 +4453,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
   sqlite3_result_double: (ctx: WasmPointer, value: number) => void;
-
   /**
    * Cause the implemented SQL function to throw an exception.
    *
@@ -5086,12 +4465,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
-  sqlite3_result_error: (
-    ctx: WasmPointer,
-    msg: string | WasmPointer,
-    msgLen: number,
-  ) => void;
-
+  sqlite3_result_error: (ctx: WasmPointer, msg: string | WasmPointer, msgLen: number) => void;
   /**
    * Causes SQLite to throw an error indicating that a string or BLOB is too
    * long to represent.
@@ -5103,7 +4477,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
   sqlite3_result_error_toobig: (ctx: WasmPointer) => void;
-
   /**
    * Causes SQLite to throw an
    *
@@ -5116,7 +4489,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
   sqlite3_result_error_nomem: (ctx: WasmPointer) => void;
-
   /**
    * Changes the error code returned by SQLite as a result of an error in a
    * function. By default, the error code is `SQLITE_ERROR`. A subsequent call
@@ -5129,7 +4501,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
   sqlite3_result_error_code: (ctx: WasmPointer, code: number) => void;
-
   /**
    * Calls either `sqlite3_result_error_nomem()`, if `err` is-a
    * `WasmAllocError`, or `sqlite3_result_error()`. In the latter case, the
@@ -5139,7 +4510,6 @@ declare type CAPI = {
    * https://sqlite.org/wasm/doc/trunk/api-c-style.md#sqlite3_result_error_js
    */
   sqlite3_result_error_js: (ctx: WasmPointer, err: Error) => void;
-
   /**
    * Sets the return value of the application-defined function to be the 32-bit
    * signed integer value given in the 2nd argument.
@@ -5151,7 +4521,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
   sqlite3_result_int: (ctx: WasmPointer, value: number) => void;
-
   /**
    * Sets the return value of the application-defined function to be the 64-bit
    * signed integer value given in the 2nd argument.
@@ -5162,8 +4531,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
-  sqlite3_result_int64: (ctx: WasmPointer, value: BigInt) => void;
-
+  sqlite3_result_int64: (ctx: WasmPointer, value: bigint) => void;
   /**
    * Sets the return value of the application-defined function to be `NULL`.
    *
@@ -5174,7 +4542,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
   sqlite3_result_null: (ctx: WasmPointer) => void;
-
   /**
    * Set the return value of the application-defined function to be a text
    * string
@@ -5185,18 +4552,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
-  sqlite3_result_text: (
-    ctx: WasmPointer,
-    text: string | WasmPointer,
-    textLen: number,
-    dtor:
-      | (() => void)
-      | WasmPointer
-      | CAPI['SQLITE_STATIC']
-      | CAPI['SQLITE_TRANSIENT']
-      | CAPI['SQLITE_WASM_DEALLOC'],
-  ) => void;
-
+  sqlite3_result_text: (ctx: WasmPointer, text: string | WasmPointer, textLen: number, dtor: (() => void) | WasmPointer | CAPI['SQLITE_STATIC'] | CAPI['SQLITE_TRANSIENT'] | CAPI['SQLITE_WASM_DEALLOC']) => void;
   /**
    * Sets the result to an SQL `NULL` value, just like
    * `sqlite3_result_null(ctx)`, except that it also associates the
@@ -5210,18 +4566,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
-  sqlite3_result_pointer: (
-    ctx: WasmPointer,
-    value: WasmPointer,
-    type: string | WasmPointer,
-    dtor:
-      | (() => void)
-      | WasmPointer
-      | CAPI['SQLITE_STATIC']
-      | CAPI['SQLITE_TRANSIENT']
-      | CAPI['SQLITE_WASM_DEALLOC'],
-  ) => void;
-
+  sqlite3_result_pointer: (ctx: WasmPointer, value: WasmPointer, type: string | WasmPointer, dtor: (() => void) | WasmPointer | CAPI['SQLITE_STATIC'] | CAPI['SQLITE_TRANSIENT'] | CAPI['SQLITE_WASM_DEALLOC']) => void;
   /**
    * Set the result of the application-defined function to be a `BLOB`
    * containing all zero bytes and `blobLen` bytes in size.
@@ -5233,7 +4578,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
   sqlite3_result_zeroblob: (ctx: WasmPointer, blobLen: number) => void;
-
   /**
    * Set the result of the application-defined function to be a `BLOB`
    * containing all zero bytes and `blobLen` bytes in size.
@@ -5244,8 +4588,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/result_blob.html
    */
-  sqlite3_result_zeroblob64: (ctx: WasmPointer, blobLen: BigInt) => void;
-
+  sqlite3_result_zeroblob64: (ctx: WasmPointer, blobLen: bigint) => void;
   /**
    * Causes the subtype of the result from the application-defined SQL function
    * with `sqlite3_context` `ctx` to be the value `subtype`. Only the lower 8
@@ -5259,7 +4602,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/result_subtype.html
    */
   sqlite3_result_subtype: (ctx: WasmPointer, subtype: number) => void;
-
   /**
    * This acts as a proxy for one of the other `sqlite3_result_...()` routines,
    * depending on the type of its 2nd argument:
@@ -5270,7 +4612,7 @@ declare type CAPI = {
    * - `boolean`: `sqlite3_result_int()` with a value of 0 or 1. `- `number`:
    *   `sqlite3_result_int()`, `sqlite3_result_int64()`, or
    *   `sqlite3_result_double()`, depending on the range of the number and
-   *   whether or not `int64` support is enabled.
+   *   whether `int64` support is enabled.
    * - `BigInt`: similar to number but will trigger an error if the value is too
    *   big to store in an `int64`.
    * - `string`: `sqlite3_result_text()
@@ -5282,20 +4624,7 @@ declare type CAPI = {
    *
    * See https://sqlite.org/wasm/doc/trunk/api-c-style.md#sqlite3_result_js
    */
-  sqlite3_result_js: (
-    ctx: WasmPointer,
-    val:
-      | Error
-      | null
-      | boolean
-      | number
-      | BigInt
-      | string
-      | Uint8Array
-      | Int8Array
-      | undefined,
-  ) => void;
-
+  sqlite3_result_js: (ctx: WasmPointer, val: Error | null | boolean | number | bigint | string | Uint8Array | Int8Array | undefined) => void;
   /**
    * Add a collation to a database connection.
    *
@@ -5311,22 +4640,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/create_collation.html
    */
-  sqlite3_create_collation: (
-    db: Database | WasmPointer,
-    zName: string,
-    eTextRep: CAPI['SQLITE_UTF8'],
-    pArg: WasmPointer,
-    xCompare:
-      | ((
-          pCtx: WasmPointer,
-          len1: number,
-          p1: WasmPointer,
-          len2: number,
-          p2: WasmPointer,
-        ) => number)
-      | WasmPointer,
-  ) => number;
-
+  sqlite3_create_collation: (db: DbPtr, zName: string, eTextRep: CAPI['SQLITE_UTF8'], pArg: WasmPointer, xCompare: ((pCtx: WasmPointer, len1: number, p1: WasmPointer, len2: number, p2: WasmPointer) => number) | WasmPointer) => Sqlite3Result;
   /**
    * Add a collation to a database connection.
    *
@@ -5343,23 +4657,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/create_collation.html
    */
-  sqlite3_create_collation_v2: (
-    db: Database | WasmPointer,
-    zName: string,
-    eTextRep: CAPI['SQLITE_UTF8'],
-    pArg: WasmPointer,
-    xCompare:
-      | ((
-          pCtx: WasmPointer,
-          len1: number,
-          p1: WasmPointer,
-          len2: number,
-          p2: WasmPointer,
-        ) => number)
-      | WasmPointer,
-    xDestroy: ((pCtx: WasmPointer) => void) | WasmPointer,
-  ) => number;
-
+  sqlite3_create_collation_v2: (db: DbPtr, zName: string, eTextRep: CAPI['SQLITE_UTF8'], pArg: WasmPointer, xCompare: ((pCtx: WasmPointer, len1: number, p1: WasmPointer, len2: number, p2: WasmPointer) => number) | WasmPointer, xDestroy: ((pCtx: WasmPointer) => void) | WasmPointer) => Sqlite3Result;
   /**
    * To avoid having to register all collation sequences before a database can
    * be used, a single callback function may be registered with the database
@@ -5376,19 +4674,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/collation_needed.html
    */
-  sqlite3_collation_needed: (
-    db: Database | WasmPointer,
-    cbArg: WasmPointer,
-    callback:
-      | ((
-          cbArg: WasmPointer,
-          db: Database | WasmPointer,
-          eTextRep: number,
-          name: string | WasmPointer,
-        ) => void)
-      | WasmPointer,
-  ) => number;
-
+  sqlite3_collation_needed: (db: DbPtr, cbArg: WasmPointer, callback: ((cbArg: WasmPointer, db: DbPtr, eTextRep: number, name: string | WasmPointer) => void) | WasmPointer) => Sqlite3Result;
   /**
    * Returns the database connection handle to which a prepared statement
    * belongs. The database connection returned by `sqlite3_db_handle` is the
@@ -5402,8 +4688,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/db_handle.html
    */
-  sqlite3_db_handle: (stmt: PreparedStatement | WasmPointer) => WasmPointer;
-
+  sqlite3_db_handle: (stmt: StmtPtr) => WasmPointer;
   /**
    * Return The Schema Name For A Database Connection
    *
@@ -5413,8 +4698,19 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/db_name.html
    */
-  sqlite3_db_name: (db: Database | WasmPointer, dbIdx: number) => string;
-
+  sqlite3_db_name: (db: DbPtr, dbIdx: number) => string;
+  /**
+   * The sqlite3_db_readonly(D,N) interface returns 1 if the database N of
+   * connection D is read-only, 0 if it is read/write, or -1 if N is not the
+   * name of a database on connection D.
+   *
+   * C Signature:
+   *
+   *     int sqlite3_db_readonly(sqlite3*, const char *zDbName);
+   *
+   * See https://www.sqlite.org/c3ref/db_readonly.html
+   */
+  sqlite3_db_readonly: (db: DbPtr, dbName: string | WasmPointer) => number;
   /**
    * Return The Filename For A Database Connection
    *
@@ -5424,11 +4720,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/db_filename.html
    */
-  sqlite3_db_filename: (
-    db: Database | WasmPointer,
-    dbName: string | WasmPointer,
-  ) => string;
-
+  sqlite3_db_filename: (db: DbPtr, dbName: string | WasmPointer) => string;
   /**
    * Determine the transaction state of a database
    *
@@ -5438,15 +4730,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/txn_state.html
    */
-  sqlite3_txn_state: (
-    db: Database | WasmPointer,
-    schema: string | WasmPointer,
-  ) =>
-    | CAPI['SQLITE_TXN_NONE']
-    | CAPI['SQLITE_TXN_READ']
-    | CAPI['SQLITE_TXN_WRITE']
-    | -1;
-
+  sqlite3_txn_state: (db: DbPtr, schema: string | WasmPointer) => CAPI['SQLITE_TXN_NONE'] | CAPI['SQLITE_TXN_READ'] | CAPI['SQLITE_TXN_WRITE'] | -1;
   /**
    * Registers a callback function to be invoked whenever a transaction is
    * committed. Any callback set by a previous call to `sqlite3_commit_hook()`
@@ -5458,12 +4742,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/commit_hook.html
    */
-  sqlite3_commit_hook: (
-    db: Database | WasmPointer,
-    hook: ((cbArg: WasmPointer) => number) | WasmPointer,
-    cbArg: WasmPointer,
-  ) => WasmPointer;
-
+  sqlite3_commit_hook: (db: DbPtr, hook: ((cbArg: WasmPointer) => number) | WasmPointer, cbArg: WasmPointer) => WasmPointer;
   /**
    * The `sqlite3_rollback_hook()` interface registers a callback function to be
    * invoked whenever a transaction is rolled back. Any callback set by a
@@ -5476,12 +4755,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/commit_hook.html
    */
-  sqlite3_rollback_hook: (
-    db: Database | WasmPointer,
-    hook: ((cbArg: WasmPointer) => number) | WasmPointer,
-    cbArg: WasmPointer,
-  ) => WasmPointer;
-
+  sqlite3_rollback_hook: (db: DbPtr, hook: ((cbArg: WasmPointer) => number) | WasmPointer, cbArg: WasmPointer) => WasmPointer;
   /**
    * Registers a callback function with the database connection identified by
    * the first argument to be invoked whenever a row is updated, inserted or
@@ -5498,18 +4772,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/update_hook.html
    */
-  sqlite3_update_hook: (
-    db: Database | WasmPointer,
-    xUpdate: (
-      userCtx: WasmPointer,
-      op: CAPI['SQLITE_UPDATE'] | CAPI['SQLITE_DELETE'] | CAPI['SQLITE_INSERT'],
-      dbName: string,
-      tableName: string,
-      newRowId: BigInt,
-    ) => void,
-    userCtx: WasmPointer,
-  ) => WasmPointer;
-
+  sqlite3_update_hook: (db: DbPtr, xUpdate: (userCtx: WasmPointer, op: CAPI['SQLITE_UPDATE'] | CAPI['SQLITE_DELETE'] | CAPI['SQLITE_INSERT'], dbName: string, tableName: string, newRowId: bigint) => void, userCtx: WasmPointer) => WasmPointer;
   /**
    * Returns information about column `colName` of table `tblName` in database
    * `dbName` on database connection `db`. The `sqlite3_table_column_metadata()`
@@ -5544,18 +4807,7 @@ declare type CAPI = {
    * @param pPrimaryKey OUTPUT: True if column part of PK
    * @param pAutoinc OUTPUT: True if column is auto-increment
    */
-  sqlite3_table_column_metadata: (
-    db: Database | WasmPointer,
-    dbName: string | WasmPointer,
-    tblName: string | WasmPointer,
-    colName: string | WasmPointer,
-    pDataType: WasmPointer,
-    pCollSeq: WasmPointer,
-    pNotNull: WasmPointer,
-    pPrimaryKey: WasmPointer,
-    pAutoinc: WasmPointer,
-  ) => number;
-
+  sqlite3_table_column_metadata: (db: DbPtr, dbName: string | WasmPointer, tblName: string | WasmPointer, colName: string | WasmPointer, pDataType: WasmPointer, pCollSeq: WasmPointer, pNotNull: WasmPointer, pPrimaryKey: WasmPointer, pAutoinc: WasmPointer) => Sqlite3Result;
   /**
    * Automatically Load Statically Linked Extensions
    *
@@ -5581,16 +4833,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/auto_extension.html
    */
-  sqlite3_auto_extension: (
-    xEntryPoint:
-      | ((
-          db: Database | WasmPointer,
-          pzErrMsg: WasmPointer,
-          pThunk: WasmPointer,
-        ) => number)
-      | WasmPointer,
-  ) => number;
-
+  sqlite3_auto_extension: (xEntryPoint: ((db: DbPtr, pzErrMsg: WasmPointer, pThunk: WasmPointer) => number) | WasmPointer) => Sqlite3Result;
   /**
    * Cancel Automatic Extension Loading
    *
@@ -5603,8 +4846,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/cancel_auto_extension.html
    */
-  sqlite3_cancel_auto_extension: (xEntryPoint: WasmPointer) => number;
-
+  sqlite3_cancel_auto_extension: (xEntryPoint: WasmPointer) => Sqlite3Result;
   /**
    * Reset Automatic Extension Loading
    *
@@ -5618,7 +4860,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/reset_auto_extension.html
    */
   sqlite3_reset_auto_extension: () => void;
-
   /**
    * Register A Virtual Table Implementation
    *
@@ -5637,13 +4878,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/create_module.html
    */
-  sqlite3_create_module: (
-    db: Database | WasmPointer,
-    name: string,
-    module: WasmPointer | sqlite3_module,
-    clientData: WasmPointer,
-  ) => number;
-
+  sqlite3_create_module: (db: DbPtr, name: string, module: WasmPointer | sqlite3_module, clientData: WasmPointer) => Sqlite3Result;
   /**
    * Register A Virtual Table Implementation
    *
@@ -5663,22 +4898,15 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/create_module.html
    */
-  sqlite3_create_module_v2: (
-    db: Database | WasmPointer,
-    name: string,
-    module: WasmPointer | sqlite3_module,
-    clientData: WasmPointer,
-    destroy?: () => void,
-  ) => number;
-
+  sqlite3_create_module_v2: (db: DbPtr, name: string, module: WasmPointer | sqlite3_module, clientData: WasmPointer, destroy?: () => void) => Sqlite3Result;
   /**
    * Remove Unnecessary Virtual Table Implementations
    *
    * Removes all virtual table modules from database connection `db` except
-   * those named on list `azKeep`. The `azKeepp` parameter must be either NULL
-   * or a pointer to an array of pointers to strings where the array is
-   * terminated by a single NULL pointer. If the `azKeep` parameter is NULL,
-   * then all virtual table modules are removed.
+   * those named on list `azKeep`. The `azKeep` parameter must be either NULL or
+   * a pointer to an array of pointers to strings where the array is terminated
+   * by a single NULL pointer. If the `azKeep` parameter is NULL, then all
+   * virtual table modules are removed.
    *
    * C Signature:
    *
@@ -5689,11 +4917,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/drop_modules.html
    */
-  sqlite3_drop_modules: (
-    db: Database | WasmPointer,
-    azKeep: WasmPointer,
-  ) => number;
-
+  sqlite3_drop_modules: (db: DbPtr, azKeep: WasmPointer) => Sqlite3Result;
   /**
    * Declare The Schema Of A Virtual Table
    *
@@ -5707,11 +4931,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/declare_vtab.html
    */
-  sqlite3_declare_vtab: (
-    db: Database | WasmPointer,
-    sql: string | WasmPointer,
-  ) => number;
-
+  sqlite3_declare_vtab: (db: DbPtr, sql: string | WasmPointer) => Sqlite3Result;
   /**
    * Overload A Function For A Virtual Table
    *
@@ -5732,14 +4952,9 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/overload_function.html
    */
-  sqlite3_overload_function: (
-    db: Database | WasmPointer,
-    funcName: string,
-    nArgs: number,
-  ) => number;
-
+  sqlite3_overload_function: (db: DbPtr, funcName: string, nArgs: number) => Sqlite3Result;
   /**
-   * Returns a pointer to a VFS given its name. Names are case sensitive.
+   * Returns a pointer to a VFS given its name. Names are case-sensitive.
    *
    * C Signature:
    *
@@ -5748,7 +4963,6 @@ declare type CAPI = {
    * See https://www.sqlite.org/c3ref/vfs_find.html
    */
   sqlite3_vfs_find: (vfsName: string | null) => WasmPointer;
-
   /**
    * Register a new VFS. Becomes the default if the makeDflt parameter is set.
    *
@@ -5758,11 +4972,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/vfs_find.html
    */
-  sqlite3_vfs_register: (
-    vfs: sqlite3_vfs | WasmPointer | string,
-    makeDflt: number,
-  ) => number;
-
+  sqlite3_vfs_register: (vfs: sqlite3_vfs | WasmPointer | string, makeDflt: number) => Sqlite3Result;
   /**
    * Unregister a VFS. If it is the default, another VFS is chosen as the
    * default.
@@ -5773,8 +4983,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/vfs_find.html
    */
-  sqlite3_vfs_unregister: (vfs: sqlite3_vfs | WasmPointer | string) => number;
-
+  sqlite3_vfs_unregister: (vfs: sqlite3_vfs | WasmPointer | string) => Sqlite3Result;
   /**
    * Low-Level Control Of Database Files
    *
@@ -5791,54 +5000,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/file_control.html
    */
-  sqlite3_file_control: (
-    db: Database | WasmPointer,
-    dbName: string | WasmPointer,
-    op:
-      | CAPI['SQLITE_FCNTL_BEGIN_ATOMIC_WRITE']
-      | CAPI['SQLITE_FCNTL_LOCKSTATE']
-      | CAPI['SQLITE_FCNTL_GET_LOCKPROXYFILE']
-      | CAPI['SQLITE_FCNTL_SET_LOCKPROXYFILE']
-      | CAPI['SQLITE_FCNTL_LAST_ERRNO']
-      | CAPI['SQLITE_FCNTL_SIZE_HINT']
-      | CAPI['SQLITE_FCNTL_CHUNK_SIZE']
-      | CAPI['SQLITE_FCNTL_FILE_POINTER']
-      | CAPI['SQLITE_FCNTL_SYNC_OMITTED']
-      | CAPI['SQLITE_FCNTL_WIN32_AV_RETRY']
-      | CAPI['SQLITE_FCNTL_PERSIST_WAL']
-      | CAPI['SQLITE_FCNTL_OVERWRITE']
-      | CAPI['SQLITE_FCNTL_VFSNAME']
-      | CAPI['SQLITE_FCNTL_POWERSAFE_OVERWRITE']
-      | CAPI['SQLITE_FCNTL_PRAGMA']
-      | CAPI['SQLITE_FCNTL_BUSYHANDLER']
-      | CAPI['SQLITE_FCNTL_TEMPFILENAME']
-      | CAPI['SQLITE_FCNTL_MMAP_SIZE']
-      | CAPI['SQLITE_FCNTL_TRACE']
-      | CAPI['SQLITE_FCNTL_HAS_MOVED']
-      | CAPI['SQLITE_FCNTL_SYNC']
-      | CAPI['SQLITE_FCNTL_COMMIT_PHASETWO']
-      | CAPI['SQLITE_FCNTL_WIN32_SET_HANDLE']
-      | CAPI['SQLITE_FCNTL_WAL_BLOCK']
-      | CAPI['SQLITE_FCNTL_ZIPVFS']
-      | CAPI['SQLITE_FCNTL_RBU']
-      | CAPI['SQLITE_FCNTL_VFS_POINTER']
-      | CAPI['SQLITE_FCNTL_JOURNAL_POINTER']
-      | CAPI['SQLITE_FCNTL_WIN32_GET_HANDLE']
-      | CAPI['SQLITE_FCNTL_PDB']
-      | CAPI['SQLITE_FCNTL_BEGIN_ATOMIC_WRITE']
-      | CAPI['SQLITE_FCNTL_COMMIT_ATOMIC_WRITE']
-      | CAPI['SQLITE_FCNTL_ROLLBACK_ATOMIC_WRITE']
-      | CAPI['SQLITE_FCNTL_LOCK_TIMEOUT']
-      | CAPI['SQLITE_FCNTL_DATA_VERSION']
-      | CAPI['SQLITE_FCNTL_SIZE_LIMIT']
-      | CAPI['SQLITE_FCNTL_CKPT_DONE']
-      | CAPI['SQLITE_FCNTL_RESERVE_BYTES']
-      | CAPI['SQLITE_FCNTL_CKPT_START']
-      | CAPI['SQLITE_FCNTL_EXTERNAL_READER']
-      | CAPI['SQLITE_FCNTL_CKSM_FILE'],
-    arg: WasmPointer,
-  ) => number;
-
+  sqlite3_file_control: (db: DbPtr, dbName: string | WasmPointer, op: CAPI['SQLITE_FCNTL_BEGIN_ATOMIC_WRITE'] | CAPI['SQLITE_FCNTL_LOCKSTATE'] | CAPI['SQLITE_FCNTL_GET_LOCKPROXYFILE'] | CAPI['SQLITE_FCNTL_SET_LOCKPROXYFILE'] | CAPI['SQLITE_FCNTL_LAST_ERRNO'] | CAPI['SQLITE_FCNTL_SIZE_HINT'] | CAPI['SQLITE_FCNTL_CHUNK_SIZE'] | CAPI['SQLITE_FCNTL_FILE_POINTER'] | CAPI['SQLITE_FCNTL_SYNC_OMITTED'] | CAPI['SQLITE_FCNTL_WIN32_AV_RETRY'] | CAPI['SQLITE_FCNTL_PERSIST_WAL'] | CAPI['SQLITE_FCNTL_OVERWRITE'] | CAPI['SQLITE_FCNTL_VFSNAME'] | CAPI['SQLITE_FCNTL_POWERSAFE_OVERWRITE'] | CAPI['SQLITE_FCNTL_PRAGMA'] | CAPI['SQLITE_FCNTL_BUSYHANDLER'] | CAPI['SQLITE_FCNTL_TEMPFILENAME'] | CAPI['SQLITE_FCNTL_MMAP_SIZE'] | CAPI['SQLITE_FCNTL_TRACE'] | CAPI['SQLITE_FCNTL_HAS_MOVED'] | CAPI['SQLITE_FCNTL_SYNC'] | CAPI['SQLITE_FCNTL_COMMIT_PHASETWO'] | CAPI['SQLITE_FCNTL_WIN32_SET_HANDLE'] | CAPI['SQLITE_FCNTL_WAL_BLOCK'] | CAPI['SQLITE_FCNTL_ZIPVFS'] | CAPI['SQLITE_FCNTL_RBU'] | CAPI['SQLITE_FCNTL_VFS_POINTER'] | CAPI['SQLITE_FCNTL_JOURNAL_POINTER'] | CAPI['SQLITE_FCNTL_WIN32_GET_HANDLE'] | CAPI['SQLITE_FCNTL_PDB'] | CAPI['SQLITE_FCNTL_COMMIT_ATOMIC_WRITE'] | CAPI['SQLITE_FCNTL_ROLLBACK_ATOMIC_WRITE'] | CAPI['SQLITE_FCNTL_LOCK_TIMEOUT'] | CAPI['SQLITE_FCNTL_DATA_VERSION'] | CAPI['SQLITE_FCNTL_SIZE_LIMIT'] | CAPI['SQLITE_FCNTL_CKPT_DONE'] | CAPI['SQLITE_FCNTL_RESERVE_BYTES'] | CAPI['SQLITE_FCNTL_CKPT_START'] | CAPI['SQLITE_FCNTL_EXTERNAL_READER'] | CAPI['SQLITE_FCNTL_CKSM_FILE'], arg: WasmPointer) => Sqlite3Result;
   /**
    * Returns the number of distinct keywords understood by SQLite.
    *
@@ -5848,8 +5010,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/keyword_count.html
    */
-  sqlite3_keyword_count: () => number;
-
+  sqlite3_keyword_count: () => Sqlite3Result;
   /**
    * Finds the `i`-th keyword and makes `*pOut` point to that keyword expressed
    * as UTF8 and writes the number of bytes in the keyword into `*pOutLen`. The
@@ -5865,12 +5026,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/keyword_count.html
    */
-  sqlite3_keyword_name: (
-    i: number,
-    pOut: WasmPointer,
-    pOutLen: WasmPointer,
-  ) => number;
-
+  sqlite3_keyword_name: (i: number, pOut: WasmPointer, pOutLen: WasmPointer) => Sqlite3Result;
   /**
    * Checks to see whether or not the `n`-byte UTF8 identifier that `name`
    * points to is a keyword, returning non-zero if it is and zero if not.
@@ -5881,8 +5037,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/keyword_count.html
    */
-  sqlite3_keyword_check: (name: string | WasmPointer, n: number) => number;
-
+  sqlite3_keyword_check: (name: string | WasmPointer, n: number) => Sqlite3Result;
   /**
    * Used to retrieve runtime status information about the performance of
    * SQLite, and optionally to reset various highwater marks.
@@ -5893,19 +5048,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/status.html
    */
-  sqlite3_status: (
-    op:
-      | CAPI['SQLITE_STATUS_MEMORY_USED']
-      | CAPI['SQLITE_STATUS_MALLOC_SIZE']
-      | CAPI['SQLITE_STATUS_MALLOC_COUNT']
-      | CAPI['SQLITE_STATUS_PAGECACHE_USED']
-      | CAPI['SQLITE_STATUS_PAGECACHE_OVERFLOW']
-      | CAPI['SQLITE_STATUS_PAGECACHE_SIZE'],
-    pCurrent: WasmPointer,
-    pHighwater: WasmPointer,
-    resetFlag: number,
-  ) => number;
-
+  sqlite3_status: (op: CAPI['SQLITE_STATUS_MEMORY_USED'] | CAPI['SQLITE_STATUS_MALLOC_SIZE'] | CAPI['SQLITE_STATUS_MALLOC_COUNT'] | CAPI['SQLITE_STATUS_PAGECACHE_USED'] | CAPI['SQLITE_STATUS_PAGECACHE_OVERFLOW'] | CAPI['SQLITE_STATUS_PAGECACHE_SIZE'], pCurrent: WasmPointer, pHighwater: WasmPointer, resetFlag: number) => Sqlite3Result;
   /**
    * Used to retrieve runtime status information about the performance of
    * SQLite, and optionally to reset various highwater marks.
@@ -5921,20 +5064,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/status.html
    */
-  sqlite3_status64: (
-    op:
-      | CAPI['SQLITE_STATUS_MALLOC_COUNT']
-      | CAPI['SQLITE_STATUS_MALLOC_SIZE']
-      | CAPI['SQLITE_STATUS_PARSER_STACK']
-      | CAPI['SQLITE_STATUS_PAGECACHE_USED']
-      | CAPI['SQLITE_STATUS_PAGECACHE_OVERFLOW']
-      | CAPI['SQLITE_STATUS_PAGECACHE_SIZE']
-      | CAPI['SQLITE_STATUS_MEMORY_USED'],
-    pCurrent: WasmPointer,
-    pHighwater: WasmPointer,
-    resetFlag: number,
-  ) => number;
-
+  sqlite3_status64: (op: CAPI['SQLITE_STATUS_MALLOC_COUNT'] | CAPI['SQLITE_STATUS_MALLOC_SIZE'] | CAPI['SQLITE_STATUS_PARSER_STACK'] | CAPI['SQLITE_STATUS_PAGECACHE_USED'] | CAPI['SQLITE_STATUS_PAGECACHE_OVERFLOW'] | CAPI['SQLITE_STATUS_PAGECACHE_SIZE'] | CAPI['SQLITE_STATUS_MEMORY_USED'], pCurrent: WasmPointer, pHighwater: WasmPointer, resetFlag: number) => Sqlite3Result;
   /**
    * Used to retrieve runtime status information about a single database
    * connection.
@@ -5951,28 +5081,24 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/db_status.html
    */
-  sqlite3_db_status: (
-    db: Database | WasmPointer,
-    op:
-      | CAPI['SQLITE_DBSTATUS_LOOKASIDE_USED']
-      | CAPI['SQLITE_DBSTATUS_CACHE_USED']
-      | CAPI['SQLITE_DBSTATUS_SCHEMA_USED']
-      | CAPI['SQLITE_DBSTATUS_STMT_USED']
-      | CAPI['SQLITE_DBSTATUS_LOOKASIDE_HIT']
-      | CAPI['SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE']
-      | CAPI['SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL']
-      | CAPI['SQLITE_DBSTATUS_CACHE_HIT']
-      | CAPI['SQLITE_DBSTATUS_CACHE_MISS']
-      | CAPI['SQLITE_DBSTATUS_CACHE_WRITE']
-      | CAPI['SQLITE_DBSTATUS_DEFERRED_FKS']
-      | CAPI['SQLITE_DBSTATUS_CACHE_USED_SHARED']
-      | CAPI['SQLITE_DBSTATUS_CACHE_SPILL']
-      | CAPI['SQLITE_DBSTATUS_MAX'],
-    pCur: WasmPointer,
-    pHighWater: WasmPointer,
-    resetFlag: number,
-  ) => number;
-
+  sqlite3_db_status: (db: DbPtr, op: CAPI['SQLITE_DBSTATUS_LOOKASIDE_USED'] | CAPI['SQLITE_DBSTATUS_CACHE_USED'] | CAPI['SQLITE_DBSTATUS_SCHEMA_USED'] | CAPI['SQLITE_DBSTATUS_STMT_USED'] | CAPI['SQLITE_DBSTATUS_LOOKASIDE_HIT'] | CAPI['SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE'] | CAPI['SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL'] | CAPI['SQLITE_DBSTATUS_CACHE_HIT'] | CAPI['SQLITE_DBSTATUS_CACHE_MISS'] | CAPI['SQLITE_DBSTATUS_CACHE_WRITE'] | CAPI['SQLITE_DBSTATUS_DEFERRED_FKS'] | CAPI['SQLITE_DBSTATUS_CACHE_USED_SHARED'] | CAPI['SQLITE_DBSTATUS_CACHE_SPILL'] | CAPI['SQLITE_DBSTATUS_TEMPBUF_SPILL'] | CAPI['SQLITE_DBSTATUS_MAX'], pCur: WasmPointer, pHighWater: WasmPointer, resetFlag: number) => Sqlite3Result;
+  /**
+   * Used to retrieve runtime status information about a single database
+   * connection with 64-bit counters.
+   *
+   * C Signature:
+   *
+   *     int sqlite3_db_status64(
+   *       sqlite3 *db,
+   *       int op,
+   *       sqlite3_int64 *pCurrent,
+   *       sqlite3_int64 *pHighwtr,
+   *       int resetFlag
+   *     );
+   *
+   * See https://www.sqlite.org/c3ref/db_status.html
+   */
+  sqlite3_db_status64: (db: DbPtr, op: CAPI['SQLITE_DBSTATUS_LOOKASIDE_USED'] | CAPI['SQLITE_DBSTATUS_CACHE_USED'] | CAPI['SQLITE_DBSTATUS_SCHEMA_USED'] | CAPI['SQLITE_DBSTATUS_STMT_USED'] | CAPI['SQLITE_DBSTATUS_LOOKASIDE_HIT'] | CAPI['SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE'] | CAPI['SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL'] | CAPI['SQLITE_DBSTATUS_CACHE_HIT'] | CAPI['SQLITE_DBSTATUS_CACHE_MISS'] | CAPI['SQLITE_DBSTATUS_CACHE_WRITE'] | CAPI['SQLITE_DBSTATUS_DEFERRED_FKS'] | CAPI['SQLITE_DBSTATUS_CACHE_USED_SHARED'] | CAPI['SQLITE_DBSTATUS_CACHE_SPILL'] | CAPI['SQLITE_DBSTATUS_TEMPBUF_SPILL'] | CAPI['SQLITE_DBSTATUS_MAX'], pCurrent: WasmPointer, pHighwtr: WasmPointer, resetFlag: number) => Sqlite3Result;
   /**
    * Retrieve and reset counter values from a prepared statement.
    *
@@ -5982,21 +5108,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/stmt_status.html
    */
-  sqlite3_stmt_status: (
-    stmt: PreparedStatement | WasmPointer,
-    op:
-      | CAPI['SQLITE_STMTSTATUS_FULLSCAN_STEP']
-      | CAPI['SQLITE_STMTSTATUS_SORT']
-      | CAPI['SQLITE_STMTSTATUS_AUTOINDEX']
-      | CAPI['SQLITE_STMTSTATUS_VM_STEP']
-      | CAPI['SQLITE_STMTSTATUS_REPREPARE']
-      | CAPI['SQLITE_STMTSTATUS_RUN']
-      | CAPI['SQLITE_STMTSTATUS_FILTER_MISS']
-      | CAPI['SQLITE_STMTSTATUS_FILTER_HIT']
-      | CAPI['SQLITE_STMTSTATUS_MEMUSED'],
-    resetFlag: number,
-  ) => number;
-
+  sqlite3_stmt_status: (stmt: StmtPtr, op: CAPI['SQLITE_STMTSTATUS_FULLSCAN_STEP'] | CAPI['SQLITE_STMTSTATUS_SORT'] | CAPI['SQLITE_STMTSTATUS_AUTOINDEX'] | CAPI['SQLITE_STMTSTATUS_VM_STEP'] | CAPI['SQLITE_STMTSTATUS_REPREPARE'] | CAPI['SQLITE_STMTSTATUS_RUN'] | CAPI['SQLITE_STMTSTATUS_FILTER_MISS'] | CAPI['SQLITE_STMTSTATUS_FILTER_HIT'] | CAPI['SQLITE_STMTSTATUS_MEMUSED'], resetFlag: number) => Sqlite3Result;
   /**
    * Compare the contents of two buffers containing UTF-8 strings in a
    * case-independent fashion, using the same definition of "case independence"
@@ -6008,11 +5120,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/stricmp.html
    */
-  sqlite3_stricmp: (
-    str1: string | WasmPointer,
-    str2: string | WasmPointer,
-  ) => number;
-
+  sqlite3_stricmp: (str1: string | WasmPointer, str2: string | WasmPointer) => Sqlite3Result;
   /**
    * Compare the contents of two buffers containing UTF-8 strings in a
    * case-independent fashion, using the same definition of "case independence"
@@ -6024,17 +5132,12 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/stricmp.html
    */
-  sqlite3_strnicmp: (
-    str1: string | WasmPointer,
-    str2: string | WasmPointer,
-    n: number,
-  ) => number;
-
+  sqlite3_strnicmp: (str1: string | WasmPointer, str2: string | WasmPointer, n: number) => Sqlite3Result;
   /**
    * Returns zero if and only if string `str` matches the `GLOB` pattern `glob`.
    * The definition of `GLOB` pattern matching used in `sqlite3_strglob(glob,
    * str)` is the same as for the `str GLOB glob` operator in the SQL dialect
-   * understood by SQLite. The function is case sensitive.
+   * understood by SQLite. The function is case-sensitive.
    *
    * C Signature:
    *
@@ -6042,18 +5145,14 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/strglob.html
    */
-  sqlite3_strglob: (
-    glob: string | WasmPointer,
-    str: string | WasmPointer,
-  ) => number;
-
+  sqlite3_strglob: (glob: string | WasmPointer, str: string | WasmPointer) => Sqlite3Result;
   /**
    * Returns zero if and only if string `str` matches the `LIKE` pattern
    * `likePat` with escape character `esc`. The definition of `LIKE` pattern
    * matching used in `sqlite3_strlike(like, str, esc)` is the same as for the
    * `X LIKE P ESCAPE E` operator in the SQL dialect understood by SQLite. For
    * `X LIKE P` without the `ESCAPE` clause, set the `esc` parameter to 0. As
-   * with the `LIKE` operator, the function is case insensitive.
+   * with the `LIKE` operator, the function is case-insensitive.
    *
    * C Signature:
    *
@@ -6061,12 +5160,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/strlike.html
    */
-  sqlite3_strlike: (
-    likePat: string | WasmPointer,
-    str: string | WasmPointer,
-    esc: number,
-  ) => number;
-
+  sqlite3_strlike: (likePat: string | WasmPointer, str: string | WasmPointer, esc: number) => Sqlite3Result;
   /**
    * Determine The Virtual Table Conflict Policy
    *
@@ -6083,15 +5177,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/vtab_on_conflict.html
    */
-  sqlite3_vtab_on_conflict: (
-    db: Database | WasmPointer,
-  ) =>
-    | CAPI['SQLITE_ROLLBACK']
-    | CAPI['SQLITE_IGNORE']
-    | CAPI['SQLITE_FAIL']
-    | CAPI['SQLITE_ABORT']
-    | CAPI['SQLITE_REPLACE'];
-
+  sqlite3_vtab_on_conflict: (db: DbPtr) => CAPI['SQLITE_ROLLBACK'] | CAPI['SQLITE_IGNORE'] | CAPI['SQLITE_FAIL'] | CAPI['SQLITE_ABORT'] | CAPI['SQLITE_REPLACE'];
   /**
    * Determine If Virtual Table Column Access Is For `UPDATE`
    *
@@ -6108,8 +5194,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/vtab_nochange.html
    */
-  sqlite3_vtab_nochange: (ctx: WasmPointer) => number;
-
+  sqlite3_vtab_nochange: (ctx: WasmPointer) => Sqlite3Result;
   /**
    * Determine The Collation For a Virtual Table Constraint
    *
@@ -6124,16 +5209,12 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/vtab_collation.html
    */
-  sqlite3_vtab_collation: (
-    indexInfo: sqlite3_index_info | WasmPointer,
-    constraintIdx: number,
-  ) => string;
-
+  sqlite3_vtab_collation: (indexInfo: sqlite3_index_info | WasmPointer, constraintIdx: number) => string;
   /**
    * Determine if a virtual table query is DISTINCT
    *
    * This API may only be used from within an `xBestIndex method` of a virtual
-   * table implementation. The result of calling this interface from outside of
+   * table implementation. The result of calling this interface from outside
    * `xBestIndex()` is undefined and probably harmful.
    *
    * C Signature:
@@ -6142,10 +5223,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/vtab_distinct.html
    */
-  sqlite3_vtab_distinct: (
-    indexInfo: sqlite3_index_info | WasmPointer,
-  ) => number;
-
+  sqlite3_vtab_distinct: (indexInfo: sqlite3_index_info | WasmPointer) => Sqlite3Result;
   /**
    * Identify and handle `IN` constraints in `xBestIndex`.
    *
@@ -6159,12 +5237,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/vtab_in.html
    */
-  sqlite3_vtab_in: (
-    indexInfo: sqlite3_index_info | WasmPointer,
-    iCons: number,
-    bhandle: number,
-  ) => number;
-
+  sqlite3_vtab_in: (indexInfo: sqlite3_index_info | WasmPointer, iCons: number, bhandle: number) => Sqlite3Result;
   /**
    * Find all elements on the right-hand side of an IN constraint.
    *
@@ -6181,8 +5254,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/vtab_in_first.html
    */
-  sqlite3_vtab_in_first: (sqlValue: WasmPointer, ppOut: WasmPointer) => number;
-
+  sqlite3_vtab_in_first: (sqlValue: WasmPointer, ppOut: WasmPointer) => Sqlite3Result;
   /**
    * Find all elements on the right-hand side of an IN constraint.
    *
@@ -6199,8 +5271,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/vtab_in_first.html
    */
-  sqlite3_vtab_in_next: (sqlValue: WasmPointer, ppOut: WasmPointer) => number;
-
+  sqlite3_vtab_in_next: (sqlValue: WasmPointer, ppOut: WasmPointer) => Sqlite3Result;
   /**
    * Constraint values in `xBestIndex()`
    *
@@ -6221,12 +5292,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/vtab_rhs_value.html
    */
-  sqlite3_vtab_rhs_value: (
-    indexInfo: sqlite3_index_info | WasmPointer,
-    constraintIdx: number,
-    ppOut: WasmPointer,
-  ) => number;
-
+  sqlite3_vtab_rhs_value: (indexInfo: sqlite3_index_info | WasmPointer, constraintIdx: number, ppOut: WasmPointer) => Sqlite3Result;
   /**
    * Registers a callback function hat is invoked prior to each `INSERT`,
    * `UPDATE`, and `DELETE` operation on a database table.
@@ -6249,28 +5315,16 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/preupdate_hook.html
    */
-  sqlite3_preupdate_hook: (
-    db: Database | WasmPointer,
-    xPreUpdate: (
-      ctx: WasmPointer,
-      db: WasmPointer,
-      op: CAPI['SQLITE_UPDATE'] | CAPI['SQLITE_DELETE'] | CAPI['SQLITE_INSERT'],
-      dbName: string,
-      tableName: string,
-      oldRowid: BigInt,
-      newRowid: BigInt,
-    ) => void,
-  ) => void;
-
+  sqlite3_preupdate_hook: (db: DbPtr, xPreUpdate: (ctx: WasmPointer, db: WasmPointer, op: CAPI['SQLITE_UPDATE'] | CAPI['SQLITE_DELETE'] | CAPI['SQLITE_INSERT'], dbName: string, tableName: string, oldRowid: bigint, newRowid: bigint) => void) => void;
   /**
    * Writes into `sqlValue` a pointer to a protected `sqlite3_value` that
    * contains the value of the `colIdx`th column of the table row before it is
    * updated. The `colIdx` parameter must be between 0 and one less than the
    * number of columns or the behavior will be undefined. This must only be used
-   * within `SQLITE_UPDATE` and `SQLITE_DELETE` preupdate callbacks; if it is
+   * within `SQLITE_UPDATE` and `SQLITE_DELETE` pre-update callbacks; if it is
    * used by an `SQLITE_INSERT` callback then the behavior is undefined. The
    * `sqlite3_value` that `sqlValue` points to will be destroyed when the
-   * preupdate callback returns.
+   * pre-update callback returns.
    *
    * C Signature:
    *
@@ -6278,12 +5332,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/preupdate_hook.html
    */
-  sqlite3_preupdate_old: (
-    db: Database | WasmPointer,
-    colIdx: number,
-    sqlValue: WasmPointer,
-  ) => number;
-
+  sqlite3_preupdate_old: (db: DbPtr, colIdx: number, sqlValue: WasmPointer) => Sqlite3Result;
   /**
    * Thin wrapper around `sqlite3_preupdate_old()` , which fetch the
    * `sqlite3_value*` from the column specified by the 2nd argument and then
@@ -6292,11 +5341,7 @@ declare type CAPI = {
    *
    * See https://sqlite.org/wasm/doc/trunk/api-c-style.md#pre-update-ext
    */
-  sqlite3_preupdate_old_js: (
-    db: Database | WasmPointer,
-    colIdx: number,
-  ) => SqlValue;
-
+  sqlite3_preupdate_old_js: (db: DbPtr, colIdx: number) => SqlValue;
   /**
    * Returns the number of columns in the row that is being inserted, updated,
    * or deleted.
@@ -6307,10 +5352,9 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/preupdate_hook.html
    */
-  sqlite3_preupdate_count: (db: Database | WasmPointer) => number;
-
+  sqlite3_preupdate_count: (db: DbPtr) => Sqlite3Result;
   /**
-   * Returns 0 if the preupdate callback was invoked as a result of a direct
+   * Returns 0 if the pre-update callback was invoked as a result of a direct
    * insert, update, or delete operation; or 1 for inserts, updates, or deletes
    * invoked by top-level triggers; or 2 for changes resulting from triggers
    * called by top-level triggers; and so forth.
@@ -6321,17 +5365,16 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/preupdate_hook.html
    */
-  sqlite3_preupdate_depth: (db: Database | WasmPointer) => number;
-
+  sqlite3_preupdate_depth: (db: DbPtr) => Sqlite3Result;
   /**
    * Writes into `sqlValue` a pointer to a protected `sqlite3_value` that
    * contains the value of the `colIdx`th column of the table row after it is
    * updated. The `colidx` parameter must be between 0 and one less than the
    * number of columns or the behavior will be undefined. This must only be used
-   * within `SQLITE_INSERT` and `SQLITE_UPDATE` preupdate callbacks; if it is
+   * within `SQLITE_INSERT` and `SQLITE_UPDATE` pre-update callbacks; if it is
    * used by an `SQLITE_DELETE` callback then the behavior is undefined. The
    * `sqlite3_value` that `sqlValue` points to will be destroyed when the
-   * preupdate callback returns.
+   * pre-update callback returns.
    *
    * C Signature:
    *
@@ -6339,12 +5382,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/preupdate_hook.html
    */
-  sqlite3_preupdate_new: (
-    db: Database | WasmPointer,
-    colIdx: number,
-    sqlValues: WasmPointer,
-  ) => number;
-
+  sqlite3_preupdate_new: (db: DbPtr, colIdx: number, sqlValues: WasmPointer) => Sqlite3Result;
   /**
    * Thin wrapper around `sqlite3_preupdate_new()` , which fetch the
    * `sqlite3_value*` from the column specified by the 2nd argument and then
@@ -6353,11 +5391,7 @@ declare type CAPI = {
    *
    * See https://sqlite.org/wasm/doc/trunk/api-c-style.md#pre-update-ext
    */
-  sqlite3_preupdate_new_js: (
-    db: Database | WasmPointer,
-    colIdx: number,
-  ) => SqlValue;
-
+  sqlite3_preupdate_new_js: (db: DbPtr, colIdx: number) => SqlValue;
   /**
    * When the `sqlite3_blob_write()` API is used to update a blob column, the
    * pre-update hook is invoked with `SQLITE_DELETE`. This is because the in
@@ -6374,8 +5408,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/preupdate_hook.html
    */
-  sqlite3_preupdate_blobwrite: (db: Database | WasmPointer) => number;
-
+  sqlite3_preupdate_blobwrite: (db: DbPtr) => Sqlite3Result;
   /**
    * Returns a pointer to memory that is a serialization of the `schema`
    * database on database connection `db`. If `piSize` is not a NULL pointer,
@@ -6397,13 +5430,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/serialize.html
    */
-  sqlite3_serialize: (
-    db: Database | WasmPointer,
-    schema: string | WasmPointer,
-    piSize: WasmPointer,
-    flags: 0 | CAPI['SQLITE_SERIALIZE_NOCOPY'],
-  ) => WasmPointer;
-
+  sqlite3_serialize: (db: DbPtr, schema: string | WasmPointer, piSize: WasmPointer, flags: 0 | CAPI['SQLITE_SERIALIZE_NOCOPY']) => WasmPointer;
   /**
    * Causes the database connection `db` to disconnect from database `schema`
    * and then reopen `schema` as an in-memory database based on the
@@ -6432,15 +5459,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/deserialize.html
    */
-  sqlite3_deserialize: (
-    db: Database | WasmPointer,
-    schema: string | WasmPointer,
-    data: WasmPointer,
-    dbSize: number,
-    bufferSize: number,
-    flags: number,
-  ) => number;
-
+  sqlite3_deserialize: (db: DbPtr, schema: string | WasmPointer, data: WasmPointer, dbSize: number, bufferSize: number, flags: number) => Sqlite3Result;
   /**
    * Create a new session object attached to database handle `db`. If
    * successful, a pointer to the new object is written to `*ppSession` and
@@ -6457,12 +5476,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_create.html
    */
-  sqlite3session_create: (
-    db: Database | WasmPointer,
-    dbName: string,
-    ppSession: WasmPointer,
-  ) => number;
-
+  sqlite3session_create: (db: DbPtr, dbName: string, ppSession: WasmPointer) => Sqlite3Result;
   /**
    * Delete a session object previously allocated using
    * `sqlite3session_create()`. Once a session object has been deleted, the
@@ -6475,8 +5489,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_delete.html
    */
-  sqlite3session_delete: (pSession: WasmPointer) => number;
-
+  sqlite3session_delete: (pSession: WasmPointer) => Sqlite3Result;
   /**
    * This method is used to configure a session object after it has been
    * created. At present the only valid values for the second parameter are
@@ -6488,8 +5501,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_object_config.html
    */
-  sqlite3session_object_config: (pSession: WasmPointer, op: number) => number;
-
+  sqlite3session_object_config: (pSession: WasmPointer, op: number) => Sqlite3Result;
   /**
    * Enable or disable the recording of changes by a session object. When
    * enabled, a session object records changes made to the database. When
@@ -6501,8 +5513,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_enable.html
    */
-  sqlite3session_enable: (pSession: WasmPointer, bEnable: number) => number;
-
+  sqlite3session_enable: (pSession: WasmPointer, bEnable: number) => Sqlite3Result;
   /**
    * Set Or Clear the Indirect Change Flag
    *
@@ -6530,8 +5541,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_indirect.html
    */
-  sqlite3session_indirect: (pSession: WasmPointer, bIndirect: number) => number;
-
+  sqlite3session_indirect: (pSession: WasmPointer, bIndirect: number) => Sqlite3Result;
   /**
    * Attach A Table To A Session Object
    *
@@ -6550,8 +5560,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_attach.html
    */
-  sqlite3session_attach: (pSession: WasmPointer, tableName: string | NullPointer) => number;
-
+  sqlite3session_attach: (pSession: WasmPointer, tableName: string | NullPointer) => Sqlite3Result;
   /**
    * Set a table filter on a Session Object.
    *
@@ -6571,12 +5580,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_table_filter.html
    */
-  sqlite3session_table_filter: (
-    pSession: WasmPointer,
-    xFilter: ((pCtx: WasmPointer, tableName: string) => number) | WasmPointer,
-    pCtx: WasmPointer,
-  ) => void;
-
+  sqlite3session_table_filter: (pSession: WasmPointer, xFilter: ((pCtx: WasmPointer, tableName: string) => number) | WasmPointer, pCtx: WasmPointer) => void;
   /**
    * Generate A Changeset From A Session Object
    *
@@ -6597,12 +5601,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_changeset.html
    */
-  sqlite3session_changeset: (
-    pSession: WasmPointer,
-    pnChangeset: WasmPointer,
-    ppChangeset: WasmPointer,
-  ) => number;
-
+  sqlite3session_changeset: (pSession: WasmPointer, pnChangeset: WasmPointer, ppChangeset: WasmPointer) => Sqlite3Result;
   /**
    * Return An Upper-limit For The Size Of The Changeset.
    *
@@ -6617,8 +5616,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_changeset_size.html
    */
-  sqlite3session_changeset_size: (pSession: WasmPointer) => number;
-
+  sqlite3session_changeset_size: (pSession: WasmPointer) => Sqlite3Result;
   /**
    * Load The Difference Between Tables Into A Session
    *
@@ -6639,13 +5637,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_diff.html
    */
-  sqlite3session_diff: (
-    pSession: WasmPointer,
-    fromDb: string,
-    tableName: string,
-    pzErrMsg: WasmPointer,
-  ) => number;
-
+  sqlite3session_diff: (pSession: WasmPointer, fromDb: string, tableName: string, pzErrMsg: WasmPointer) => Sqlite3Result;
   /**
    * Generate A Patchset From A Session Object
    *
@@ -6656,7 +5648,7 @@ declare type CAPI = {
    * - The original values of any modified fields are omitted from `UPDATE`
    *   records.
    *
-   * A patchset blob may be used with up to date versions of all
+   * A patchset blob may be used with up-to-date versions of all
    * `sqlite3changeset_xxx` API functions except for
    * `sqlite3changeset_invert()`, which returns `SQLITE_CORRUPT` if it is passed
    * a patchset. Similarly, attempting to use a patchset blob with old versions
@@ -6673,12 +5665,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_patchset.html
    */
-  sqlite3session_patchset: (
-    pSession: WasmPointer,
-    pnPatchset: WasmPointer,
-    ppPatchset: WasmPointer,
-  ) => number;
-
+  sqlite3session_patchset: (pSession: WasmPointer, pnPatchset: WasmPointer, ppPatchset: WasmPointer) => Sqlite3Result;
   /**
    * Test if a changeset has recorded any changes.
    *
@@ -6692,8 +5679,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_isempty.html
    */
-  sqlite3session_isempty: (pSession: WasmPointer) => number;
-
+  sqlite3session_isempty: (pSession: WasmPointer) => Sqlite3Result;
   /**
    * Query for the amount of heap memory used by a session object.
    *
@@ -6706,8 +5692,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_memory_used.html
    */
-  sqlite3session_memory_used: (pSession: WasmPointer) => number;
-
+  sqlite3session_memory_used: (pSession: WasmPointer) => Sqlite3Result;
   /**
    * Create an iterator used to iterate through the contents of a changeset. If
    * successful, `*ppIter` is set to point to the iterator handle and
@@ -6728,12 +5713,7 @@ declare type CAPI = {
    * @param nChangeSet Size of changeset blob in bytes
    * @param pChangeset Pointer to blob containing changeset
    */
-  sqlite3changeset_start: (
-    ppIter: WasmPointer,
-    nChangeset: number,
-    pChangeset: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_start: (ppIter: WasmPointer, nChangeset: number, pChangeset: WasmPointer) => Sqlite3Result;
   /**
    * Create an iterator used to iterate through the contents of a changeset. If
    * successful, `*ppIter` is set to point to the iterator handle and
@@ -6756,13 +5736,7 @@ declare type CAPI = {
    * @param pChangeset Pointer to blob containing changeset
    * @param flags `SESSION_CHANGESTART_*` flags
    */
-  sqlite3changeset_start_v2: (
-    ppIter: WasmPointer,
-    nChangeset: number,
-    pChangeset: WasmPointer,
-    flags: number,
-  ) => number;
-
+  sqlite3changeset_start_v2: (ppIter: WasmPointer, nChangeset: number, pChangeset: WasmPointer, flags: number) => Sqlite3Result;
   /**
    * Advance A Changeset Iterator
    *
@@ -6777,8 +5751,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/changeset_next.html
    */
-  sqlite3changeset_next: (pIter: WasmPointer) => number;
-
+  sqlite3changeset_next: (pIter: WasmPointer) => Sqlite3Result;
   /**
    * Obtain The Current Operation From A Changeset Iterator
    *
@@ -6799,14 +5772,7 @@ declare type CAPI = {
    *   SQLITE_UPDATE)
    * @param pbIndirect OUT: True for an 'indirect' change
    */
-  sqlite3changeset_op: (
-    pIter: WasmPointer,
-    pzTab: WasmPointer,
-    pnCol: WasmPointer,
-    pOp: WasmPointer,
-    pbIndirect: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_op: (pIter: WasmPointer, pzTab: WasmPointer, pnCol: WasmPointer, pOp: WasmPointer, pbIndirect: WasmPointer) => Sqlite3Result;
   /**
    * Obtain The Primary Key Definition Of A Table
    *
@@ -6832,12 +5798,7 @@ declare type CAPI = {
    * @param pabPK Array of boolean - true for PK cols
    * @param pnCol Number of entries in output array
    */
-  sqlite3changeset_pk: (
-    pIter: WasmPointer,
-    pabPK: WasmPointer,
-    pnCol: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_pk: (pIter: WasmPointer, pabPK: WasmPointer, pnCol: WasmPointer) => Sqlite3Result;
   /**
    * Obtain old.* Values From A Changeset Iterator
    *
@@ -6855,12 +5816,7 @@ declare type CAPI = {
    * @param colNum Column number
    * @param ppValue OUT: Old value (or NULL pointer)
    */
-  sqlite3changeset_old: (
-    pIter: WasmPointer,
-    colNum: number,
-    ppValue: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_old: (pIter: WasmPointer, colNum: number, ppValue: WasmPointer) => Sqlite3Result;
   /**
    * Thin wrapper around `sqlite3changeset_old()`, which fetches the
    * `sqlite3_value*` from the column specified by the 2nd argument and then
@@ -6869,11 +5825,7 @@ declare type CAPI = {
    *
    * See https://sqlite.org/wasm/doc/trunk/api-c-style.md#session-api-ext
    */
-  sqlite3changeset_old_js: (
-    pChangeSetIter: WasmPointer,
-    colIdx: number,
-  ) => SqlValue;
-
+  sqlite3changeset_old_js: (pChangeSetIter: WasmPointer, colIdx: number) => SqlValue;
   /**
    * Obtain new.* Values From A Changeset Iterator
    *
@@ -6891,12 +5843,7 @@ declare type CAPI = {
    * @param colNum Column number
    * @param ppValue OUT: New value (or NULL pointer)
    */
-  sqlite3changeset_new: (
-    pIter: WasmPointer,
-    colNum: number,
-    ppValue: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_new: (pIter: WasmPointer, colNum: number, ppValue: WasmPointer) => Sqlite3Result;
   /**
    * Thin wrapper around `sqlite3changeset_new()`, which fetches the
    * `sqlite3_value*` from the column specified by the 2nd argument and then
@@ -6908,11 +5855,7 @@ declare type CAPI = {
    *
    * See https://sqlite.org/wasm/doc/trunk/api-c-style.md#session-api-ext
    */
-  sqlite3changeset_new_js: (
-    pChangeSetIter: WasmPointer,
-    colIdx: number,
-  ) => SqlValue | undefined;
-
+  sqlite3changeset_new_js: (pChangeSetIter: WasmPointer, colIdx: number) => SqlValue | undefined;
   /**
    * Obtain Conflicting Row Values From A Changeset Iterator
    *
@@ -6930,12 +5873,7 @@ declare type CAPI = {
    * @param colNum Column number
    * @param ppValue OUT: Value from conflicting row
    */
-  sqlite3changeset_conflict: (
-    pIter: WasmPointer,
-    colNum: number,
-    ppValue: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_conflict: (pIter: WasmPointer, colNum: number, ppValue: WasmPointer) => Sqlite3Result;
   /**
    * Determine The Number Of Foreign Key Constraint Violations
    *
@@ -6951,11 +5889,7 @@ declare type CAPI = {
    * @param pIter Changeset iterator
    * @param pnOut OUT: Number of FK constraint violations
    */
-  sqlite3changeset_fk_conflicts: (
-    pIter: WasmPointer,
-    pnOut: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_fk_conflicts: (pIter: WasmPointer, pnOut: WasmPointer) => Sqlite3Result;
   /**
    * This function is used to finalize an iterator allocated with
    * `sqlite3changeset_start()`.
@@ -6966,8 +5900,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/changeset_finalize.html
    */
-  sqlite3changeset_finalize: (pIter: WasmPointer) => number;
-
+  sqlite3changeset_finalize: (pIter: WasmPointer) => Sqlite3Result;
   /**
    * This function is used to "invert" a changeset object. Applying an inverted
    * changeset to a database reverses the effects of applying the uninverted
@@ -7001,13 +5934,7 @@ declare type CAPI = {
    * @param pnOut OUT: Size of output changeset blob in bytes
    * @param ppOut OUT: Pointer to output changeset blob
    */
-  sqlite3changeset_invert: (
-    nIn: number,
-    pIn: WasmPointer,
-    pnOut: WasmPointer,
-    ppOut: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_invert: (nIn: number, pIn: WasmPointer, pnOut: WasmPointer, ppOut: WasmPointer) => Sqlite3Result;
   /**
    * Concatenate Two Changeset Objects
    *
@@ -7036,15 +5963,7 @@ declare type CAPI = {
    * @param pnOut OUT: Size of output changeset blob in bytes
    * @param ppOut OUT: Pointer to output changeset blob
    */
-  sqlite3changeset_concat: (
-    nA: number,
-    pA: WasmPointer,
-    nB: number,
-    pB: WasmPointer,
-    pnOut: WasmPointer,
-    ppOut: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_concat: (nA: number, pA: WasmPointer, nB: number, pB: WasmPointer, pnOut: WasmPointer, ppOut: WasmPointer) => Sqlite3Result;
   /**
    * Create A New Changegroup Object
    *
@@ -7054,8 +5973,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/changegroup_new.html
    */
-  sqlite3changegroup_new: (ppOut: WasmPointer) => number;
-
+  sqlite3changegroup_new: (ppOut: WasmPointer) => Sqlite3Result;
   /**
    * Add all changes within the changeset (or patchset) in buffer `pData` (size
    * `nData` bytes) to the changegroup.
@@ -7070,12 +5988,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/changegroup_add.html
    */
-  sqlite3changegroup_add: (
-    changeGrp: WasmPointer,
-    nData: number,
-    pData: WasmPointer,
-  ) => number;
-
+  sqlite3changegroup_add: (changeGrp: WasmPointer, nData: number, pData: WasmPointer) => Sqlite3Result;
   /**
    * Obtain a buffer containing a changeset (or patchset) representing the
    * current contents of the changegroup. If the inputs to the changegroup were
@@ -7092,12 +6005,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/changegroup_output.html
    */
-  sqlite3changegroup_output: (
-    changeGrp: WasmPointer,
-    pnData: WasmPointer,
-    ppData: WasmPointer,
-  ) => number;
-
+  sqlite3changegroup_output: (changeGrp: WasmPointer, pnData: WasmPointer, ppData: WasmPointer) => Sqlite3Result;
   /**
    * Delete a Changegroup Object
    *
@@ -7107,8 +6015,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/c3ref/changegroup_delete.html
    */
-  sqlite3changegroup_delete: (changeGrp: WasmPointer) => number;
-
+  sqlite3changegroup_delete: (changeGrp: WasmPointer) => Sqlite3Result;
   /**
    * Apply a changeset or patchset to a database. This function attempts to
    * update the `"main"` database attached to handle `db` with the changes found
@@ -7143,24 +6050,7 @@ declare type CAPI = {
    * @param xConflict Conflict handler function
    * @param pCtx Context pointer passed to filter and conflict functions
    */
-  sqlite3changeset_apply: (
-    db: Database | WasmPointer,
-    nChangeset: number,
-    pChangeSet: WasmPointer,
-    xFilter: ((pCtx: WasmPointer, tableName: string) => number) | WasmPointer,
-    xConflict:
-      | ((
-          pCtx: WasmPointer,
-          eConflict: number /* TODO: Can be more specific? */,
-          pIter: WasmPointer,
-        ) =>
-          | CAPI['SQLITE_CHANGESET_OMIT']
-          | CAPI['SQLITE_CHANGESET_ABORT']
-          | CAPI['SQLITE_CHANGESET_REPLACE'])
-      | WasmPointer,
-    pCtx: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_apply: (db: DbPtr, nChangeset: number, pChangeSet: WasmPointer, xFilter: ((pCtx: WasmPointer, tableName: string) => number) | WasmPointer, xConflict: ((pCtx: WasmPointer, eConflict: CAPI['SQLITE_CHANGESET_DATA'] | CAPI['SQLITE_CHANGESET_NOTFOUND'] | CAPI['SQLITE_CHANGESET_CONFLICT'] | CAPI['SQLITE_CHANGESET_FOREIGN_KEY'] | CAPI['SQLITE_CHANGESET_CONSTRAINT'], pIter: WasmPointer) => CAPI['SQLITE_CHANGESET_OMIT'] | CAPI['SQLITE_CHANGESET_ABORT'] | CAPI['SQLITE_CHANGESET_REPLACE']) | WasmPointer, pCtx: WasmPointer) => Sqlite3Result;
   /**
    * Apply a changeset or patchset to a database. This function attempts to
    * update the `"main"` database attached to handle `db` with the changes found
@@ -7189,7 +6079,7 @@ declare type CAPI = {
    *       int flags
    *     );
    *
-   * See https://www.sqlite.org/c3ref/changeset_apply.html
+   * See https://sqlite.org/session/sqlite3changeset_apply.html
    *
    * @param db Apply change to `"main"` db of this handle
    * @param nChangeset Size of changeset blob in bytes
@@ -7201,27 +6091,29 @@ declare type CAPI = {
    * @param pnRebase OUT: Size of rebase data in bytes
    * @param flags `SESSION_CHANGESETAPPLY_*` flags
    */
-  sqlite3changeset_apply_v2: (
-    db: Database | WasmPointer,
-    nChangeset: number,
-    pChangeset: WasmPointer,
-    xFilter: ((pCtx: WasmPointer, tableName: string) => number) | WasmPointer,
-    xConflict:
-      | ((
-          pCtx: WasmPointer,
-          eConflict: number /* TODO: Can be more specific? */,
-          pIter: WasmPointer,
-        ) =>
-          | CAPI['SQLITE_CHANGESET_OMIT']
-          | CAPI['SQLITE_CHANGESET_ABORT']
-          | CAPI['SQLITE_CHANGESET_REPLACE'])
-      | WasmPointer,
-    pCtx: WasmPointer,
-    ppRebase: WasmPointer,
-    pnRebase: WasmPointer,
-    flags: number,
-  ) => number;
-
+  sqlite3changeset_apply_v2: (db: DbPtr, nChangeset: number, pChangeset: WasmPointer, xFilter: ((pCtx: WasmPointer, tableName: string) => number) | WasmPointer, xConflict: ((pCtx: WasmPointer, eConflict: CAPI['SQLITE_CHANGESET_DATA'] | CAPI['SQLITE_CHANGESET_NOTFOUND'] | CAPI['SQLITE_CHANGESET_CONFLICT'] | CAPI['SQLITE_CHANGESET_FOREIGN_KEY'] | CAPI['SQLITE_CHANGESET_CONSTRAINT'], pIter: WasmPointer) => CAPI['SQLITE_CHANGESET_OMIT'] | CAPI['SQLITE_CHANGESET_ABORT'] | CAPI['SQLITE_CHANGESET_REPLACE']) | WasmPointer, pCtx: WasmPointer, ppRebase: WasmPointer, pnRebase: WasmPointer, flags: number) => Sqlite3Result;
+  /**
+   * Apply a changeset or patchset to a database (V3 variant). This is like
+   * `sqlite3changeset_apply_v2()` but the filter callback is invoked once per
+   * change and receives an iterator handle for the current change.
+   *
+   * C Signature:
+   *
+   *     int sqlite3changeset_apply_v3(
+   *       sqlite3 *db,
+   *       int nChangeset,
+   *       void *pChangeset,
+   *       int(*xFilter)(void *pCtx, sqlite3_changeset_iter *p),
+   *       int (*xConflict)(void *pCtx, int eConflict, sqlite3_changeset_iter *p),
+   *       void *pCtx,
+   *       void **ppRebase,
+   *       int *pnRebase,
+   *       int flags
+   *     );
+   *
+   * See https://sqlite.org/session/sqlite3changeset_apply.html
+   */
+  sqlite3changeset_apply_v3: (db: DbPtr, nChangeset: number, pChangeset: WasmPointer, xFilter: ((pCtx: WasmPointer, pIter: WasmPointer) => number) | WasmPointer, xConflict: ((pCtx: WasmPointer, eConflict: CAPI['SQLITE_CHANGESET_DATA'] | CAPI['SQLITE_CHANGESET_NOTFOUND'] | CAPI['SQLITE_CHANGESET_CONFLICT'] | CAPI['SQLITE_CHANGESET_FOREIGN_KEY'] | CAPI['SQLITE_CHANGESET_CONSTRAINT'], pIter: WasmPointer) => CAPI['SQLITE_CHANGESET_OMIT'] | CAPI['SQLITE_CHANGESET_ABORT'] | CAPI['SQLITE_CHANGESET_REPLACE']) | WasmPointer, pCtx: WasmPointer, ppRebase: WasmPointer, pnRebase: WasmPointer, flags: number) => Sqlite3Result;
   /**
    * Streaming version of `sqlite3changeset_apply()`.
    *
@@ -7243,24 +6135,9 @@ declare type CAPI = {
    * @param pIn First arg for xInput
    * @param xFilter Filter function
    * @param xConflict Conflict handler function
-   * @param pCtx First argumet for xFilter and xConflict
+   * @param pCtx First argument for xFilter and xConflict
    */
-  sqlite3changeset_apply_strm: (
-    db: Database | WasmPointer,
-    xInput:
-      | ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number)
-      | WasmPointer,
-    pIn: WasmPointer,
-    xFilter: ((pCtx: WasmPointer, tableName: string) => number) | WasmPointer,
-    xConflict:
-      | ((
-          pCtx: WasmPointer,
-          eConflict: number /* TODO: Can be more specific? */,
-        ) => number)
-      | WasmPointer,
-    pCtx: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_apply_strm: (db: DbPtr, xInput: ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number) | WasmPointer, pIn: WasmPointer, xFilter: ((pCtx: WasmPointer, tableName: string) => number) | WasmPointer, xConflict: ((pCtx: WasmPointer, eConflict: CAPI['SQLITE_CHANGESET_DATA'] | CAPI['SQLITE_CHANGESET_NOTFOUND'] | CAPI['SQLITE_CHANGESET_CONFLICT'] | CAPI['SQLITE_CHANGESET_FOREIGN_KEY'] | CAPI['SQLITE_CHANGESET_CONSTRAINT']) => number) | WasmPointer, pCtx: WasmPointer) => Sqlite3Result;
   /**
    * Streaming version of `sqlite3changeset_apply_v2()`.
    *
@@ -7285,30 +6162,31 @@ declare type CAPI = {
    * @param pIn First arg for xInput
    * @param xFilter Filter function
    * @param xConflict Conflict handler function
-   * @param pCtx First argumet for xFilter and xConflict
+   * @param pCtx First argument for xFilter and xConflict
    * @param ppRebase OUT: Pointer to rebase data
    * @param pnRebase OUT: Size of rebase data in bytes
    * @param flags `SESSION_CHANGESETAPPLY_*` flags
    */
-  sqlite3changeset_apply_v2_strm: (
-    db: Database | WasmPointer,
-    xInput:
-      | ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number)
-      | WasmPointer,
-    pIn: WasmPointer,
-    xFilter: ((pCtx: WasmPointer, tableName: string) => number) | WasmPointer,
-    xConflict:
-      | ((
-          pCtx: WasmPointer,
-          eConflict: number /* TODO: Can be more specific? */,
-        ) => number)
-      | WasmPointer,
-    pCtx: WasmPointer,
-    ppRebase: WasmPointer,
-    pnRebase: WasmPointer,
-    flags: number,
-  ) => number;
-
+  sqlite3changeset_apply_v2_strm: (db: DbPtr, xInput: ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number) | WasmPointer, pIn: WasmPointer, xFilter: ((pCtx: WasmPointer, tableName: string) => number) | WasmPointer, xConflict: ((pCtx: WasmPointer, eConflict: CAPI['SQLITE_CHANGESET_DATA'] | CAPI['SQLITE_CHANGESET_NOTFOUND'] | CAPI['SQLITE_CHANGESET_CONFLICT'] | CAPI['SQLITE_CHANGESET_FOREIGN_KEY'] | CAPI['SQLITE_CHANGESET_CONSTRAINT']) => number) | WasmPointer, pCtx: WasmPointer, ppRebase: WasmPointer, pnRebase: WasmPointer, flags: number) => Sqlite3Result;
+  /**
+   * Streaming version of `sqlite3changeset_apply_v3()`.
+   *
+   * C Signature:
+   *
+   *     int sqlite3changeset_apply_v3_strm(
+   *       sqlite3 *db,
+   *       int (*xInput)(void *pIn, void *pData, int *pnData),
+   *       void *pIn,
+   *       int(*xFilter)(void *pCtx, sqlite3_changeset_iter *p),
+   *       int (*xConflict)(void *pCtx, int eConflict, sqlite3_changeset_iter *p),
+   *       void *pCtx,
+   *       void **ppRebase, int *pnRebase,
+   *       int flags
+   *     );
+   *
+   * See https://sqlite.org/session/sqlite3changeset_apply.html
+   */
+  sqlite3changeset_apply_v3_strm: (db: DbPtr, xInput: ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number) | WasmPointer, pIn: WasmPointer, xFilter: ((pCtx: WasmPointer, pIter: WasmPointer) => number) | WasmPointer, xConflict: ((pCtx: WasmPointer, eConflict: CAPI['SQLITE_CHANGESET_DATA'] | CAPI['SQLITE_CHANGESET_NOTFOUND'] | CAPI['SQLITE_CHANGESET_CONFLICT'] | CAPI['SQLITE_CHANGESET_FOREIGN_KEY'] | CAPI['SQLITE_CHANGESET_CONSTRAINT']) => number) | WasmPointer, pCtx: WasmPointer, ppRebase: WasmPointer, pnRebase: WasmPointer, flags: number) => Sqlite3Result;
   /**
    * Streaming version of `sqlite3changeset_concat()`.
    *
@@ -7325,21 +6203,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3changegroup_add_strm.html
    */
-  sqlite3changeset_concat_strm: (
-    xInputA:
-      | ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number)
-      | WasmPointer,
-    pInA: WasmPointer,
-    xInputB:
-      | ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number)
-      | WasmPointer,
-    pInB: WasmPointer,
-    xOutput:
-      | ((pOut: WasmPointer, pData: WasmPointer, nData: number) => number)
-      | WasmPointer,
-    pOut: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_concat_strm: (xInputA: ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number) | WasmPointer, pInA: WasmPointer, xInputB: ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number) | WasmPointer, pInB: WasmPointer, xOutput: ((pOut: WasmPointer, pData: WasmPointer, nData: number) => number) | WasmPointer, pOut: WasmPointer) => Sqlite3Result;
   /**
    * Streaming version of `sqlite3changeset_invert()`.
    *
@@ -7354,17 +6218,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3changegroup_add_strm.html
    */
-  sqlite3changeset_invert_strm: (
-    xInput:
-      | ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number)
-      | WasmPointer,
-    pIn: WasmPointer,
-    xOutput:
-      | ((pOut: WasmPointer, pData: WasmPointer, nData: number) => number)
-      | WasmPointer,
-    pOut: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_invert_strm: (xInput: ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number) | WasmPointer, pIn: WasmPointer, xOutput: ((pOut: WasmPointer, pData: WasmPointer, nData: number) => number) | WasmPointer, pOut: WasmPointer) => Sqlite3Result;
   /**
    * Streaming version of `sqlite3changeset_start()`.
    *
@@ -7378,14 +6232,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3changegroup_add_strm.html
    */
-  sqlite3changeset_start_strm: (
-    ppIter: WasmPointer,
-    xInput:
-      | ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number)
-      | WasmPointer,
-    pIn: WasmPointer,
-  ) => number;
-
+  sqlite3changeset_start_strm: (ppIter: WasmPointer, xInput: ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number) | WasmPointer, pIn: WasmPointer) => Sqlite3Result;
   /**
    * Streaming version of `sqlite3changeset_start_v2()`.
    *
@@ -7400,15 +6247,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3changegroup_add_strm.html
    */
-  sqlite3changeset_start_v2_strm: (
-    ppIter: WasmPointer,
-    xInput:
-      | ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number)
-      | WasmPointer,
-    pIn: WasmPointer,
-    flags: number,
-  ) => number;
-
+  sqlite3changeset_start_v2_strm: (ppIter: WasmPointer, xInput: ((pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number) | WasmPointer, pIn: WasmPointer, flags: number) => Sqlite3Result;
   /**
    * Streaming version of `sqlite3session_changeset()`.
    *
@@ -7422,14 +6261,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3changegroup_add_strm.html
    */
-  sqlite3session_changeset_strm: (
-    pSession: WasmPointer,
-    xOutput:
-      | ((pOut: WasmPointer, pData: WasmPointer, nData: number) => number)
-      | WasmPointer,
-    pOut: WasmPointer,
-  ) => number;
-
+  sqlite3session_changeset_strm: (pSession: WasmPointer, xOutput: ((pOut: WasmPointer, pData: WasmPointer, nData: number) => number) | WasmPointer, pOut: WasmPointer) => Sqlite3Result;
   /**
    * Streaming version of `sqlite3session_patchset()`.
    *
@@ -7443,14 +6275,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3changegroup_add_strm.html
    */
-  sqlite3session_patchset_strm: (
-    pSession: WasmPointer,
-    xOutput:
-      | ((pOut: WasmPointer, pData: WasmPointer, nData: number) => number)
-      | WasmPointer,
-    pOut: WasmPointer,
-  ) => number;
-
+  sqlite3session_patchset_strm: (pSession: WasmPointer, xOutput: ((pOut: WasmPointer, pData: WasmPointer, nData: number) => number) | WasmPointer, pOut: WasmPointer) => Sqlite3Result;
   /**
    * Streaming version of `sqlite3changegroup_add()`.
    *
@@ -7464,16 +6289,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3changegroup_add_strm.html
    */
-  sqlite3changegroup_add_strm: (
-    changeGrp: WasmPointer,
-    xInput: (
-      pIn: WasmPointer,
-      pData: WasmPointer,
-      pnData: WasmPointer,
-    ) => number,
-    pIn: WasmPointer,
-  ) => number;
-
+  sqlite3changegroup_add_strm: (changeGrp: WasmPointer, xInput: (pIn: WasmPointer, pData: WasmPointer, pnData: WasmPointer) => number, pIn: WasmPointer) => Sqlite3Result;
   /**
    * Streaming version of `sqlite3changegroup_output()`.
    *
@@ -7487,12 +6303,7 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3changegroup_add_strm.html
    */
-  sqlite3changegroup_output_strm: (
-    changeGrp: WasmPointer,
-    xOutput: (pOut: WasmPointer, pData: WasmPointer, nData: number) => number,
-    pOut: WasmPointer,
-  ) => number;
-
+  sqlite3changegroup_output_strm: (changeGrp: WasmPointer, xOutput: (pOut: WasmPointer, pData: WasmPointer, nData: number) => number, pOut: WasmPointer) => Sqlite3Result;
   /**
    * Used to make global configuration changes to the sessions module in order
    * to tune it to the specific needs of the application.
@@ -7506,25 +6317,19 @@ declare type CAPI = {
    *
    * See https://www.sqlite.org/session/sqlite3session_config.html
    */
-  sqlite3session_config: (
-    op: CAPI['SQLITE_SESSION_CONFIG_STRMSIZE'],
-    pArg: WasmPointer,
-  ) => number;
-
+  sqlite3session_config: (op: CAPI['SQLITE_SESSION_CONFIG_STRMSIZE'], pArg: WasmPointer) => Sqlite3Result;
   /**
    * If the wasm environment has a WASMFS/OPFS-backed persistent storage
    * directory, its path is returned by this function. If it does not then it
    * returns "" (noting that "" is a falsy value).
    */
   sqlite3_wasmfs_opfs_dir: () => string;
-
   /**
    * Returns true if sqlite3.capi.sqlite3_wasmfs_opfs_dir() is a non-empty
    * string and the given name starts with (that string + '/'), else returns
    * false.
    */
   sqlite3_wasmfs_filename_is_persistent: (name: string) => boolean;
-
   /**
    * Given an `sqlite3*`, an `sqlite3_vfs` name, and an optional db name
    * (defaults to `"main"`), returns a truthy value (see below) if that db
@@ -7541,15 +6346,9 @@ declare type CAPI = {
    *
    * See https://sqlite.org/wasm/doc/trunk/api-c-style.md#sqlite3_js_db_uses_vfs
    */
-  sqlite3_js_db_uses_vfs: (
-    db: Database | WasmPointer,
-    vfsName: string,
-    dbName: string,
-  ) => boolean;
-
+  sqlite3_js_db_uses_vfs: (db: DbPtr, vfsName: string, dbName: string) => boolean;
   /** Returns an array of the names of all currently-registered sqlite3 VFSes. */
   sqlite3_js_vfs_list: () => string[];
-
   /**
    * A convenience wrapper around `sqlite3_serialize()` which serializes the
    * given `sqlite3*` pointer or `sqlite3.oo1.DB` instance to a `Uint8Array`.
@@ -7562,21 +6361,13 @@ declare type CAPI = {
    *   returned.
    * @throws A description of the problem.
    */
-  sqlite3_js_db_export: (
-    db: Database | WasmPointer,
-    schema?: string | WasmPointer,
-  ) => Uint8Array;
-
+  sqlite3_js_db_export: (db: DbPtr, schema?: string | WasmPointer) => Uint8Array<ArrayBuffer>;
   /**
    * Given a `sqlite3*` and a database name (JS string or WASM C-string pointer,
    * which may be 0), returns a pointer to the `sqlite3_vfs` responsible for it.
    * If the given db name is null/0, or not provided, then `"main"` is assumed.
    */
-  sqlite3_js_db_vfs: (
-    db: Database | WasmPointer,
-    dbName?: string | WasmPointer,
-  ) => WasmPointer;
-
+  sqlite3_js_db_vfs: (db: DbPtr, dbName?: string | WasmPointer) => WasmPointer;
   /**
    * Given one of the `SQLITE_...` constant values, this function returns the
    * string form of that constant, or undefined if no match is found, noting
@@ -7584,24 +6375,15 @@ declare type CAPI = {
    * they simply are not used there.
    */
   sqlite3_js_rc_str: (rc: number) => string;
-
   /** @deprecated Use `sqlite3_js_posix_create_file` or `OpfsDb#importDb` instead */
-  sqlite3_js_vfs_create_file: (
-    vfs: string | WasmPointer | sqlite3_vfs,
-    name: string | WasmPointer,
-    data: undefined | WasmPointer | Uint8Array | ArrayBuffer,
-    dataLen?: number,
-  ) => void;
-
+  sqlite3_js_vfs_create_file: (vfs: string | WasmPointer | sqlite3_vfs, name: string | WasmPointer, data: undefined | WasmPointer | Uint8Array | ArrayBuffer, dataLen?: number) => void;
   /**
    * Clears all kvvfs-owned state and returns the number of records it deleted
    * (one record per database page).
    */
   sqlite3_js_kvvfs_clear: (which?: string) => void;
-
   /** Returns an estimate of how many bytes of storage are used by kvvfs. */
-  sqlite3_js_kvvfs_size: (which?: string) => number;
-
+  sqlite3_js_kvvfs_size: (which?: string) => Sqlite3Result;
   /**
    * If the current environment supports the POSIX file APIs, this routine
    * creates (or overwrites) the given file using those APIs. This is primarily
@@ -7619,54 +6401,33 @@ declare type CAPI = {
    * not a positive integer then the 3rd defaults to the array's byteLength
    * value.
    *
-   * Results are undefined if data is a WASM pointer and dataLen is exceeds
+   * Results are undefined if data is a WASM pointer and dataLen is exceeding
    * data's bounds.
    *
    * Throws if any arguments are invalid or if creating or writing to the file
    * fails.
    */
-  sqlite3_js_posix_create_file: (
-    filename: string | WasmPointer,
-    data: Uint8Array | ArrayBuffer | WasmPointer,
-    dataLen?: number,
-  ) => void;
-
+  sqlite3_js_posix_create_file: (filename: string | WasmPointer, data: Uint8Array | ArrayBuffer | WasmPointer, dataLen?: number) => void;
   /**
    * Given a `sqlite3_value*`, this function attempts to convert it to an
    * equivalent JS value with as much fidelity as feasible and return it.
    *
-   * By default it throws if it cannot determine any sensible conversion. If
+   * By default, it throws if it cannot determine any sensible conversion. If
    * passed a falsy second argument, it instead returns undefined if no suitable
    * conversion is found. Note that there is no conversion from SQL to JS which
    * results in the undefined value. It always throws a WasmAllocError if
    * allocating memory for a conversion fails.
    */
-  sqlite3_value_to_js(
-    sqliteValue: WasmPointer,
-    throwIfCannotConvert?: true,
-  ): SqlValue;
-  sqlite3_value_to_js(
-    sqliteValue: WasmPointer,
-    throwIfCannotConvert: false,
-  ): SqlValue | undefined;
-
+  sqlite3_value_to_js(sqliteValue: WasmPointer, throwIfCannotConvert?: true): SqlValue;
+  sqlite3_value_to_js(sqliteValue: WasmPointer, throwIfCannotConvert: false): SqlValue | undefined;
   /**
    * Requires a C-style array of `sqlite3_value*` objects and the number of
    * entries in that array. Returns a JS array containing the results of passing
    * each C array entry to `sqlite3_value_to_js()`. The 3rd argument to this
    * function is passed on as the 2nd argument to that one.
    */
-  sqlite3_values_to_js(
-    numVals: number,
-    sqliteValues: WasmPointer,
-    throwIfCannotConvert?: true,
-  ): SqlValue[];
-  sqlite3_values_to_js(
-    numVals: number,
-    sqliteValues: WasmPointer,
-    throwIfCannotConvert: false,
-  ): (SqlValue | undefined)[];
-
+  sqlite3_values_to_js(numVals: number, sqliteValues: WasmPointer, throwIfCannotConvert?: true): SqlValue[];
+  sqlite3_values_to_js(numVals: number, sqliteValues: WasmPointer, throwIfCannotConvert: false): (SqlValue | undefined)[];
   SQLITE_ACCESS_EXISTS: 0;
   SQLITE_ACCESS_READWRITE: 1;
   SQLITE_ACCESS_READ: 2;
@@ -7773,7 +6534,11 @@ declare type CAPI = {
   SQLITE_DBCONFIG_TRUSTED_SCHEMA: 1017;
   SQLITE_DBCONFIG_STMT_SCANSTATUS: 1018;
   SQLITE_DBCONFIG_REVERSE_SCANORDER: 1019;
-  SQLITE_DBCONFIG_MAX: 1019;
+  SQLITE_DBCONFIG_ENABLE_ATTACH_CREATE: 1020;
+  SQLITE_DBCONFIG_ENABLE_ATTACH_WRITE: 1021;
+  SQLITE_DBCONFIG_ENABLE_COMMENTS: 1022;
+  SQLITE_DBCONFIG_FP_DIGITS: 1023;
+  SQLITE_DBCONFIG_MAX: 1023;
   SQLITE_DBSTATUS_LOOKASIDE_USED: 0;
   SQLITE_DBSTATUS_CACHE_USED: 1;
   SQLITE_DBSTATUS_SCHEMA_USED: 2;
@@ -7787,12 +6552,14 @@ declare type CAPI = {
   SQLITE_DBSTATUS_DEFERRED_FKS: 10;
   SQLITE_DBSTATUS_CACHE_USED_SHARED: 11;
   SQLITE_DBSTATUS_CACHE_SPILL: 12;
-  SQLITE_DBSTATUS_MAX: 12;
+  SQLITE_DBSTATUS_TEMPBUF_SPILL: 13;
+  SQLITE_DBSTATUS_MAX: 13;
   SQLITE_UTF8: 1;
   SQLITE_UTF16LE: 2;
   SQLITE_UTF16BE: 3;
   SQLITE_UTF16: 4;
   SQLITE_UTF16_ALIGNED: 8;
+  SQLITE_UTF8_ZT: 16;
   SQLITE_FCNTL_LOCKSTATE: 1;
   SQLITE_FCNTL_GET_LOCKPROXYFILE: 2;
   SQLITE_FCNTL_SET_LOCKPROXYFILE: 3;
@@ -7853,12 +6620,12 @@ declare type CAPI = {
   SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN: 2048;
   SQLITE_IOCAP_POWERSAFE_OVERWRITE: 4096;
   SQLITE_IOCAP_IMMUTABLE: 8192;
-  SQLITE_IOCAP_BATCH_ATOMIC: 16384;
-  SQLITE_MAX_ALLOCATION_SIZE: 536870911;
+  SQLITE_IOCAP_BATCH_ATOMIC: 16_384;
+  SQLITE_MAX_ALLOCATION_SIZE: 536_870_911;
   SQLITE_LIMIT_LENGTH: 0;
-  SQLITE_MAX_LENGTH: 1000000000;
+  SQLITE_MAX_LENGTH: 1_000_000_000;
   SQLITE_LIMIT_SQL_LENGTH: 1;
-  SQLITE_MAX_SQL_LENGTH: 1000000000;
+  SQLITE_MAX_SQL_LENGTH: 1_000_000_000;
   SQLITE_LIMIT_COLUMN: 2;
   SQLITE_MAX_COLUMN: 2000;
   SQLITE_LIMIT_EXPR_DEPTH: 3;
@@ -7866,43 +6633,46 @@ declare type CAPI = {
   SQLITE_LIMIT_COMPOUND_SELECT: 4;
   SQLITE_MAX_COMPOUND_SELECT: 500;
   SQLITE_LIMIT_VDBE_OP: 5;
-  SQLITE_MAX_VDBE_OP: 250000000;
+  SQLITE_MAX_VDBE_OP: 250_000_000;
   SQLITE_LIMIT_FUNCTION_ARG: 6;
   SQLITE_MAX_FUNCTION_ARG: 127;
   SQLITE_LIMIT_ATTACHED: 7;
   SQLITE_MAX_ATTACHED: 10;
   SQLITE_LIMIT_LIKE_PATTERN_LENGTH: 8;
-  SQLITE_MAX_LIKE_PATTERN_LENGTH: 50000;
+  SQLITE_MAX_LIKE_PATTERN_LENGTH: 50_000;
   SQLITE_LIMIT_VARIABLE_NUMBER: 9;
-  SQLITE_MAX_VARIABLE_NUMBER: 32766;
+  SQLITE_MAX_VARIABLE_NUMBER: 32_766;
   SQLITE_LIMIT_TRIGGER_DEPTH: 10;
   SQLITE_MAX_TRIGGER_DEPTH: 1000;
   SQLITE_LIMIT_WORKER_THREADS: 11;
   SQLITE_MAX_WORKER_THREADS: 0;
+  SQLITE_LIMIT_PARSER_DEPTH: 12;
+  SQLITE_MAX_PARSER_DEPTH: 2500;
   SQLITE_OPEN_READONLY: 1;
   SQLITE_OPEN_READWRITE: 2;
   SQLITE_OPEN_CREATE: 4;
   SQLITE_OPEN_URI: 64;
   SQLITE_OPEN_MEMORY: 128;
-  SQLITE_OPEN_NOMUTEX: 32768;
-  SQLITE_OPEN_FULLMUTEX: 65536;
-  SQLITE_OPEN_SHAREDCACHE: 131072;
-  SQLITE_OPEN_PRIVATECACHE: 262144;
-  SQLITE_OPEN_EXRESCODE: 33554432;
-  SQLITE_OPEN_NOFOLLOW: 16777216;
+  SQLITE_OPEN_NOMUTEX: 32_768;
+  SQLITE_OPEN_FULLMUTEX: 65_536;
+  SQLITE_OPEN_SHAREDCACHE: 131_072;
+  SQLITE_OPEN_PRIVATECACHE: 262_144;
+  SQLITE_OPEN_EXRESCODE: 33_554_432;
+  SQLITE_OPEN_NOFOLLOW: 16_777_216;
   SQLITE_OPEN_MAIN_DB: 256;
   SQLITE_OPEN_MAIN_JOURNAL: 2048;
   SQLITE_OPEN_TEMP_DB: 512;
   SQLITE_OPEN_TEMP_JOURNAL: 4096;
   SQLITE_OPEN_TRANSIENT_DB: 1024;
   SQLITE_OPEN_SUBJOURNAL: 8192;
-  SQLITE_OPEN_SUPER_JOURNAL: 16384;
-  SQLITE_OPEN_WAL: 524288;
+  SQLITE_OPEN_SUPER_JOURNAL: 16_384;
+  SQLITE_OPEN_WAL: 524_288;
   SQLITE_OPEN_DELETEONCLOSE: 8;
   SQLITE_OPEN_EXCLUSIVE: 16;
   SQLITE_PREPARE_PERSISTENT: 1;
   SQLITE_PREPARE_NORMALIZE: 2;
   SQLITE_PREPARE_NO_VTAB: 4;
+  SQLITE_PREPARE_FROM_DDL: 32;
   SQLITE_OK: 0;
   SQLITE_ERROR: 1;
   SQLITE_INTERNAL: 2;
@@ -8034,8 +6804,8 @@ declare type CAPI = {
   SQLITE_TXN_READ: 1;
   SQLITE_TXN_WRITE: 2;
   SQLITE_DETERMINISTIC: 2048;
-  SQLITE_DIRECTONLY: 524288;
-  SQLITE_INNOCUOUS: 2097152;
+  SQLITE_DIRECTONLY: 524_288;
+  SQLITE_INNOCUOUS: 2_097_152;
   SQLITE_VERSION_NUMBER: number;
   SQLITE_VERSION: string;
   SQLITE_SOURCE_ID: string;
@@ -8067,7 +6837,22 @@ declare type CAPI = {
   SQLITE_VTAB_INNOCUOUS: 2;
   SQLITE_VTAB_DIRECTONLY: 3;
   SQLITE_VTAB_USES_ALL_SCHEMAS: 4;
+  SQLITE_CHECKPOINT_NOOP: -1;
+  SQLITE_CHECKPOINT_PASSIVE: 0;
+  SQLITE_CHECKPOINT_FULL: 1;
+  SQLITE_CHECKPOINT_RESTART: 2;
+  SQLITE_CHECKPOINT_TRUNCATE: 3;
+  SQLITE_SCANSTAT_NLOOP: 0;
+  SQLITE_SCANSTAT_NVISIT: 1;
+  SQLITE_SCANSTAT_EST: 2;
+  SQLITE_SCANSTAT_NAME: 3;
+  SQLITE_SCANSTAT_EXPLAIN: 4;
+  SQLITE_SCANSTAT_SELECTID: 5;
+  SQLITE_SCANSTAT_PARENTID: 6;
+  SQLITE_SCANSTAT_NCYCLE: 7;
+  SQLITE_SCANSTAT_COMPLEX: 1;
   SQLITE_ROLLBACK: 1;
   SQLITE_FAIL: 3;
   SQLITE_REPLACE: 5;
 };
+//#endregion
