@@ -24,3 +24,19 @@
 - `SyncTablesOneWay`: direction-filtered variant of `SyncTables`, same paginated
   copyRange. (SY-ronuk)
 - Verified: `bun test` 35 pass, `bunx tsc --noEmit` clean.
+
+## 2026-10-10 — sqlite-wasm 3.46.0 -> 3.53.4
+
+- `sqlite-wasm/` now holds the upstream `@sqlite.org/sqlite-wasm` 3.53.4-build1 `dist`
+  (`index.mjs`, `sqlite3-worker1.mjs`, `sqlite3-opfs-async-proxy.js`, `sqlite3.wasm`,
+  `index.d.mts`). `sqlite.mjs` re-exports `default` and `sqlite3Worker1Promiser` from
+  `index.mjs`, so `/lib/sqlite.mjs` and `sql-api/wasm.ts` are unchanged. The promiser files
+  and bundler-friendly variants are gone: 3.53 ships the promiser inside `index.mjs` and
+  starts `sqlite3-worker1.mjs` relative to it.
+- Why: 3.46.0's `opfs` VFS answered `xCheckReservedLock` from its own lock state, so a hot
+  journal left by a killed worker could be skipped instead of rolled back. Ferry hit it and
+  moved to 3.53.4 (its BD-pusoh); this brings the same bundle to other users of `/lib/`.
+- Verified: `bun test` 34 pass; the Playwright integration test fails only because its
+  chromium-1208 is not downloaded. Ran its page by hand in a browser against
+  `integration-server.ts`: "Running SQLite3 version 3.53.4", "Sync complete: 3 rows".
+  The OPFS path was not exercised (the page uses `:memory:`).
